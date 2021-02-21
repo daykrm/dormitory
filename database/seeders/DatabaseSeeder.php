@@ -25,7 +25,7 @@ class DatabaseSeeder extends Seeder
             ProvinceSeeder::class,
             StudentSeeder::class,
             PersonelSeeder::class,
-            //YearConfigSeeder::class,
+            YearConfigSeeder::class,
         ]);
     }
 }
