@@ -1,0 +1,105 @@
+// Fonts
+@import url("https://fonts.googleapis.com/css?family=Nunito");
+
+// Variables
+@import "variables";
+
+// Bootstrap
+@import "~bootstrap/scss/bootstrap";
+
+.card-header {
+    color: aliceblue;
+    background-color: brown;
+    text-align: center;
+}
+
+.btn-primary {
+    color: #fff;
+    background-color: brown;
+    border-color: brown;
+}
+
+.btn-primary:hover {
+    color: #fff;
+    background-color: rgb(202, 51, 51);
+    border-color: rgb(202, 51, 51);
+}
+
+.btn-primary:focus,
+.btn-primary.focus {
+    color: #fff;
+    background-color: rgb(202, 51, 51);
+    border-color: rgb(202, 51, 51);
+    box-shadow: 0 0 0 0.2rem rgba(225, 82, 82, 0.5);
+}
+
+.btn-primary.disabled,
+.btn-primary:disabled {
+    color: #fff;
+    background-color: rgb(238, 92, 92);
+    border-color: rgb(238, 92, 92);
+}
+
+.btn-primary:not(:disabled):not(.disabled):active,
+.btn-primary:not(:disabled):not(.disabled).active,
+.show > .btn-primary.dropdown-toggle {
+    color: #fff;
+    background-color: rgb(238, 92, 92);
+    border-color: rgb(238, 92, 92);
+}
+
+.btn-outline-primary {
+    color: brown;
+    border-color: brown;
+  }
+  
+  .btn-outline-primary:hover {
+    color: #fff;
+    background-color: rgb(202, 51, 51);
+    border-color: rgb(202, 51, 51);
+  }
+  
+  .btn-outline-primary:focus,
+  .btn-outline-primary.focus {
+    box-shadow: 0 0 0 0.2rem rgba(225, 82, 82, 0.5);
+  }
+  
+  .btn-outline-primary.disabled,
+  .btn-outline-primary:disabled {
+    color: brown;
+    background-color: transparent;
+  }
+  
+  .btn-outline-primary:not(:disabled):not(.disabled):active,
+  .btn-outline-primary:not(:disabled):not(.disabled).active,
+  .show > .btn-outline-primary.dropdown-toggle {
+    color: #fff;
+    background-color: brown;
+    border-color: brown;
+  }
+  
+  .btn-outline-primary:not(:disabled):not(.disabled):active:focus,
+  .btn-outline-primary:not(:disabled):not(.disabled).active:focus,
+  .show > .btn-outline-primary.dropdown-toggle:focus {
+    box-shadow: 0 0 0 0.2rem rgba(225, 82, 82, 0.5);
+  }
+
+.bg-primary {
+    background-color: brown !important;
+}
+
+th {
+    background-color: brown;
+    color: white;
+}
+
+a {
+  color: brown;
+  text-decoration: none;
+  background-color: transparent;
+}
+
+a:hover {
+  color: rgb(116, 30, 30);
+  text-decoration: none;
+}

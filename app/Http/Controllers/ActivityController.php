@@ -1,0 +1,174 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\Activity;
+use Illuminate\Http\Request;
+
+class ActivityController extends Controller
+{
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
+    {
+        //
+        $activities = Activity::where('activity_date', '>=', date('Y-m-d'))->orderBy('activity_date')->get();
+
+        //dd(date('Y-m-d'));
+        //$sql = Activity::where('activity_date', '>=', date('yyyy-mm-dd'))->orderBy('activity_date')->toSql();
+        return view('activity.index', compact('activities'));
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        //
+        return view('activity.create', [
+            'actionRoute' => 'activity.store'
+        ]);
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+
+        //return back()->with('status','council_id'.$request->input('council_id'));
+        //
+        $rules = [
+            'name' => 'required|string',
+            'detail' => 'required|string',
+            'year' => 'required|string|min:4|max:4',
+            'budget' => 'required',
+            'date' => 'required',
+            'score' => 'required',
+        ];
+
+        $messages = [
+            'name.required' => 'กรุณาระบุชื่อกิจกรรม',
+            'detail.required' => 'กรุณาระบุรายละเอียดกิจกรรม',
+            'year.required' => 'กรุณาระบุปีการศึกษา',
+            'budget.required' => 'กรุณาระบุงบประมาณ',
+            'date.required' => 'กรุณาระบุวันที่จัดกิจกรรม',
+            'score.required' => 'กรุณาระบุคะแนนของกิจกรรม',
+        ];
+
+        $request->validate($rules, $messages);
+
+        $table  = new Activity();
+
+        $table->name = $request->get('name');
+        $table->detail = $request->get('detail');
+        $table->year = $request->get('year');
+        $table->budget = $request->get('budget');
+        $table->activity_date = $request->get('date');
+        $table->credit = $request->get('score');
+        $table->council_id = $request->input('council_id');
+
+        if ($table->save()) {
+            return redirect()->action([ActivityController::class, 'index'])->with('status','บันทึกข้อมูลสำเร็จ');
+        } else {
+            return back()->with('error', 'บันทึกข้อมูลล้มเหลว');
+        }
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+        //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
+    {
+        $activity = Activity::find($id);
+        return view('activity.edit', [
+            'activity' => $activity
+        ]);
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
+    {
+        //
+        $rules = [
+            'name' => 'required|string',
+            'detail' => 'required|string',
+            'year' => 'required|string|min:4|max:4',
+            'budget' => 'required',
+            'date' => 'required',
+            'score' => 'required',
+        ];
+
+        $messages = [
+            'name.required' => 'กรุณาระบุชื่อกิจกรรม',
+            'detail.required' => 'กรุณาระบุรายละเอียดกิจกรรม',
+            'year.required' => 'กรุณาระบุปีการศึกษา',
+            'budget.required' => 'กรุณาระบุงบประมาณ',
+            'date.required' => 'กรุณาระบุวันที่จัดกิจกรรม',
+            'score.required' => 'กรุณาระบุคะแนนของกิจกรรม',
+        ];
+
+        $request->validate($rules, $messages);
+
+        $table  = Activity::find($id);
+
+        $table->name = $request->get('name');
+        $table->detail = $request->get('detail');
+        $table->year = $request->get('year');
+        $table->budget = $request->get('budget');
+        $table->activity_date = $request->get('date');
+        $table->credit = $request->get('score');
+        $table->council_id = $request->input('council_id');
+
+        if ($table->save()) {
+            return redirect()->action([ActivityController::class, 'index'])->with('status','บันทึกข้อมูลสำเร็จ');
+        } else {
+            return back()->with('error', 'บันทึกข้อมูลล้มเหลว');
+        }
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        //
+    }
+}
