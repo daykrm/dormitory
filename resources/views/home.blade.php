@@ -33,7 +33,8 @@
                     หอพัก :
                 </div>
                 <div class="col-md-10">
-                    {{ Auth::guard('web')->user()->dorm->dormitory->name }} ห้อง {{ Auth::guard('web')->user()->dorm->room->name }}
+                    {{ Auth::guard('web')->user()->dorm->dormitory->name }} ห้อง
+                    {{ Auth::guard('web')->user()->dorm->room->name }}
                 </div>
             </div>
         </div>

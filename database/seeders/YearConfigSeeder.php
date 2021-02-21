@@ -16,7 +16,7 @@ class YearConfigSeeder extends Seeder
     {
         //
         DB::table('year_configs')->insert([
-            'year' => '2021'
+            'year' => '2021',
         ]);
     }
 }

@@ -13,4 +13,8 @@ class Activity_credit extends Model
         'student_id',
         'activity_id'
     ];
+
+    public function student(){
+        return $this->belongsTo(User::class,'student_id');
+    }
 }

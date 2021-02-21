@@ -43,7 +43,8 @@ class ScoreController extends Controller
     public function showForm($id)
     {
         $activity = Activity::find($id);
-        return view('score.create', compact('activity'));
+        $data = Activity_credit::where('activity_id',$id)->get();
+        return view('score.create', compact('activity','data'));
     }
 
     public function findStudent(Request $request)
