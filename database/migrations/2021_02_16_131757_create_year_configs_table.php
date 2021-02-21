@@ -15,11 +15,11 @@ class CreateYearConfigsTable extends Migration
     public function up()
     {
         Schema::create('year_configs', function (Blueprint $table) {
-            $table->id();
-            $table->string('year');
-            $table->date('startDate')->default(DB::raw('CURRENT_TIMESTAMP'));
-            $table->date('endDate')->default(DB::raw('CURRENT_TIMESTAMP'));
-            $table->timestamps();
+            // $table->id();
+            // $table->string('year');
+            // $table->date('startDate')->default(DB::raw('CURRENT_TIMESTAMP'));
+            // $table->date('endDate')->default(DB::raw('CURRENT_TIMESTAMP'));
+            // $table->timestamps();
         });
     }
 
