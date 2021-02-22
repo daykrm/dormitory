@@ -1,6 +1,5 @@
 @inject('dormModel', 'App\Models\Dormitory')
-<form method="POST" action="{{ route('register') }}">
-    @csrf
+
     <div class="row">
         <div class="form-group col-md-2">
             <label>คำนำหน้า</label>
@@ -58,146 +57,99 @@
         </div>
     </div>
 
-    <div class="row">
-        <div class="form-group col-md-4">
-            <label>จังหวัด</label>
-            <select name="province" class="selectpicker form-control @error('province') is-invalid @enderror"
-                title="เลือกจังหวัด" data-live-search="true">
-                @foreach ($provinces as $item)
-                    <option value="{{ $item->id }}">{{ $item->name }}</option>
-                @endforeach
-            </select>
+    @if ($edit == 0)
+        <div class="row">
+            <div class="form-group col-md-4">
+                <label>จังหวัด</label>
+                <select name="province" class="selectpicker form-control @error('province') is-invalid @enderror"
+                    title="เลือกจังหวัด" data-live-search="true">
+                    @foreach ($provinces as $item)
+                        <option value="{{ $item->id }}">{{ $item->name }}</option>
+                    @endforeach
+                </select>
+            </div>
+            <div class="form-group col-md-4">
+                <label>E-mail</label>
+                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email"
+                    value="{{ old('email') }}">
+
+                @error('email')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                @enderror
+            </div>
+            <div class="form-group col-md-4">
+                <label>Username</label>
+                <input id="username" type="text" class="form-control @error('username') is-invalid @enderror"
+                    name="username" value="{{ old('username') }}" autofocus>
+
+                @error('username')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                @enderror
+            </div>
         </div>
-        <div class="form-group col-md-4">
-            <label>E-mail</label>
-            <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email"
-                value="{{ old('email') }}">
 
-            @error('email')
-                <span class="invalid-feedback" role="alert">
-                    <strong>{{ $message }}</strong>
-                </span>
-            @enderror
+        <div class="row justify-content-center">
+            <div class="form-group col-md-4">
+                <label>Password</label>
+                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror"
+                    name="password">
+
+                @error('password')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                @enderror
+            </div>
+            <div class="form-group col-md-4">
+                <label>Confirm Password</label>
+                <input id="password-confirm" type="password" class="form-control" name="password_confirmation">
+            </div>
         </div>
-        <div class="form-group col-md-4">
-            <label>Username</label>
-            <input id="username" type="text" class="form-control @error('username') is-invalid @enderror"
-                name="username" value="{{ old('username') }}" autofocus>
 
-            @error('username')
-                <span class="invalid-feedback" role="alert">
-                    <strong>{{ $message }}</strong>
-                </span>
-            @enderror
+        <hr>
+
+        <div class="row justify-content-center">
+            <div class="form-group col-md-4">
+                <label>คณะ</label>
+                <select name="faculty" class="selectpicker form-control @error('faculty') is-invalid @enderror"
+                    title="เลือกคณะ" data-live-search="true">
+                    @foreach ($faculties as $item)
+                        <option value="{{ $item->id }}">{{ $item->name }}</option>
+                    @endforeach
+                </select>
+            </div>
+            <div class="form-group col-md-2">
+                <label>ปีที่เข้าศึกษา</label>
+                <input id="enroll" type="text" class="form-control @error('enroll') is-invalid @enderror" name="enroll"
+                    value="{{ old('enroll') }}" autofocus>
+
+                @error('enroll')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                @enderror
+            </div>
+            <div class="form-group col-md-4">
+                <label>หอพัก</label>
+                <select id="dorm" name="dorm" class="selectpicker form-control @error('dorm') is-invalid @enderror"
+                    title="เลือกหอพัก" data-live-search="true">
+                    @foreach ($dorms as $item)
+                        <option value="{{ $item->id }}">{{ $item->name }}</option>
+                    @endforeach
+                </select>
+            </div>
+            <div class="form-group col-md-2">
+                <label>ห้อง</label>
+                <select id="room" name="room" class="selectpicker form-control @error('room') is-invalid @enderror"
+                    title="เลือกห้องพัก" data-live-search="true">
+                </select>
+            </div>
+            <div class="form-group col-md-2" id="room_container" style="display: none"></div>
         </div>
-    </div>
+    @endif
 
-    <div class="row justify-content-center">
-        <div class="form-group col-md-4">
-            <label>Password</label>
-            <input id="password" type="password" class="form-control @error('password') is-invalid @enderror"
-                name="password">
 
-            @error('password')
-                <span class="invalid-feedback" role="alert">
-                    <strong>{{ $message }}</strong>
-                </span>
-            @enderror
-        </div>
-        <div class="form-group col-md-4">
-            <label>Confirm Password</label>
-            <input id="password-confirm" type="password" class="form-control" name="password_confirmation">
-        </div>
-    </div>
-
-    <hr>
-
-    <div class="row justify-content-center">
-        <div class="form-group col-md-4">
-            <label>คณะ</label>
-            <select name="faculty" class="selectpicker form-control @error('faculty') is-invalid @enderror"
-                title="เลือกคณะ" data-live-search="true">
-                @foreach ($faculties as $item)
-                    <option value="{{ $item->id }}">{{ $item->name }}</option>
-                @endforeach
-            </select>
-        </div>
-        <div class="form-group col-md-2">
-            <label>ปีที่เข้าศึกษา</label>
-            <input id="enroll" type="text" class="form-control @error('enroll') is-invalid @enderror" name="enroll"
-                value="{{ old('enroll') }}" autofocus>
-
-            @error('enroll')
-                <span class="invalid-feedback" role="alert">
-                    <strong>{{ $message }}</strong>
-                </span>
-            @enderror
-        </div>
-        <div class="form-group col-md-4">
-            <label>หอพัก</label>
-            <select id="dorm" name="dorm" class="selectpicker form-control @error('dorm') is-invalid @enderror"
-                title="เลือกหอพัก" data-live-search="true">
-                @foreach ($dorms as $item)
-                    <option value="{{ $item->id }}">{{ $item->name }}</option>
-                @endforeach
-            </select>
-        </div>
-        <div class="form-group col-md-2">
-            <label>ห้อง</label>
-            <select id="room" name="room" class="selectpicker form-control @error('room') is-invalid @enderror"
-                title="เลือกห้องพัก" data-live-search="true">
-            </select>
-        </div>
-        <div class="form-group col-md-2" id="room_container" style="display: none"></div>
-    </div>
-
-    <div class="row justify-content-center">
-        <button type="submit" class="btn btn-primary" disabled>
-            {{ __('Register') }}
-        </button>
-    </div>
-</form>
-
-@push('scripts')
-    <script>
-        $(document).ready(function() {
-            var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
-
-            $('#dob').datepicker({
-                format: 'yyyy-mm-dd',
-                startView: "years",
-                autoclose: true,
-                //minViewMode: "years"
-            });
-
-            $('#enroll').datepicker({
-                format: 'yyyy',
-                startView: "years",
-                autoclose: true,
-                minViewMode: "years"
-            });
-
-            $('#dorm').change(function() {
-                var dormId = this.value;
-                $("#room").empty();
-                var option = '';
-                $.ajax({
-                    /* the route pointing to the post function */
-                    url: '/getRoom/' + dormId,
-                    type: 'GET',
-                    success: function(data) {
-                        console.log(data.rooms[0].name)
-                        var data = data.rooms;
-                        data.forEach(e => {
-                            option += '<option value="' + e.id + '">' + e.name +
-                                '</option>';
-                        });
-                        $('#room').append(option);
-                        $('#room').selectpicker('refresh');
-                    }
-                });
-            })
-        })
-
-    </script>
-@endpush

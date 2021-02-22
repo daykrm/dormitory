@@ -93,6 +93,7 @@ class RegisterController extends Controller
             'provinces' => $provinces,
             'faculties' => $faculties,
             'dorms' => $dorms,
+            'edit' => 0
         ]);
     }
 }

@@ -24,6 +24,8 @@ Route::prefix('/personel')->name('personel.')->namespace('Personel')->group(func
     Route::post('/logout', 'LoginController@logout')->name('logout');
 });
 
+Route::resource('user','StudentController');
+
 Route::get('/indexScore', 'ScoreController@index')->name('indexScore');
 
 Route::get('/createScore/{id}', 'ScoreController@showForm')->name('createScore');
@@ -33,6 +35,8 @@ Route::get('/findStudent', 'ScoreController@findStudent')->name('findStudent');
 Route::post('/storeScore', 'ScoreController@store')->name('storeScore');
 
 Route::get('/getRoom/{id}', 'DormitoryDetailController@getRoom')->name('getRoom');
+
+Route::resource('application','ApplicationController');
 
 Route::resource('activity', 'ActivityController');
 
