@@ -23,19 +23,23 @@
                 <div class="col-md-10">
                     {{ $year->year - Auth::guard('web')->user()->enrolled_year }}
                 </div>
-                <div class="col-md-2 text-right">
-                    คณะ :
-                </div>
-                <div class="col-md-10">
-                    {{ Auth::guard('web')->user()->faculty->name }}
-                </div>
-                <div class="col-md-2 text-right">
-                    หอพัก :
-                </div>
-                <div class="col-md-10">
-                    {{ Auth::guard('web')->user()->dorm->dormitory->name }} ห้อง
-                    {{ Auth::guard('web')->user()->dorm->room->name }}
-                </div>
+                @if (Auth::guard('web')->user()->faculty != null)
+                    <div class="col-md-2 text-right">
+                        คณะ :
+                    </div>
+                    <div class="col-md-10">
+                        {{ Auth::guard('web')->user()->faculty->name }}
+                    </div>
+                @endif
+                @if (Auth::guard('web')->user()->dorm != null)
+                    <div class="col-md-2 text-right">
+                        หอพัก :
+                    </div>
+                    <div class="col-md-10">
+                        {{ Auth::guard('web')->user()->dorm->dormitory->name }} ห้อง
+                        {{ Auth::guard('web')->user()->dorm->room->name }}
+                    </div>
+                @endif
             </div>
         </div>
     </div>

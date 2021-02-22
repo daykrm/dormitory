@@ -24,13 +24,17 @@ Route::prefix('/personel')->name('personel.')->namespace('Personel')->group(func
     Route::post('/logout', 'LoginController@logout')->name('logout');
 });
 
-Route::get('/createScore/{id}','ScoreController@showForm')->name('createScore');
+Route::get('/indexScore', 'ScoreController@index')->name('indexScore');
 
-Route::get('/findStudent','ScoreController@findStudent')->name('findStudent');
+Route::get('/createScore/{id}', 'ScoreController@showForm')->name('createScore');
 
-Route::post('/storeScore','ScoreController@store')->name('storeScore');
+Route::get('/findStudent', 'ScoreController@findStudent')->name('findStudent');
 
-Route::resource('activity','ActivityController');
+Route::post('/storeScore', 'ScoreController@store')->name('storeScore');
+
+Route::get('/getRoom/{id}', 'DormitoryDetailController@getRoom')->name('getRoom');
+
+Route::resource('activity', 'ActivityController');
 
 Auth::routes();
 

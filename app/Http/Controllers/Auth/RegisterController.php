@@ -93,8 +93,6 @@ class RegisterController extends Controller
             'provinces' => $provinces,
             'faculties' => $faculties,
             'dorms' => $dorms,
-            'rooms' => $rooms,
-            'dorm_detail' => $dorm_detail
         ]);
     }
 }

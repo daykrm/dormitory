@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Activity;
 use App\Models\Activity_credit;
 use App\Models\User;
+use App\Models\YearConfig;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -15,6 +16,13 @@ class ScoreController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+    }
+
+    public function index()
+    {
+        $year = YearConfig::find(1);
+        $activities = Activity::where('year', $year->year)->orderBy('name')->get();
+        return view('score.index',compact('activities'));
     }
 
     public function store(Request $request)
@@ -43,8 +51,8 @@ class ScoreController extends Controller
     public function showForm($id)
     {
         $activity = Activity::find($id);
-        $data = Activity_credit::where('activity_id',$id)->get();
-        return view('score.create', compact('activity','data'));
+        $data = Activity_credit::where('activity_id', $id)->get();
+        return view('score.create', compact('activity', 'data'));
     }
 
     public function findStudent(Request $request)

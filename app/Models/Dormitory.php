@@ -14,5 +14,10 @@ class Dormitory extends Model
         return $this->hasMany(\App\Models\DormitoryDetail::class,'dormitory_id');
     }
 
+    public function rooms()
+    {
+        return $this->belongsToMany(Room::class,'dormitory_details','dormitory_id','room_id');
+    }
+
     protected $table = 'dormitories';
 }

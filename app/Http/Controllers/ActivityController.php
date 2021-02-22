@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Activity;
+use App\Models\YearConfig;
 use Illuminate\Http\Request;
 
 class ActivityController extends Controller
@@ -21,7 +22,8 @@ class ActivityController extends Controller
     public function index()
     {
         //
-        $activities = Activity::where('activity_date', '>=', date('Y-m-d'))->orderBy('activity_date')->get();
+        $year = YearConfig::find(1);
+        $activities = Activity::where('year', $year->year)->orderBy('activity_date')->get();
 
         //dd(date('Y-m-d'));
         //$sql = Activity::where('activity_date', '>=', date('yyyy-mm-dd'))->orderBy('activity_date')->toSql();

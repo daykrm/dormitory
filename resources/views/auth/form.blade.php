@@ -1,9 +1,9 @@
+@inject('dormModel', 'App\Models\Dormitory')
 <form method="POST" action="{{ route('register') }}">
     @csrf
-
     <div class="row">
         <div class="form-group col-md-2">
-            <label>Prefix</label>
+            <label>คำนำหน้า</label>
             <select name="prefix" class="form-control @error('prefix') is-invalid @enderror">
                 @foreach ($prefixes as $key => $item)
                     @if ($key == 0)
@@ -15,7 +15,7 @@
             </select>
         </div>
         <div class="form-group col-md-4">
-            <label>Name</label>
+            <label>ชื่อ - สกุล</label>
             <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name"
                 value="{{ old('name') }}" autofocus>
 
@@ -26,7 +26,7 @@
             @enderror
         </div>
         <div class="form-group col-md-2">
-            <label>Nickname</label>
+            <label>ชื่อเล่น</label>
             <input id="nickname" type="text" class="form-control @error('nickname') is-invalid @enderror"
                 name="nickname" value="{{ old('nickname') }}" autofocus>
 
@@ -37,7 +37,7 @@
             @enderror
         </div>
         <div class="form-group col-md-2">
-            <label>Telephone</label>
+            <label>เบอร์โทรศัพท์</label>
             <input id="phone" type="text" class="form-control @error('phone') is-invalid @enderror" name="phone"
                 value="{{ old('phone') }}" autofocus>
 
@@ -48,7 +48,7 @@
             @enderror
         </div>
         <div class="form-group col-md-2">
-            <label>Date of birth</label>
+            <label>วันเกิด</label>
             <input id="dob" name="dob" class="form-control @error('dob') is-invalid @enderror" />
             @error('dob')
                 <span class="invalid-feedback" role="alert">
@@ -60,7 +60,7 @@
 
     <div class="row">
         <div class="form-group col-md-4">
-            <label>Province</label>
+            <label>จังหวัด</label>
             <select name="province" class="selectpicker form-control @error('province') is-invalid @enderror"
                 title="เลือกจังหวัด" data-live-search="true">
                 @foreach ($provinces as $item)
@@ -114,7 +114,7 @@
 
     <div class="row justify-content-center">
         <div class="form-group col-md-4">
-            <label>Faculty</label>
+            <label>คณะ</label>
             <select name="faculty" class="selectpicker form-control @error('faculty') is-invalid @enderror"
                 title="เลือกคณะ" data-live-search="true">
                 @foreach ($faculties as $item)
@@ -123,7 +123,7 @@
             </select>
         </div>
         <div class="form-group col-md-2">
-            <label>Enrolled Year</label>
+            <label>ปีที่เข้าศึกษา</label>
             <input id="enroll" type="text" class="form-control @error('enroll') is-invalid @enderror" name="enroll"
                 value="{{ old('enroll') }}" autofocus>
 
@@ -134,12 +134,18 @@
             @enderror
         </div>
         <div class="form-group col-md-4">
-            <label>Dormitory</label>
+            <label>หอพัก</label>
             <select id="dorm" name="dorm" class="selectpicker form-control @error('dorm') is-invalid @enderror"
-                title="หอพัก" data-live-search="true">
+                title="เลือกหอพัก" data-live-search="true">
                 @foreach ($dorms as $item)
                     <option value="{{ $item->id }}">{{ $item->name }}</option>
                 @endforeach
+            </select>
+        </div>
+        <div class="form-group col-md-2">
+            <label>ห้อง</label>
+            <select id="room" name="room" class="selectpicker form-control @error('room') is-invalid @enderror"
+                title="เลือกห้องพัก" data-live-search="true">
             </select>
         </div>
         <div class="form-group col-md-2" id="room_container" style="display: none"></div>
@@ -155,6 +161,8 @@
 @push('scripts')
     <script>
         $(document).ready(function() {
+            var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+
             $('#dob').datepicker({
                 format: 'yyyy-mm-dd',
                 startView: "years",
@@ -168,6 +176,27 @@
                 autoclose: true,
                 minViewMode: "years"
             });
+
+            $('#dorm').change(function() {
+                var dormId = this.value;
+                $("#room").empty();
+                var option = '';
+                $.ajax({
+                    /* the route pointing to the post function */
+                    url: '/getRoom/' + dormId,
+                    type: 'GET',
+                    success: function(data) {
+                        console.log(data.rooms[0].name)
+                        var data = data.rooms;
+                        data.forEach(e => {
+                            option += '<option value="' + e.id + '">' + e.name +
+                                '</option>';
+                        });
+                        $('#room').append(option);
+                        $('#room').selectpicker('refresh');
+                    }
+                });
+            })
         })
 
     </script>

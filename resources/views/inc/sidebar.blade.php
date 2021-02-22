@@ -3,7 +3,7 @@
         <ul class="nav flex-column">
             @if (Auth::guard('web')->user()->type->id == 1)
                 <li class="nav-item">
-                    <a class="nav-link active" href="{{route('home')}}">
+                    <a class="nav-link active" href="{{ route('home') }}">
                         Student Dashboard <span class="sr-only">(current)</span>
                     </a>
                 </li>
@@ -14,13 +14,28 @@
                 </li>
             @elseif (Auth::guard('web')->user()->type->id == 2)
                 <li class="nav-item">
-                    <a class="nav-link active" href="{{route('home')}}">
-                        Council Dashboard <span class="sr-only">(current)</span>
+                    <a class="nav-link active" href="{{ route('home') }}">
+                        หน้าแรก <span class="sr-only">(current)</span>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{route('activity.index')}}">
-                        จัดการกิจกรรม
+                    <a class="nav-link" href="{{ route('activity.index') }}">
+                        การจัดการรายการกิจกรรมประจำปี
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('indexScore') }}">
+                        การจัดการคะแนนการเข้าร่วมกิจกรรม
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('activity.index') }}">
+                        บันทึกใบสมัคร
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('activity.index') }}">
+                        รายงาน
                     </a>
                 </li>
             @elseif (Auth::guard('personel'))
