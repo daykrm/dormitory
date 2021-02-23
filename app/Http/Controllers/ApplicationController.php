@@ -105,6 +105,7 @@ class ApplicationController extends Controller
             'phone' => $request->get('phone'),
             'dob' => $request->get('dob'),
             'credit' => $request->get('credit'),
+            'province_id' => $request->get('province'),
         ];
 
         DB::table('users')->where('id', $student_id)->update($studentData);
@@ -192,7 +193,7 @@ class ApplicationController extends Controller
         $occs = Occupation::where('id', '<>', 1)->get();
         $app = Application::findOrFail($id);
         $edit = 1;
-        return view('application.edit', compact('app', 'year', 'occs', 'prefixes', 'dorms', 'edit'));
+        return view('application.edit', compact('app', 'year', 'occs', 'prefixes', 'provinces', 'dorms', 'edit'));
     }
 
     /**
@@ -215,6 +216,7 @@ class ApplicationController extends Controller
             'phone' => $request->get('phone'),
             'dob' => $request->get('dob'),
             'credit' => $request->get('credit'),
+            'province_id' => $request->get('province'),
         ];
 
         DB::table('users')->where('id', $student_id)->update($studentData);

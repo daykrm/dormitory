@@ -93,6 +93,8 @@
                     $('#nickname').val(user.nickname);
                     $('#phone').val(user.phone);
                     $('#dob').val(user.dob);
+                    console.log(user.province_id);
+                    $('#province').selectpicker('val',user.province_id);
                 }
             });
         })

@@ -19,12 +19,30 @@
 <h5>ข้อมูลส่วนตัว</h5>
 @include('auth.form')
 <div class="row justify-content center">
-    <div class="form-group col-md-5">
+    <div class="form-group col-md-2">
+        <label>จังหวัด</label>
+        <select name="province" id="province" class="selectpicker form-control @error('province') is-invalid @enderror"
+            title="เลือกจังหวัด" data-live-search="true" required>
+            @foreach ($provinces as $item)
+                @if ($app->student != null)
+                    @if ($app->student->province_id == $item->id)
+                        <option value="{{ $item->id }}" selected>{{ $item->name }}</option>
+                    @else
+                        <option value="{{ $item->id }}">{{ $item->name }}</option>
+                    @endif
+                @else
+                    <option value="{{ $item->id }}">{{ $item->name }}</option>
+                @endif
+            @endforeach
+        </select>
+
+    </div>
+    <div class="form-group col-md-4">
         <label>ทุนการศึกษาที่เคยได้รับ</label>
         <input type="text" name="scholarship_name" value="{{ $app->scholarship_name ?? old('scholarship_name') }}"
             class="form-control">
     </div>
-    <div class="form-group col-md-3">
+    <div class="form-group col-md-2">
         <label>โรคประจำตัว</label>
         <input type="text" name="underlying_disease"
             value="{{ $app->underlying_disease ?? old('underlying_disease') }}" class="form-control">
@@ -214,7 +232,8 @@
         </div>
         <div class="form-group col-md-3">
             <label>อาชีพ</label>
-            <select name="occ_sp" id="occ_sp" {{ $app->name_sp != null ? 'required' : '' }} class="form-control @error('occ_sp') is-invalid @enderror">
+            <select name="occ_sp" id="occ_sp" {{ $app->name_sp != null ? 'required' : '' }}
+                class="form-control @error('occ_sp') is-invalid @enderror">
                 <option value="">เลือกอาชีพ</option>
                 @foreach ($occs as $item)
                     @if ($app->occupation_sp == $item->id)
@@ -237,7 +256,8 @@
         </div>
         <div class="form-group col-md-2" id="other_sp_container" style="display: none">
             <label>ระบุอาชีพ</label>
-            <input type="text" {{ $app->name_sp != null ? 'required' : '' }} value="{{ $app->other_sp ?? old('other_sp') }}" name="other_sp" id="other_sp"
+            <input type="text" {{ $app->name_sp != null ? 'required' : '' }}
+                value="{{ $app->other_sp ?? old('other_sp') }}" name="other_sp" id="other_sp"
                 class="form-control @error('other_sp') is-invalid @enderror">
             @error('other_sp')
                 <span class="invalid-feedback" role="alert">

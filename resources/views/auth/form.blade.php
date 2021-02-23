@@ -70,7 +70,7 @@
     <div class="row">
         <div class="form-group col-md-4">
             <label>จังหวัด</label>
-            <select name="province" class="selectpicker form-control @error('province') is-invalid @enderror"
+            <select name="province" id="province" class="selectpicker form-control @error('province') is-invalid @enderror"
                 title="เลือกจังหวัด" data-live-search="true">
                 @foreach ($provinces as $item)
                     <option value="{{ $item->id }}">{{ $item->name }}</option>
