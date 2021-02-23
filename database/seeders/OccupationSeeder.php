@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class OccupationSeeder extends Seeder
 {
@@ -14,5 +15,17 @@ class OccupationSeeder extends Seeder
     public function run()
     {
         //
+        $list = [
+            'อื่น ๆ',
+            'รับจ้าง',
+            'ข้าราชการ',
+            'เกษตรกร',
+            'ค้าขาย',
+        ];
+        foreach ($list as $item) {
+            DB::table('occupations')->insert([
+                'name' => $item
+            ]);
+        }
     }
 }

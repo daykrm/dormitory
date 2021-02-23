@@ -8,4 +8,33 @@ use Illuminate\Database\Eloquent\Model;
 class Application extends Model
 {
     use HasFactory;
+
+    public function student()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function dorm()
+    {
+        return $this->belongsTo(Dormitory::class,'dorm_id');
+    }
+
+    public function occ_fa(){
+        return $this->belongsTo(Occupation::class,'occupation_fa');
+    }
+
+    public function occ_mo(){
+        return $this->belongsTo(Occupation::class,'occupation_mo');
+    }
+
+    public function occ_sp(){
+        return $this->belongsTo(Occupation::class,'occupation_sp');
+    }
+
+    public function marital(){
+        $status = $this->marital_status;
+        if($status == 1) return 'อยู่ด้วย';
+        if($status == 2) return 'แยกกันอยู่';
+        if($status == 3) return 'หย่าร้าง'; 
+    }
 }

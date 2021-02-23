@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\Application;
 use App\Models\Dormitory;
 use App\Models\DormitoryDetail;
 use App\Models\Faculty;
@@ -85,6 +86,7 @@ class RegisterController extends Controller
         $dorms = Dormitory::all();
         $rooms = Room::all();
         $dorm_detail = DormitoryDetail::all();
+        $app = new Application();
         return view('auth.register', [
             'title' => 'Register',
             'registerRoute' => 'register',
@@ -93,7 +95,8 @@ class RegisterController extends Controller
             'provinces' => $provinces,
             'faculties' => $faculties,
             'dorms' => $dorms,
-            'edit' => 0
+            'edit' => 0,
+            'app' => $app,
         ]);
     }
 }

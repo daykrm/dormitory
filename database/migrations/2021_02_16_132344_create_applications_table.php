@@ -16,11 +16,11 @@ class CreateApplicationsTable extends Migration
         Schema::create('applications', function (Blueprint $table) {
             $table->id();
             $table->foreignId('student_id')->constrained('users');
-            $table->string('scholarship_name');
-            $table->foreignId('dorm_id')->constrained('dormitories');
-            $table->string('year');
+            $table->string('scholarship_name')->nullable();
+            $table->foreignId('dorm_id')->nullable()->constrained('dormitories');
+            $table->string('year')->default(date('Y'));
             $table->integer('monthly_expense')->default(0);
-            $table->string('underlying_disease');
+            $table->string('underlying_disease')->nullable();
             $table->integer('relative_number')->default(1);
             $table->integer('being_number')->default(1);
             $table->integer('graduated')->default(0);
@@ -28,18 +28,22 @@ class CreateApplicationsTable extends Migration
             $table->string('name_fa');
             $table->integer('age_fa');
             $table->foreignId('occupation_fa')->constrained('occupations');
+            $table->string('other_fa')->nullable();
             $table->integer('status_fa')->default(1);
             $table->string('name_mo');
             $table->integer('age_mo');
             $table->foreignId('occupation_mo')->constrained('occupations');
+            $table->string('other_mo')->nullable();
             $table->integer('status_mo')->default(1);
             $table->integer('family_monthly_income')->default(0);
             $table->integer('marital_status')->default(1);
-            $table->string('name_sp');
-            $table->integer('age_sp');
-            $table->foreignId('occupation_sp')->constrained('occupations');
-            $table->integer('monthly_income_sp')->default(0);
-            $table->string('relevance');
+            $table->string('name_sp')->nullable();
+            $table->integer('age_sp')->nullable();
+            $table->foreignId('occupation_sp')->nullable()->constrained('occupations');
+            $table->string('other_sp')->nullable();
+            $table->integer('monthly_income_sp')->nullable();
+            $table->string('relevance')->nullable();
+            $table->integer('status')->default(0);
             $table->timestamps();
         });
     }

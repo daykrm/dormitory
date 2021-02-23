@@ -29,6 +29,7 @@ class CreateUsersTable extends Migration
             $table->foreignId('province_id')->nullable()->constrained('provinces');
             $table->foreignId('faculty_id')->nullable()->constrained('faculties');
             $table->foreignId('type_id')->default(1)->constrained('user_types');
+            $table->float('credit')->default(0);
             $table->rememberToken();
             $table->timestamps();
         });

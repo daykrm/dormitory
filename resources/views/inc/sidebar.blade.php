@@ -4,12 +4,17 @@
             @if (Auth::guard('web')->user()->type->id == 1)
                 <li class="nav-item">
                     <a class="nav-link active" href="{{ route('home') }}">
-                        Student Dashboard <span class="sr-only">(current)</span>
+                        หน้าแรก <span class="sr-only">(current)</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('checkApp', Auth::user()->id) }}">
+                        บันทึกใบสมัคร
                     </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#">
-                        Orders
+                        รายงาน
                     </a>
                 </li>
             @elseif (Auth::guard('web')->user()->type->id == 2)
@@ -29,7 +34,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('application.create') }}">
+                    <a class="nav-link" href="{{ route('checkApp', Auth::user()->id) }}">
                         บันทึกใบสมัคร
                     </a>
                 </li>

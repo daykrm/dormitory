@@ -26,6 +26,7 @@ class DatabaseSeeder extends Seeder
             StudentSeeder::class,
             PersonelSeeder::class,
             YearConfigSeeder::class,
+            OccupationSeeder::class,
         ]);
     }
 }

@@ -56,4 +56,8 @@ class User extends Authenticatable
     {
         return $this->belongsTo(DormitoryDetail::class,'dorm_detail_id');
     }
+
+    public function prefix(){
+        return $this->belongsTo(Prefix::class,'prefix_id');
+    }
 }
