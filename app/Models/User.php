@@ -18,6 +18,14 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name',
+        'nickname',
+        'prefix_id',
+        'dob',
+        'phone',
+        'enrolled_year',
+        'dorm_detail_id',
+        'province_id',
+        'faculty_id',
         'username',
         'email',
         'password',
@@ -64,6 +72,6 @@ class User extends Authenticatable
 
     public function activities()
     {
-        return $this->hasMany(Activity_credit::class,'student_id');
+        return $this->hasMany(Activity_credit::class, 'student_id');
     }
 }

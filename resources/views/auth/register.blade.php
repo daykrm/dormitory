@@ -11,7 +11,7 @@
                             @csrf
                             @include('auth.form')
                             <div class="row justify-content-center">
-                                <button type="submit" class="btn btn-primary" disabled>
+                                <button type="submit" class="btn btn-primary">
                                     {{ __('Register') }}
                                 </button>
                             </div>
