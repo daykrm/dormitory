@@ -24,6 +24,14 @@ Route::prefix('/personel')->name('personel.')->namespace('Personel')->group(func
     Route::post('/logout', 'LoginController@logout')->name('logout');
 });
 
+Route::prefix('/report')->name('report.')->namespace('Report')->group(function () {
+    Route::prefix('/activity')->name('activity.')->group(function () {
+        Route::get('/', 'ActivityController@index')->name('index');
+        Route::get('/show/{id}','ActivityController@show')->name('show');
+        Route::get('/{start}/{end}', 'ActivityController@search');
+    });
+});
+
 Route::resource('user', 'StudentController');
 
 Route::get('/indexScore', 'ScoreController@index')->name('indexScore');

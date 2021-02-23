@@ -54,10 +54,16 @@ class User extends Authenticatable
 
     public function dorm()
     {
-        return $this->belongsTo(DormitoryDetail::class,'dorm_detail_id');
+        return $this->belongsTo(DormitoryDetail::class, 'dorm_detail_id');
     }
 
-    public function prefix(){
-        return $this->belongsTo(Prefix::class,'prefix_id');
+    public function prefix()
+    {
+        return $this->belongsTo(Prefix::class, 'prefix_id');
+    }
+
+    public function activities()
+    {
+        return $this->hasMany(Activity_credit::class,'student_id');
     }
 }

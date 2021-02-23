@@ -1,7 +1,7 @@
 <input type="hidden" name="student_id" value="{{ Auth::user()->id }}">
 <input type="hidden" name="year" value="{{ $app->year ?? $year->year }}">
 <hr>
-<h5>ข้อมูลหอพัก</h5>
+<h5>หอพักที่ต้องการสมัคร</h5>
 <div class="row justify-content-center">
     <div class="form-group col-md-12">
         <select id="dorm" name="dorm_id" class="selectpicker form-control" title="เลือกหอพัก" data-live-search="true"
@@ -30,7 +30,7 @@
             value="{{ $app->underlying_disease ?? old('underlying_disease') }}" class="form-control">
     </div>
     <div class="form-group col-md-2">
-        <label>คะแนนกิจกรรมสะสม</label>
+        <label>หน่วยกิจกรรมสะสม</label>
         <input type="text" name="credit" value="{{ $app->student->credit ?? old('credit') }}" required
             class="form-control">
     </div>

@@ -3,83 +3,39 @@
 namespace App\Http\Controllers\Report;
 
 use App\Http\Controllers\Controller;
+use App\Models\Activity;
+use App\Models\YearConfig;
 use Illuminate\Http\Request;
 
 class ActivityController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    //
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function index()
     {
-        //
+        $year = YearConfig::find(1);
+        $activities = Activity::where('year', $year->year)->orderBy('name', 'DESC')->orderBy('activity_date', 'ASC')->get();
+        return view('report.activity.index', compact('activities', 'year'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function show($userId)
     {
-        //
+        $year = YearConfig::find(1);
+        $activities = Activity::where('year', $year->year)->orderBy('name', 'DESC')->orderBy('activity_date', 'ASC')->get();
+        $sumCredit = $activities->sum('credit'); //คะแนนรวมทั้งปี
+        //dd($sumCredit);
+        return view('report.activity.show', compact('year', 'activities'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function search($start, $end)
     {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+        $year = YearConfig::find(1);
+        $activities = Activity::whereBetween('year', [$start, $end])->orderBy('name')->orderBy('activity_date')->get();
+        return view('report.activity.index', compact('activities', 'year'));
     }
 }
