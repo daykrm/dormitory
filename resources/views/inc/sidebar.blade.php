@@ -13,10 +13,24 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">
+                    <a class="nav-link" data-toggle="collapse" href="#collapse1">
                         รายงาน
                     </a>
                 </li>
+                <div class="nav-item panel-group">
+                    <div class="panel panel-default">
+                        <div id="collapse1" class="panel-collapse collapse">
+                            <ul class="list-group">
+                                <li class="list-group-item"><a href="#">รายการกิจกรรมประจำปี</a></li>
+                                {{-- <li class="list-group-item"><a href="#">รายชื่อสมาชิกในหอพัก</a></li> --}}
+                                <li class="list-group-item"><a href="#">ผลการเข้าร่วมกิจกรรม</a></li>
+                                {{-- <li class="list-group-item"><a href="#">คะแนนการสัมภาษณ์</a></li> --}}
+                                <li class="list-group-item"><a href="#">ผลการคัดกรองนักศึกษาเข้าพักในหอพักส่วนกลาง</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
             @elseif (Auth::guard('web')->user()->type->id == 2)
                 <li class="nav-item">
                     <a class="nav-link active" href="{{ route('home') }}">
@@ -39,21 +53,53 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('activity.index') }}">
+                    <a class="nav-link" data-toggle="collapse" href="#collapse1">
                         รายงาน
                     </a>
                 </li>
+                <div class="nav-item panel-group">
+                    <div class="panel panel-default">
+                        <div id="collapse1" class="panel-collapse collapse">
+                            <ul class="list-group">
+                                <li class="list-group-item"><a href="#">รายการกิจกรรมประจำปี</a></li>
+                                <li class="list-group-item"><a href="#">รายชื่อสมาชิกในหอพัก</a></li>
+                                <li class="list-group-item"><a href="#">ผลการเข้าร่วมกิจกรรม</a></li>
+                                {{-- <li class="list-group-item"><a href="#">คะแนนการสัมภาษณ์</a></li> --}}
+                                <li class="list-group-item"><a href="#">ผลการคัดกรองนักศึกษาเข้าพักในหอพักส่วนกลาง</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
             @elseif (Auth::guard('personel'))
                 <li class="nav-item">
                     <a class="nav-link active" href="#">
-                        Personel Dashboard <span class="sr-only">(current)</span>
+                        หน้าแรก <span class="sr-only">(current)</span>
                     </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#">
-                        Orders
+                        การจัดการคะแนนการสัมภาษณ์
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="collapse" href="#collapse1">
+                        รายงาน
+                    </a>
+                </li>
+                <div class="nav-item panel-group">
+                    <div class="panel panel-default">
+                        <div id="collapse1" class="panel-collapse collapse">
+                            <ul class="list-group">
+                                {{-- <li class="list-group-item"><a href="#">รายการกิจกรรมประจำปี</a></li>
+                                <li class="list-group-item"><a href="#">รายชื่อสมาชิกในหอพัก</a></li>
+                                <li class="list-group-item"><a href="#">ผลการเข้าร่วมกิจกรรม</a></li> --}}
+                                <li class="list-group-item"><a href="#">คะแนนการสัมภาษณ์</a></li>
+                                <li class="list-group-item"><a href="#">ผลการคัดกรองนักศึกษาเข้าพักในหอพักส่วนกลาง</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
             @else
                 <li class="nav-item">
                     <a class="nav-link active" href="#">

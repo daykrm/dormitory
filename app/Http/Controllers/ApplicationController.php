@@ -78,6 +78,8 @@ class ApplicationController extends Controller
             'name.required' => 'กรุณาระบุชื่อ'
         ];
 
+        $sp = $request->get('sp');
+
         if ($sp == 0) {
             $rule['name_sp'] = 'required';
             $rule['age_sp'] = 'required';
@@ -93,7 +95,6 @@ class ApplicationController extends Controller
         }
         //$request->validate($rule, $message);
 
-        $sp = $request->get('sp');
         $student_id = $request->input('student_id');
         $year = $request->input('year');
 
