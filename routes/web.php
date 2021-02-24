@@ -47,6 +47,8 @@ Route::resource('interview','InterviewController');
 
 Route::resource('user', 'StudentController');
 
+Route::get('user/all/{id}','StudentController@getUserByDormId');
+
 Route::get('/indexScore/{id}', 'ScoreController@index')->name('indexScore');
 
 Route::get('/createScore/{id}', 'ScoreController@showForm')->name('createScore');
@@ -60,6 +62,8 @@ Route::post('/storeScore', 'ScoreController@store')->name('storeScore');
 Route::get('/getRoom/{id}', 'DormitoryDetailController@getRoom')->name('getRoom');
 
 Route::resource('application', 'ApplicationController');
+
+Route::get('application/detail/{id}','ApplicationController@showApp');
 
 Route::get('/checkApp/{id}', 'ApplicationController@checkApplicationThisYear')->name('checkApp');
 

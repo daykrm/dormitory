@@ -90,8 +90,13 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('interview.index')}}">
+                    <a class="nav-link" href="{{ route('interview.index') }}">
                         การจัดการคะแนนการสัมภาษณ์
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('user.index') }}">
+                        ข้อมูลนักศึกษา
                     </a>
                 </li>
                 <li class="nav-item">
@@ -106,7 +111,8 @@
                                 {{-- <li class="list-group-item"><a href="#">รายการกิจกรรมประจำปี</a></li>
                                 <li class="list-group-item"><a href="#">รายชื่อสมาชิกในหอพัก</a></li>
                                 <li class="list-group-item"><a href="#">ผลการเข้าร่วมกิจกรรม</a></li> --}}
-                                <li class="list-group-item"><a href="{{ route('interview.index')}}">คะแนนการสัมภาษณ์</a></li>
+                                <li class="list-group-item"><a
+                                        href="{{ route('interview.index') }}">คะแนนการสัมภาษณ์</a></li>
                                 <li class="list-group-item"><a
                                         href="{{ route('report.result.select') }}">ผลการคัดกรองนักศึกษาเข้าพักในหอพักส่วนกลาง</a>
                                 </li>

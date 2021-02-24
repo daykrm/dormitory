@@ -20,7 +20,7 @@ class ApplicationController extends Controller
 
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware('isLogin');
     }
     /**
      * Display a listing of the resource.
@@ -155,6 +155,12 @@ class ApplicationController extends Controller
         //     ['id' => $id]
         // );
         //return back()->with('status','บันทึกข้อมูลสำเร็จ');
+    }
+
+    public function showApp($id)
+    {
+        $app = Application::findOrFail($id);
+        return view('interview.detail', compact('app'));
     }
 
     /**

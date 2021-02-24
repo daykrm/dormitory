@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Activity;
+use App\Models\Dormitory;
 use App\Models\User;
 use App\Models\YearConfig;
 use Illuminate\Http\Request;
@@ -131,6 +132,24 @@ class InterviewController extends Controller
     public function show($id)
     {
         //
+        $year = YearConfig::find(1);
+        $dorm = Dormitory::find($id);
+        $applications = DB::table('applications as a')
+            ->select(
+                'u.username as username',
+                'u.name as name',
+                'f.name as faculty',
+                DB::raw('SUM(is.dorm_score) as dorm_score'),
+                DB::raw('SUM(is.family_score) as family_score'),
+                DB::raw('SUM(is.behavior_score) as behavior_score'),
+                DB::raw('SUM(is.kku_score) as kku_score'),
+                DB::raw('(dorm_score + family_score + behavior_score + kku_score) as sum_score')
+            )
+            ->join('users as u', 'a.student_id', '=', 'u.id')
+            ->join('faculties as f', 'u.faculty_id', '=', 'f.id')
+            ->leftJoin('interview_scores as is', 'is.application_id', '=', 'a.id')
+            ->groupBy('a.id')
+            ->get();
     }
 
     /**

@@ -39,7 +39,7 @@
             @csrf
             <input type="hidden" name="personel_id" value="{{ Auth::guard('personel')->user()->id }}">
             <input type="hidden" name="app_id" value="{{ session('appId') }}">
-            <div class="container-fluid"> 
+            <div class="container-fluid">
                 <div class="table-responsive">
                     <table class="table table-striped table-bordered">
                         <thead>
@@ -78,15 +78,19 @@
                                 </td>
                                 <td class="text-center">{{ session('user')->credit }}</td>
                                 <td>
-                                    <input type="number" min="0" max="20" step="any" name="kku_score" required class="form-control">
+                                    <input type="number" min="0" max="20" step="any" name="kku_score" required
+                                        class="form-control">
                                 </td>
                                 <td>
-                                    <input type="number" min="0" max="20" step="any" name="family_score" required class="form-control">
+                                    <input type="number" min="0" max="20" step="any" name="family_score" required
+                                        class="form-control">
                                 </td>
                                 <td>
-                                    <input type="number" min="0" max="20" step="any" name="behavior_score" required class="form-control">
+                                    <input type="number" min="0" max="20" step="any" name="behavior_score" required
+                                        class="form-control">
                                 </td>
-                                <td><a href="#">รายละเอียดใบสมัคร</a></td>
+                                <td><a href="{{ url('application/detail/' . session('appId')) }}">รายละเอียดใบสมัคร</a>
+                                </td>
                                 <td>
                                     <button type="submit" class="btn btn-outline-primary">บันทึก</button>
                                 </td>
