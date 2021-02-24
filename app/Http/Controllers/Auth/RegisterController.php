@@ -64,7 +64,7 @@ class RegisterController extends Controller
             'nickname' => ['required'],
             'dob' => ['required'],
             'username' => ['required', 'string', 'min:11', 'max:11', 'unique:users'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'password' => ['required', 'string', 'min:6', 'confirmed'],
             'enroll' => ['required'],
             'province' => ['required'],
             'faculty' => ['required'],
