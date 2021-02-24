@@ -33,12 +33,14 @@ class LoginController extends Controller
         //Redirect the admin...
         $this->validator($request);
 
+        //return back()->with('status','test test test');
+
         if (Auth::guard('personel')->attempt($request->only('username', 'password'), $request->filled('remember'))) {
 
             //return back()->with('status','test test test');
             //Authentication passed...
             return redirect()
-                ->intended(route('personel.home'))
+                ->intended('personel/dashboard')
                 ->with('status', 'You are Logged in as Personel!');
         }
 
@@ -82,6 +84,11 @@ class LoginController extends Controller
 
         //validate the request.
         $request->validate($rules, $messages);
+    }
+
+    public function username()
+    {
+        return 'username';
     }
 
     /**

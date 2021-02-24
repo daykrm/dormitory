@@ -10,6 +10,7 @@
                 @if (Auth::user()->type_id == 2)
                     <div class="form-inline mt-2">
                         <div class="form-group">
+                            <input type="hidden" id="dorm_id" value="{{ Auth::user()->dorm->dormitory->id }}">
                             <label class="mr-2">เริ่มต้น</label>
                             <input type="text" name="start" id="start" autocomplete="off" class="form-control">
                             <label class="ml-2 mr-2">สิ้นสุด</label>
@@ -70,8 +71,10 @@
             $('#search').click(function() {
                 var start = $('#start').val();
                 var end = $('#end').val();
+                var dormId = $('#dorm_id').val();
                 if (start != '' && end != '') {
-                    $('#search-form').attr('action', '/report/activity/' + start + '/' + end);
+                    $('#search-form').attr('action', '/report/activity/' + dormId + '/' + start + '/' +
+                    end);
                     $('#search-form').submit();
                 } else {
                     alert('กรุณาเลือกช่วงปี')

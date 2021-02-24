@@ -76,16 +76,18 @@ class ActivityController extends Controller
 
         $table  = new Activity();
 
+        $dorm_id = $request->input('dorm_id');
+
         $table->name = $request->get('name');
         $table->detail = $request->get('detail');
         $table->year = $request->get('year');
         $table->budget = $request->get('budget');
         $table->activity_date = $request->get('date');
         $table->credit = $request->get('score');
-        $table->council_id = $request->input('council_id');
+        $table->dorm_id = $dorm_id;
 
         if ($table->save()) {
-            return redirect()->action([ActivityController::class, 'index'])->with('status','บันทึกข้อมูลสำเร็จ');
+            return redirect()->action([ActivityController::class, 'show'], ['activity' => $dorm_id])->with('status', 'บันทึกข้อมูลสำเร็จ');
         } else {
             return back()->with('error', 'บันทึกข้อมูลล้มเหลว');
         }
@@ -100,6 +102,12 @@ class ActivityController extends Controller
     public function show($id)
     {
         //
+        $year = YearConfig::find(1);
+        $activities = Activity::where('year', $year->year)->where('dorm_id', $id)->orderBy('activity_date')->get();
+
+        //dd(date('Y-m-d'));
+        //$sql = Activity::where('activity_date', '>=', date('yyyy-mm-dd'))->orderBy('activity_date')->toSql();
+        return view('activity.index', compact('activities'));
     }
 
     /**
@@ -148,16 +156,18 @@ class ActivityController extends Controller
 
         $table  = Activity::find($id);
 
+        $dorm_id = $request->input('dorm_id');
+
         $table->name = $request->get('name');
         $table->detail = $request->get('detail');
         $table->year = $request->get('year');
         $table->budget = $request->get('budget');
         $table->activity_date = $request->get('date');
         $table->credit = $request->get('score');
-        $table->council_id = $request->input('council_id');
+        $table->council_id = $dorm_id;
 
         if ($table->save()) {
-            return redirect()->action([ActivityController::class, 'index'])->with('status','บันทึกข้อมูลสำเร็จ');
+            return redirect()->action([ActivityController::class, 'show'], ['activity' => $dorm_id])->with('status', 'บันทึกข้อมูลสำเร็จ');
         } else {
             return back()->with('error', 'บันทึกข้อมูลล้มเหลว');
         }

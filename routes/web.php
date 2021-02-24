@@ -26,9 +26,9 @@ Route::prefix('/personel')->name('personel.')->namespace('Personel')->group(func
 
 Route::prefix('/report')->name('report.')->namespace('Report')->group(function () {
     Route::prefix('/activity')->name('activity.')->group(function () {
-        Route::get('/', 'ActivityController@index')->name('index');
-        Route::get('/show/{id}', 'ActivityController@show')->name('show');
-        Route::get('/{start}/{end}', 'ActivityController@search');
+        Route::get('/{id}', 'ActivityController@index')->name('index');
+        Route::get('/show/{id}/{dormId}', 'ActivityController@show')->name('show');
+        Route::get('/{dormId}/{start}/{end}', 'ActivityController@search');
     });
 
     Route::prefix('/result')->name('result.')->group(function () {
@@ -42,7 +42,7 @@ Route::prefix('/report')->name('report.')->namespace('Report')->group(function (
 
 Route::resource('user', 'StudentController');
 
-Route::get('/indexScore', 'ScoreController@index')->name('indexScore');
+Route::get('/indexScore/{id}', 'ScoreController@index')->name('indexScore');
 
 Route::get('/createScore/{id}', 'ScoreController@showForm')->name('createScore');
 

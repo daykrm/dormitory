@@ -19,25 +19,25 @@ class ActivityController extends Controller
         $this->middleware('auth');
     }
 
-    public function index()
+    public function index($id)
     {
         $year = YearConfig::find(1);
-        $activities = Activity::where('year', $year->year)->orderBy('name', 'DESC')->orderBy('activity_date', 'ASC')->get();
+        $activities = Activity::where('year', $year->year)->where('dorm_id', $id)->orderBy('name', 'DESC')->orderBy('activity_date', 'ASC')->get();
         return view('report.activity.index', compact('activities', 'year'));
     }
 
-    public function show($userId)
+    public function show($userId, $dormId)
     {
         $year = YearConfig::find(1);
         //$activities = Activity::where('year', $year->year)->orderBy('name', 'DESC')->orderBy('activity_date', 'ASC')->get();
-        $sumCredit = Activity::where('year', $year->year)->orderBy('name', 'DESC')->orderBy('activity_date', 'ASC')->sum('credit');
+        $sumCredit = Activity::where('year', $year->year)->where('dorm_id', $dormId)->orderBy('name', 'DESC')->orderBy('activity_date', 'ASC')->sum('credit');
         // $activities->sum('credit'); //คะแนนรวมทั้งปี
         $sumUserCredit = DB::table('activity_credits')
             ->join('activities', 'activity_credits.activity_id', '=', 'activities.id')
             ->where('activity_credits.student_id', $userId)
             ->sum('activities.credit');
         $activity_credit = DB::table('activity_credits as ac')
-            ->select('a.name as name', 'a.activity_date as date', 'a.credit as credit','ac.created_at as date_create')
+            ->select('a.name as name', 'a.activity_date as date', 'a.credit as credit', 'ac.created_at as date_create')
             ->join('activities as a', 'ac.activity_id', '=', 'a.id')
             ->where([
                 ['ac.student_id', $userId],
@@ -49,10 +49,10 @@ class ActivityController extends Controller
         return view('report.activity.show', compact('year', 'sumCredit', 'activity_credit', 'percent', 'sumUserCredit'));
     }
 
-    public function search($start, $end)
+    public function search($dormId, $start, $end)
     {
         $year = YearConfig::find(1);
-        $activities = Activity::whereBetween('year', [$start, $end])->orderBy('name')->orderBy('activity_date')->get();
+        $activities = Activity::whereBetween('year', [$start, $end])->where('dorm_id', $dormId)->orderBy('name')->orderBy('activity_date')->get();
         return view('report.activity.index', compact('activities', 'year'));
     }
 }

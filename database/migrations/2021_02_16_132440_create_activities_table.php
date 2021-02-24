@@ -15,7 +15,7 @@ class CreateActivitiesTable extends Migration
     {
         Schema::create('activities', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('council_id')->constrained('users');
+            $table->foreignId('dorm_id')->constrained('dormitories');
             $table->string('name');
             $table->text('detail');
             $table->float('budget');

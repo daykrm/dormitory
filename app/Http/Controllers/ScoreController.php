@@ -18,11 +18,11 @@ class ScoreController extends Controller
         $this->middleware('auth');
     }
 
-    public function index()
+    public function index($id)
     {
         $year = YearConfig::find(1);
-        $activities = Activity::where('year', $year->year)->orderBy('name')->get();
-        return view('score.index',compact('activities'));
+        $activities = Activity::where('year', $year->year)->where('dorm_id', $id)->orderBy('name')->get();
+        return view('score.index', compact('activities'));
     }
 
     public function store(Request $request)

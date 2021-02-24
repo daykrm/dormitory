@@ -1,4 +1,4 @@
-<input type="hidden" name="council_id" value="{{ Auth::user()->id }}">
+<input type="hidden" name="dorm_id" value="{{ Auth::user()->dorm->dormitory->id }}">
 <div class="row justify-content-center">
     <div class="form-group col-md-12">
         <label>ชื่อกิจกรรม</label>

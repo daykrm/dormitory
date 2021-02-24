@@ -1,7 +1,7 @@
 <nav class="col-md-2 d-none d-md-block bg-light sidebar">
     <div class="sidebar-sticky">
         <ul class="nav flex-column">
-            @if (Auth::guard('web')->user()->type->id == 1)
+            @if (Auth::guard('web')->check() && Auth::guard('web')->user()->type->id == 1)
                 <li class="nav-item">
                     <a class="nav-link active" href="{{ route('home') }}">
                         หน้าแรก <span class="sr-only">(current)</span>
@@ -22,10 +22,11 @@
                         <div id="collapse1" class="panel-collapse collapse">
                             <ul class="list-group">
                                 <li class="list-group-item"><a
-                                        href="{{ route('report.activity.index') }}">รายการกิจกรรมประจำปี</a></li>
+                                        href="{{ route('report.activity.index', Auth::user()->dorm->dormitory->id) }}">รายการกิจกรรมประจำปี</a>
+                                </li>
                                 {{-- <li class="list-group-item"><a href="#">รายชื่อสมาชิกในหอพัก</a></li> --}}
                                 <li class="list-group-item"><a
-                                        href="{{ route('report.activity.show', Auth::user()->id) }}">ผลการเข้าร่วมกิจกรรม</a>
+                                        href="{{ route('report.activity.show', ['id' => Auth::user()->id, 'dormId' => Auth::user()->dorm->dormitory->id]) }}">ผลการเข้าร่วมกิจกรรม</a>
                                 </li>
                                 {{-- <li class="list-group-item"><a href="#">คะแนนการสัมภาษณ์</a></li> --}}
                                 <li class="list-group-item"><a
@@ -35,19 +36,19 @@
                         </div>
                     </div>
                 </div>
-            @elseif (Auth::guard('web')->user()->type->id == 2)
+            @elseif (Auth::guard('web')->check() && Auth::guard('web')->user()->type->id == 2)
                 <li class="nav-item">
                     <a class="nav-link active" href="{{ route('home') }}">
                         หน้าแรก <span class="sr-only">(current)</span>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('activity.index') }}">
+                    <a class="nav-link" href="{{ route('activity.show', Auth::user()->dorm->dormitory->id) }}">
                         การจัดการรายการกิจกรรมประจำปี
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('indexScore') }}">
+                    <a class="nav-link" href="{{ route('indexScore', Auth::user()->dorm->dormitory->id) }}">
                         การจัดการคะแนนการเข้าร่วมกิจกรรม
                     </a>
                 </li>
@@ -66,12 +67,13 @@
                         <div id="collapse1" class="panel-collapse collapse">
                             <ul class="list-group">
                                 <li class="list-group-item"><a
-                                        href="{{ route('report.activity.index') }}">รายการกิจกรรมประจำปี</a></li>
+                                        href="{{ route('report.activity.index', Auth::user()->dorm->dormitory->id) }}">รายการกิจกรรมประจำปี</a>
+                                </li>
                                 <li class="list-group-item"><a
                                         href="{{ route('report.dorm.index', Auth::user()->dorm->dormitory->id) }}">รายชื่อสมาชิกในหอพัก</a>
                                 </li>
                                 <li class="list-group-item"><a
-                                        href="{{ route('report.activity.show', Auth::user()->id) }}">ผลการเข้าร่วมกิจกรรม</a>
+                                        href="{{ route('report.activity.show', ['id' => Auth::user()->id, 'dormId' => Auth::user()->dorm->dormitory->id]) }}">ผลการเข้าร่วมกิจกรรม</a>
                                 </li>
                                 {{-- <li class="list-group-item"><a href="#">คะแนนการสัมภาษณ์</a></li> --}}
                                 <li class="list-group-item"><a
@@ -83,7 +85,7 @@
                 </div>
             @elseif (Auth::guard('personel'))
                 <li class="nav-item">
-                    <a class="nav-link active" href="#">
+                    <a class="nav-link active" href="{{ route('personel.home') }}">
                         หน้าแรก <span class="sr-only">(current)</span>
                     </a>
                 </li>

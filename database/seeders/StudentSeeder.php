@@ -34,6 +34,21 @@ class StudentSeeder extends Seeder
         ]);
 
         DB::table('users')->insert([
+            'name' => 'ทดสอบ ทดสอบ',
+            'prefix_id' => 1,
+            'nickname' => 'ทดสอบ',
+            'dob' => date('Y/m/d', $date),
+            'email' => 'k.anuchit2@kkumail.com',
+            'username' => 'testtest2',
+            'password' => Hash::make('123456'),
+            'enrolled_year' => '2015',
+            'dorm_detail_id' => 4,
+            'province_id' => 1,
+            'faculty_id' => 1,
+            'type_id' => 1,
+        ]);
+
+        DB::table('users')->insert([
             'name' => 'กรรมการ กรรมการ',
             'prefix_id' => 1,
             'nickname' => 'กรรมการ',
@@ -43,6 +58,21 @@ class StudentSeeder extends Seeder
             'password' => Hash::make('123456'),
             'enrolled_year' => '2014',
             'dorm_detail_id' => 1,
+            'province_id' => 1,
+            'faculty_id' => 1,
+            'type_id' => 2,
+        ]);
+
+        DB::table('users')->insert([
+            'name' => 'กรรมการ2 กรรมการ2',
+            'prefix_id' => 1,
+            'nickname' => 'กรรมการ',
+            'dob' => date('Y/m/d', $date),
+            'email' => 'council2@kkumail.com',
+            'username' => 'council2',
+            'password' => Hash::make('123456'),
+            'enrolled_year' => '2014',
+            'dorm_detail_id' => 4,
             'province_id' => 1,
             'faculty_id' => 1,
             'type_id' => 2,
