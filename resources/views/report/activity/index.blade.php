@@ -5,7 +5,7 @@
         <div class="card-header">
             รายการกิจกรรมประจำปี {{ $year->year + 543 }}
         </div>
-        <div class="card-title">
+        <div class="card-body">
             <div class="container">
                 @if (Auth::user()->type_id == 2)
                     <div class="form-inline mt-2">

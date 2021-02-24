@@ -28,7 +28,8 @@
                                         href="{{ route('report.activity.show', Auth::user()->id) }}">ผลการเข้าร่วมกิจกรรม</a>
                                 </li>
                                 {{-- <li class="list-group-item"><a href="#">คะแนนการสัมภาษณ์</a></li> --}}
-                                <li class="list-group-item"><a href="#">ผลการคัดกรองนักศึกษาเข้าพักในหอพักส่วนกลาง</a>
+                                <li class="list-group-item"><a
+                                        href="{{ route('report.result.index', Auth::user()->dorm_detail_id) }}">ผลการคัดกรองนักศึกษาเข้าพักในหอพักส่วนกลาง</a>
                                 </li>
                             </ul>
                         </div>
@@ -64,11 +65,17 @@
                     <div class="panel panel-default">
                         <div id="collapse1" class="panel-collapse collapse">
                             <ul class="list-group">
-                                <li class="list-group-item"><a href="#">รายการกิจกรรมประจำปี</a></li>
-                                <li class="list-group-item"><a href="#">รายชื่อสมาชิกในหอพัก</a></li>
-                                <li class="list-group-item"><a href="#">ผลการเข้าร่วมกิจกรรม</a></li>
+                                <li class="list-group-item"><a
+                                        href="{{ route('report.activity.index') }}">รายการกิจกรรมประจำปี</a></li>
+                                <li class="list-group-item"><a
+                                        href="{{ route('report.dorm.index', Auth::user()->dorm->dormitory->id) }}">รายชื่อสมาชิกในหอพัก</a>
+                                </li>
+                                <li class="list-group-item"><a
+                                        href="{{ route('report.activity.show', Auth::user()->id) }}">ผลการเข้าร่วมกิจกรรม</a>
+                                </li>
                                 {{-- <li class="list-group-item"><a href="#">คะแนนการสัมภาษณ์</a></li> --}}
-                                <li class="list-group-item"><a href="#">ผลการคัดกรองนักศึกษาเข้าพักในหอพักส่วนกลาง</a>
+                                <li class="list-group-item"><a
+                                        href="{{ route('report.result.index', Auth::user()->dorm_detail_id) }}">ผลการคัดกรองนักศึกษาเข้าพักในหอพักส่วนกลาง</a>
                                 </li>
                             </ul>
                         </div>

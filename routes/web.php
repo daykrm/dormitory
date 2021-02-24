@@ -27,8 +27,16 @@ Route::prefix('/personel')->name('personel.')->namespace('Personel')->group(func
 Route::prefix('/report')->name('report.')->namespace('Report')->group(function () {
     Route::prefix('/activity')->name('activity.')->group(function () {
         Route::get('/', 'ActivityController@index')->name('index');
-        Route::get('/show/{id}','ActivityController@show')->name('show');
+        Route::get('/show/{id}', 'ActivityController@show')->name('show');
         Route::get('/{start}/{end}', 'ActivityController@search');
+    });
+
+    Route::prefix('/result')->name('result.')->group(function () {
+        Route::get('/{id}', 'ResultController@index')->name('index');
+    });
+
+    Route::prefix('/dorm')->name('dorm.')->group(function () {
+        Route::get('/{id}', 'DormController@index')->name('index');
     });
 });
 

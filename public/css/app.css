@@ -11032,6 +11032,14 @@ a.text-dark:focus {
   background-color: brown !important;
 }
 
+.text-primary {
+  color: brown !important;
+}
+
+.bg-secondary {
+  background-color: #d44f4f !important;
+}
+
 th {
   background-color: brown;
   color: white;
