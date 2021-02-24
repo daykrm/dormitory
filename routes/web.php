@@ -32,6 +32,9 @@ Route::prefix('/report')->name('report.')->namespace('Report')->group(function (
     });
 
     Route::prefix('/result')->name('result.')->group(function () {
+        Route::post('/store', 'ResultController@store')->name('store');
+        Route::get('/select', 'ResultController@select')->name('select');
+        Route::post('/find', 'ResultController@show')->name('find');
         Route::get('/{id}', 'ResultController@index')->name('index');
     });
 
@@ -40,6 +43,8 @@ Route::prefix('/report')->name('report.')->namespace('Report')->group(function (
     });
 });
 
+Route::resource('interview','InterviewController');
+
 Route::resource('user', 'StudentController');
 
 Route::get('/indexScore/{id}', 'ScoreController@index')->name('indexScore');
@@ -47,6 +52,8 @@ Route::get('/indexScore/{id}', 'ScoreController@index')->name('indexScore');
 Route::get('/createScore/{id}', 'ScoreController@showForm')->name('createScore');
 
 Route::get('/findStudent', 'ScoreController@findStudent')->name('findStudent');
+
+Route::get('/findApplication','InterviewController@findStudent')->name('findApplication');
 
 Route::post('/storeScore', 'ScoreController@store')->name('storeScore');
 

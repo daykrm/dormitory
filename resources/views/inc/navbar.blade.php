@@ -51,11 +51,22 @@
                         </div>
                     </li>
                 @else
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('login') }}">Login</a>
+                    <li class="nav-item dropdown">
+                        <a id="loginDropdown" class="nav-link dropdown-toggle" href="#" role="button"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                            เข้าสู่ระบบ
+                            <span class="caret"></span>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="loginDropdown">
+                            <a class="dropdown-item" href="{{ route('login') }}">นักศึกษา</a>
+                            <a class="dropdown-item" href="{{ route('personel.login') }}">บุคลากร</a>
+                        </div>
                     </li>
+                    {{-- <li class="nav-item">
+                        <a class="nav-link" href="{{ route('login') }}">Login</a>
+                    </li> --}}
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('register') }}">Register</a>
+                        <a class="nav-link" href="{{ route('register') }}">สมัครสมาชิก</a>
                     </li>
                 @endif
             </ul>

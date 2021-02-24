@@ -1,4 +1,6 @@
-@extends($loginRoute == 'personel.login' ? 'layouts.person' : 'layouts.app')
+{{-- @extends($loginRoute == 'personel.login' ? 'layouts.person' : 'layouts.app') --}}
+
+@extends('layouts.app')
 
 @section('content')
     <div class="container">

@@ -31,7 +31,7 @@
         $(document).ready(function() {
             $('#ac').change(function() {
                 //alert(this.value)
-                $('#form-search').attr('action', 'createScore/' + this.value);
+                $('#form-search').attr('action', '/createScore/' + this.value);
                 //$('#form-search').submit();
             })
         })
