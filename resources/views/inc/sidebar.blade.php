@@ -30,7 +30,7 @@
                                 </li>
                                 {{-- <li class="list-group-item"><a href="#">คะแนนการสัมภาษณ์</a></li> --}}
                                 <li class="list-group-item"><a
-                                        href="{{ route('report.result.index', Auth::user()->dorm_detail_id) }}">ผลการคัดกรองนักศึกษาเข้าพักในหอพักส่วนกลาง</a>
+                                        href="{{ route('report.result.index', Auth::user()->dorm->dormitory->id) }}">ผลการคัดกรองนักศึกษาเข้าพักในหอพักส่วนกลาง</a>
                                 </li>
                             </ul>
                         </div>
@@ -77,7 +77,7 @@
                                 </li>
                                 {{-- <li class="list-group-item"><a href="#">คะแนนการสัมภาษณ์</a></li> --}}
                                 <li class="list-group-item"><a
-                                        href="{{ route('report.result.index', Auth::user()->dorm_detail_id) }}">ผลการคัดกรองนักศึกษาเข้าพักในหอพักส่วนกลาง</a>
+                                        href="{{ route('report.result.index', Auth::user()->dorm->dormitory->id) }}">ผลการคัดกรองนักศึกษาเข้าพักในหอพักส่วนกลาง</a>
                                 </li>
                             </ul>
                         </div>
