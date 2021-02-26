@@ -106,7 +106,8 @@ class InterviewController extends Controller
 
         $application = DB::table('applications')->where([
             ['student_id', $user->id],
-            ['year', $year->year]
+            ['year', $year->year],
+            ['status', 0]
         ])->first();
 
         if ($application == null) {

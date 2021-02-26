@@ -65,35 +65,59 @@
             </div>
         </div>
 
-        {{-- Success Alert --}}
-        @if (session('status'))
-            <div class="alert alert-success alert-dismissible fade show" role="alert">
-                {{ session('status') }}
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+        @if (Session::has('status'))
+            <script type="text/javascript">
+                $(document).ready(function() {
+                    $('#showStatusModal').modal();
+                    setTimeout(function() {
+                        $('#showStatusModal').modal('hide');
+                    }, 1500);
+                });
+
+            </script>
+            <div id="showStatusModal" class="modal fade" tabindex="-1" role="dialog"
+                aria-labelledby="showStatusModalLabel" style="display: block; padding-right: 16px;">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <div class="row justify-content-center">
+                                <h5>{{ Session::get('status') }}</h5>
+                            </div>
+                            <div class="row justify-content-center">
+                                <button type="button" data-dismiss="modal" class="btn btn-primary">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         @endif
 
-        {{-- Error Alert --}}
-        @if (session('error'))
-            <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                {{ session('error') }}
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+        @if (Session::has('error'))
+            <script type="text/javascript">
+                $(document).ready(function() {
+                    $('#showError').modal();
+                    setTimeout(function() {
+                        $('#showError').modal('hide');
+                    }, 1500);
+                });
+
+            </script>
+            <div id="showError" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="showErrorLabel"
+                style="display: block; padding-right: 16px;">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <div class="row justify-content-center">
+                                <h5>{{ Session::get('error') }}</h5>
+                            </div>
+                            <div class="row justify-content-center">
+                                <button type="button" data-dismiss="modal" class="btn btn-primary">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         @endif
-
-        <script>
-            //close the alert after 3 seconds.
-            $(document).ready(function() {
-                setTimeout(function() {
-                    $(".alert").alert('close');
-                }, 1500);
-            });
-
-        </script>
     </div>
 </body>
 

@@ -44,11 +44,16 @@ class ResultController extends Controller
         $dorm = $model->name;
         $pdf = $request->file('file');
         $path = $pdf->storeAs('file/' . $year->year, $dorm . '.pdf');
-        DB::table('report_result')->insert([
-            'year' => $year->year,
-            'dormitory_id' => $id,
-            'path' => $path
-        ]);
+        $old = DB::table('report_result')->where([['year', $year->year], ['dormitory_id', $id]])->first();
+        if ($old != null) {
+            DB::table('report_result')->where('id', $old->id)->update(['path' => $path]);
+        } else {
+            DB::table('report_result')->insert([
+                'year' => $year->year,
+                'dormitory_id' => $id,
+                'path' => $path
+            ]);
+        }
         $file = DB::table('report_result')->where('year', $year->year)->where('dormitory_id', $id)->first();
         return view('report.result.index', compact('year', 'file', 'dorm', 'id'));
         //return redirect()->action([ResultController::class, 'index'], ['id' => $request->input('dorm')]);
