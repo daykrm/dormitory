@@ -65,6 +65,8 @@ Route::get('/findStudent', 'ScoreController@findStudent')->name('findStudent');
 
 Route::get('/findApplication', 'InterviewController@findStudent')->name('findApplication');
 
+Route::post('/calculateResult','InterviewController@calculateResult')->name('calculate');
+
 Route::post('/storeScore', 'ScoreController@store')->name('storeScore');
 
 Route::get('/getRoom/{id}', 'DormitoryDetailController@getRoom')->name('getRoom');

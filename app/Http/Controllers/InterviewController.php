@@ -44,7 +44,7 @@ class InterviewController extends Controller
             ->where([
                 ['a.year', $year->year],
                 ['a.status', 0],
-            ])->groupBy('student_id', 'a.id')->simplePaginate(5);
+            ])->groupBy('student_id', 'a.id')->orderBy('sum_score','desc')->simplePaginate(5);
 
         foreach ($apps as $app) {
             $user = User::find($app->student_id);
@@ -64,6 +64,7 @@ class InterviewController extends Controller
                 'kku_score' => $app->kku_score,
                 'behavior_score' => $app->behavior_score,
                 'family_score' => $app->family_score,
+                'sum_score' => $app->sum_score,
                 'count' => $app->count,
                 'id' => $app->id
             );
@@ -92,6 +93,12 @@ class InterviewController extends Controller
 
         //dd($returnArr);
         return view('interview.index', ['data' => $returnArr, 'apps' => $apps]);
+    }
+
+    public function calculateResult(Request $request){
+        dd($request->get('sum'));
+        //loop appId to change application status to 1 (calculated)
+        return back()->with('status','ประมวลผลสำเร็จจ้า');
     }
 
     public function findStudent(Request $request)

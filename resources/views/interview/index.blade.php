@@ -110,7 +110,7 @@
             </div>
         </form>
     @endif
-    <form action="#" method="post">
+    <form action="{{ route('calculate') }}" method="post">
         @csrf
         <div class="container-fluid mt-4">
             <h5>รายการรอประมวลผล</h5>
@@ -125,6 +125,7 @@
                             <th colspan="4">การมีส่วนร่วมในกิจกรรม</th>
                             <th rowspan="3" class="align-middle">ความจำเป็นตามฐานะทางเศรษฐกิจ (20)</th>
                             <th rowspan="3" class="align-middle">ความประพฤติ (20)</th>
+                            <th rowspan="3" class="align-middle">รวม (100)</th>
                             <th rowspan="3" class="align-middle">รายละเอียดใบสมัคร</th>
                             <th rowspan="3" class="align-middle">จำนวนผู้ให้คะแนน</th>
                         </tr>
@@ -142,6 +143,7 @@
                     <tbody>
                         @foreach ($data as $item)
                             <input type="hidden" name="app[]" value="{{ $item['id'] }}">
+                            <input type="hidden" name="sum[]" value="{{ $item['sum_score'] }}">
                             <tr>
                                 <td>{{ $item['username'] }}</td>
                                 <td>{{ $item['name'] }}</td>
@@ -152,10 +154,11 @@
                                 <td class="text-center">{{ $item['kku_score'] }}</td>
                                 <td class="text-center">{{ $item['family_score'] }}</td>
                                 <td class="text-center">{{ $item['behavior_score'] }}</td>
+                                <td class="text-center">{{ $item['sum_score'] }}</td>
                                 <td class="text-center"><a
                                         href="{{ url('application/detail/' . $item['id']) }}">ใบสมัคร</a></td>
                             <td class="@if ($item['count']>= 2) text-success @else
-                                    text-danger @endif">
+                                    text-danger @endif text-center">
                                     {{ $item['count'] }} คน</td>
                             </tr>
                         @endforeach
