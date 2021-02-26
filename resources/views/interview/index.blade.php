@@ -152,6 +152,7 @@
                         @endforeach
                     </tbody>
                 </table>
+                {{ $apps->links() }}
             </div>
             <div class="row justify-content-center mt-2">
                 <button type="submit" class="btn btn-outline-primary">ประมวลผล</button>

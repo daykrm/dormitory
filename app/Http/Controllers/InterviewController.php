@@ -43,7 +43,7 @@ class InterviewController extends Controller
             ->where([
                 ['a.year', $year->year],
                 ['a.status', 0],
-            ])->groupBy('student_id', 'a.id')->get();
+            ])->groupBy('student_id', 'a.id')->simplePaginate(5);
 
         foreach ($apps as $app) {
             $user = User::find($app->student_id);
@@ -90,7 +90,7 @@ class InterviewController extends Controller
         //     ->get();
 
         //dd($returnArr);
-        return view('interview.index', ['data' => $returnArr]);
+        return view('interview.index', ['data' => $returnArr,'apps' => $apps]);
     }
 
     public function findStudent(Request $request)
