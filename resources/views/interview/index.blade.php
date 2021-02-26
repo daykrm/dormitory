@@ -17,6 +17,7 @@
                                 <div class="form-group col-md-10">
                                     <input type="text" name="username" value="{{ old('username') }}" required
                                         class="form-control">
+                                        <input type="hidden" name="personel_id" value="{{ Auth::guard('personel')->user()->id }}">
                                     @if (session('error'))
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ session('error') }}</strong>
@@ -79,15 +80,15 @@
                                 </td>
                                 <td class="text-center">{{ session('user')->credit }}</td>
                                 <td>
-                                    <input type="number" min="0" max="20" step="any" name="kku_score" required
+                                    <input type="number" min="0" max="20" value="{{ session('score')->kku_score ?? 0 }}" step="any" name="kku_score" required
                                         class="form-control">
                                 </td>
                                 <td>
-                                    <input type="number" min="0" max="20" step="any" name="family_score" required
+                                    <input type="number" min="0" max="20" value="{{ session('score')->family_score ?? 0 }}" step="any" name="family_score" required
                                         class="form-control">
                                 </td>
                                 <td>
-                                    <input type="number" min="0" max="20" step="any" name="behavior_score" required
+                                    <input type="number" min="0" max="20" value="{{ session('score')->behavior_score ?? 0 }}" step="any" name="behavior_score" required
                                         class="form-control">
                                 </td>
                                 <td><a href="{{ url('application/detail/' . session('appId')) }}">รายละเอียดใบสมัคร</a>

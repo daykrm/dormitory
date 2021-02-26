@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Activity;
 use App\Models\Dormitory;
 use App\Models\Faculty;
+use App\Models\Interview_score;
 use App\Models\User;
 use App\Models\YearConfig;
 use Illuminate\Http\Request;
@@ -90,13 +91,14 @@ class InterviewController extends Controller
         //     ->get();
 
         //dd($returnArr);
-        return view('interview.index', ['data' => $returnArr,'apps' => $apps]);
+        return view('interview.index', ['data' => $returnArr, 'apps' => $apps]);
     }
 
     public function findStudent(Request $request)
     {
         $year = YearConfig::find(1);
         $user = User::where('username', $request->get('username'))->first();
+        $personel_id = $request->input('personel_id');
 
         if ($user == null) {
             return back()->with('error', 'ไม่พับนักศึกษา');
@@ -113,6 +115,13 @@ class InterviewController extends Controller
 
         $appId = $application->id;
 
+        $interviewScore = Interview_score::where([
+            'application_id' => $appId,
+            'personel_id' => $personel_id
+        ])->first();
+
+        //dd($interviewScore);
+
         $sumCredit = Activity::where('year', $year->year)->where('dorm_id', $user->dorm->dormitory->id)->orderBy('name', 'DESC')->orderBy('activity_date', 'ASC')->sum('credit');
         // $activities->sum('credit'); //คะแนนรวมทั้งปี
         $sumUserCredit = DB::table('activity_credits')
@@ -126,7 +135,8 @@ class InterviewController extends Controller
         return back()->with('user', $user)
             ->with('percent', $percent)
             ->with('appId', $appId)
-            ->with('dorm_score', $dorm_score);
+            ->with('dorm_score', $dorm_score)
+            ->with('score', $interviewScore);
     }
 
     /**
