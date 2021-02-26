@@ -24,6 +24,46 @@
             </div>
         </div>
     </div>
+    @if (session('users'))
+        @php
+            $users = session('users');
+        @endphp
+        <div class="container-fluid mt-4">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>รหัสนักศึกษา</th>
+                        <th>ชื่อ - สกุล</th>
+                        <th>ห้องพัก</th>
+                        <th>สถานะ</th>
+                        <th>จัดการ</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($users as $key => $item)
+                        <tr>
+                            <td>{{ $key + 1 }}</td>
+                            <td>{{ $item->username }}</td>
+                            <td>{{ $item->prefix->name }}{{ $item->name }}</td>
+                            <td>{{ $item->dorm->room->name }}</td>
+                            <td>{{ $item->type->name }}</td>
+                            <td>
+                                <div class="row justify-content center">
+                                    <a href="#" class="btn btn-primary">แก้ไข</a>
+                                    <form action="{{route('changeStatus', $item->id)}}" class="ml-2" method="post">
+                                    @csrf
+                                    @method('PUT')
+                                    <button type="submit" class="btn btn-outline-primary">สลับสถานะ</button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
+    @endif
 @endsection
 
 @push('scripts')

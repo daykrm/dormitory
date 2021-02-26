@@ -3,17 +3,17 @@
         <ul class="nav flex-column">
             @if (Auth::guard('web')->check() && Auth::guard('web')->user()->type->id == 1)
                 <li class="nav-item">
-                    <a class="nav-link active" href="{{ route('home') }}">
+                    <a class="nav-link btn btn-primary mt-2" href="{{ route('home') }}">
                         หน้าแรก <span class="sr-only">(current)</span>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('checkApp', Auth::user()->id) }}">
+                    <a class="nav-link btn btn-primary mt-2" href="{{ route('checkApp', Auth::user()->id) }}">
                         บันทึกใบสมัคร
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" data-toggle="collapse" href="#collapse1">
+                    <a class="nav-link btn btn-primary mt-2" data-toggle="collapse" href="#collapse1">
                         รายงาน
                     </a>
                 </li>
@@ -38,27 +38,29 @@
                 </div>
             @elseif (Auth::guard('web')->check() && Auth::guard('web')->user()->type->id == 2)
                 <li class="nav-item">
-                    <a class="nav-link active" href="{{ route('home') }}">
+                    <a class="nav-link btn btn-primary mt-2" href="{{ route('home') }}">
                         หน้าแรก <span class="sr-only">(current)</span>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('activity.show', Auth::user()->dorm->dormitory->id) }}">
+                    <a class="nav-link btn btn-primary mt-2"
+                        href="{{ route('activity.show', Auth::user()->dorm->dormitory->id) }}">
                         การจัดการรายการกิจกรรมประจำปี
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('indexScore', Auth::user()->dorm->dormitory->id) }}">
+                    <a class="nav-link btn btn-primary mt-2"
+                        href="{{ route('indexScore', Auth::user()->dorm->dormitory->id) }}">
                         การจัดการคะแนนการเข้าร่วมกิจกรรม
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('checkApp', Auth::user()->id) }}">
+                    <a class="nav-link btn btn-primary mt-2" href="{{ route('checkApp', Auth::user()->id) }}">
                         บันทึกใบสมัคร
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" data-toggle="collapse" href="#collapse1">
+                    <a class="nav-link btn btn-primary mt-2" data-toggle="collapse" href="#collapse1">
                         รายงาน
                     </a>
                 </li>
@@ -83,24 +85,35 @@
                         </div>
                     </div>
                 </div>
-            @elseif (Auth::guard('personel'))
+            @elseif (Auth::guard('web')->check() && Auth::guard('web')->user()->type->id == 3)
                 <li class="nav-item">
-                    <a class="nav-link active" href="{{ route('personel.home') }}">
+                    <a class="nav-link btn btn-primary mt-2" href="#">
                         หน้าแรก <span class="sr-only">(current)</span>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('interview.index') }}">
+                    <a class="nav-link btn btn-primary mt-2" href="{{ route('admin.personel.index') }}">
+                        จัดการบุคลากร
+                    </a>
+                </li>
+            @elseif (Auth::guard('personel'))
+                <li class="nav-item">
+                    <a class="nav-link btn btn-primary mt-2" href="{{ route('personel.home') }}">
+                        หน้าแรก <span class="sr-only">(current)</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link btn btn-primary mt-2" href="{{ route('interview.index') }}">
                         การจัดการคะแนนการสัมภาษณ์
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('user.index') }}">
+                    <a class="nav-link btn btn-primary mt-2" href="{{ route('user.index') }}">
                         ข้อมูลนักศึกษา
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" data-toggle="collapse" href="#collapse1">
+                    <a class="nav-link btn btn-primary mt-2" data-toggle="collapse" href="#collapse1">
                         รายงาน
                     </a>
                 </li>
@@ -120,17 +133,6 @@
                         </div>
                     </div>
                 </div>
-            @else
-                <li class="nav-item">
-                    <a class="nav-link active" href="#">
-                        Admin Dashboard <span class="sr-only">(current)</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">
-                        Orders
-                    </a>
-                </li>
             @endif
         </ul>
     </div>

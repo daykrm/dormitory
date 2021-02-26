@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Activity;
 use App\Models\Dormitory;
+use App\Models\Faculty;
 use App\Models\User;
 use App\Models\YearConfig;
 use Illuminate\Http\Request;
@@ -25,7 +26,71 @@ class InterviewController extends Controller
     public function index()
     {
         //
-        return view('interview.index');
+        $year = YearConfig::find(1);
+        $returnArr = [];
+        $apps = DB::table('applications as a')
+            ->select(
+                'a.student_id as student_id',
+                'a.id as id',
+                DB::raw('AVG(is.dorm_score) as dorm_score'),
+                DB::raw('AVG(is.family_score) as family_score'),
+                DB::raw('AVG(is.behavior_score) as behavior_score'),
+                DB::raw('AVG(is.kku_score) as kku_score'),
+                DB::raw('(dorm_score + family_score + behavior_score + kku_score) as sum_score'),
+                DB::raw('COUNT(is.id) as count'),
+            )
+            ->leftJoin('interview_scores as is', 'is.application_id', '=', 'a.id')
+            ->where([
+                ['a.year', $year->year],
+                ['a.status', 0],
+            ])->groupBy('student_id', 'a.id')->get();
+
+        foreach ($apps as $app) {
+            $user = User::find($app->student_id);
+            $sumCredit = Activity::where('year', $year->year)->where('dorm_id', $user->dorm->dormitory->id)->sum('credit');
+            $sumUserCredit = DB::table('activity_credits')
+                ->join('activities', 'activity_credits.activity_id', '=', 'activities.id')
+                ->where('activity_credits.student_id', $user->id)
+                ->sum('activities.credit');
+            $percent = round($sumUserCredit / $sumCredit * 100, 2);
+            $arr = array(
+                'username' => $user->username,
+                'name' => $user->name,
+                'faculty' => $user->faculty->name,
+                'percent' => $percent,
+                'credit' => $user->credit,
+                'dorm_score' => $app->dorm_score,
+                'kku_score' => $app->kku_score,
+                'behavior_score' => $app->behavior_score,
+                'family_score' => $app->family_score,
+                'count' => $app->count,
+                'id' => $app->id
+            );
+
+            array_push($returnArr, $arr);
+        }
+
+        //dd($returnArr);
+        // $applications = DB::table('applications as a')
+        //     ->select(
+        //         'u.username as username',
+        //         'u.name as name',
+        //         'f.name as faculty',
+        //         DB::raw(''),
+        //         DB::raw('SUM(is.dorm_score) as dorm_score'),
+        //         DB::raw('SUM(is.family_score) as family_score'),
+        //         DB::raw('SUM(is.behavior_score) as behavior_score'),
+        //         DB::raw('SUM(is.kku_score) as kku_score'),
+        //         DB::raw('(dorm_score + family_score + behavior_score + kku_score) as sum_score')
+        //     )
+        //     ->join('users as u', 'a.student_id', '=', 'u.id')
+        //     ->join('faculties as f', 'u.faculty_id', '=', 'f.id')
+        //     ->leftJoin('interview_scores as is', 'is.application_id', '=', 'a.id')
+        //     ->groupBy('a.id')
+        //     ->get();
+
+        //dd($returnArr);
+        return view('interview.index', ['data' => $returnArr]);
     }
 
     public function findStudent(Request $request)

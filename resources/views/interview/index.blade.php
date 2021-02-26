@@ -33,13 +33,14 @@
             </div>
         </div>
     </div>
-    <hr>
     @if (session('user'))
         <form action="{{ route('interview.store') }}" method="POST">
             @csrf
             <input type="hidden" name="personel_id" value="{{ Auth::guard('personel')->user()->id }}">
             <input type="hidden" name="app_id" value="{{ session('appId') }}">
-            <div class="container-fluid">
+            <div class="container-fluid mt-4">
+                <h5>ผลการค้นหา</h5>
+                <hr>
                 <div class="table-responsive">
                     <table class="table table-striped table-bordered">
                         <thead>
@@ -101,4 +102,60 @@
             </div>
         </form>
     @endif
+    <form action="#" method="post">
+        @csrf
+        <div class="container-fluid mt-4">
+            <h5>รายการรอประมวลผล</h5>
+            <hr>
+            <div class="table-responsive">
+                <table class="table table-striped table-bordered">
+                    <thead>
+                        <tr class="text-center">
+                            <th rowspan="3" class="align-middle">รหัสนักศึกษา</th>
+                            <th rowspan="3" class="align-middle">ชื่อ - สกุล</th>
+                            <th rowspan="3" class="align-middle">คณะ</th>
+                            <th colspan="4">การมีส่วนร่วมในกิจกรรม</th>
+                            <th rowspan="3" class="align-middle">ความจำเป็นตามฐานะทางเศรษฐกิจ (20)</th>
+                            <th rowspan="3" class="align-middle">ความประพฤติ (20)</th>
+                            <th rowspan="3" class="align-middle">รายละเอียดใบสมัคร</th>
+                            <th rowspan="3" class="align-middle">จำนวนผู้ให้คะแนน</th>
+                        </tr>
+                        <tr class="text-center">
+                            <th colspan="2">กิจกรรมหอพัก (40)</th>
+                            <th colspan="2">กิจกรรมคณะ / มหาวิทยาลัย (20)</th>
+                        </tr>
+                        <tr class="text-center">
+                            <th>ร้อยละการเข้าร่วมกิจกรรม</th>
+                            <th>คะแนนที่ได้รับ</th>
+                            <th>หน่วยกิจกรรม</th>
+                            <th>คะแนนที่ได้</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($data as $item)
+                            <input type="hidden" name="app[]" value="{{ $item['id'] }}">
+                            <tr>
+                                <td>{{ $item['username'] }}</td>
+                                <td>{{ $item['name'] }}</td>
+                                <td>{{ $item['faculty'] }}</td>
+                                <td class="text-center">{{ $item['percent'] }}</td>
+                                <td class="text-center">{{ $item['dorm_score'] }}</td>
+                                <td class="text-center">{{ $item['credit'] }}</td>
+                                <td class="text-center">{{ $item['kku_score'] }}</td>
+                                <td class="text-center">{{ $item['family_score'] }}</td>
+                                <td class="text-center">{{ $item['behavior_score'] }}</td>
+                                <td class="text-center"><a
+                                        href="{{ url('application/detail/' . $item['id']) }}">ใบสมัคร</a></td>
+                                <td class="@if($item['count'] >= 2) text-success @else text-danger @endif">
+                                    {{ $item['count'] }} คน</td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+            <div class="row justify-content-center mt-2">
+                <button type="submit" class="btn btn-outline-primary">ประมวลผล</button>
+            </div>
+        </div>
+    </form>
 @endsection

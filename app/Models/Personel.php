@@ -17,7 +17,7 @@ class Personel extends Authenticatable
         'password',
         'email',
         'prefix_id',
-        'dorm_id',
+        'dorm_detail_id',
     ];
 
     protected $hidden = [

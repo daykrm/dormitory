@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Dormitory;
+use App\Models\DormitoryDetail;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -23,12 +24,36 @@ class StudentController extends Controller
     {
         //
         $dorm = Dormitory::all();
-        return view('user.select',compact('dorm'));
+        return view('user.select', compact('dorm'));
     }
 
     public function getUserByDormId($dormId)
     {
-        return back()->with('status','wowza');
+        // $dorm = DormitoryDetail::where()->get();
+        // $users = User::where([
+        //     ''
+        // ])->get();
+        $dorms = Dormitory::all();
+        $dorm = Dormitory::find($dormId);
+        $users = $dorm->users->where('type_id', '<>', 3);
+        return view('user.index', compact('users', 'dormId', 'dorms', 'dorm'));
+        //$users = User::where('username', 'testtest')->first();
+        return back()->with('users', $users);
+    }
+
+    public function changeStatus($userId)
+    {
+        $user = User::find($userId);
+        if ($user->type_id == 1) {
+            $user->type_id = 2;
+        } else {
+            $user->type_id = 1;
+        }
+        if ($user->save()){
+            return back()->with('status', 'แก้ไขสถานะสำเร็จ');
+        }else{
+            return back()->with('error', 'แก้ไขสถานะล้มเหลว');
+        }
     }
 
     /**

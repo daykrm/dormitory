@@ -17,6 +17,12 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::prefix('/admin')->name('admin.')->namespace('Admin')->group(function () {
+    Route::resource('personel', 'PersonController');
+});
+
+// Route::resource('/admin/personel', 'Admin\PersonController');
+
 Route::prefix('/personel')->name('personel.')->namespace('Personel')->group(function () {
     Route::get('/dashboard', 'HomeController@index')->name('home');
     Route::get('/login', 'LoginController@showLoginForm')->name('login');
@@ -43,11 +49,13 @@ Route::prefix('/report')->name('report.')->namespace('Report')->group(function (
     });
 });
 
-Route::resource('interview','InterviewController');
+Route::resource('interview', 'InterviewController');
 
 Route::resource('user', 'StudentController');
 
-Route::get('user/all/{id}','StudentController@getUserByDormId');
+Route::get('user/all/{id}', 'StudentController@getUserByDormId');
+
+Route::put('user/changeStatus/{id}', 'StudentController@changeStatus')->name('changeStatus');
 
 Route::get('/indexScore/{id}', 'ScoreController@index')->name('indexScore');
 
@@ -55,7 +63,7 @@ Route::get('/createScore/{id}', 'ScoreController@showForm')->name('createScore')
 
 Route::get('/findStudent', 'ScoreController@findStudent')->name('findStudent');
 
-Route::get('/findApplication','InterviewController@findStudent')->name('findApplication');
+Route::get('/findApplication', 'InterviewController@findStudent')->name('findApplication');
 
 Route::post('/storeScore', 'ScoreController@store')->name('storeScore');
 
@@ -63,7 +71,7 @@ Route::get('/getRoom/{id}', 'DormitoryDetailController@getRoom')->name('getRoom'
 
 Route::resource('application', 'ApplicationController');
 
-Route::get('application/detail/{id}','ApplicationController@showApp');
+Route::get('application/detail/{id}', 'ApplicationController@showApp');
 
 Route::get('/checkApp/{id}', 'ApplicationController@checkApplicationThisYear')->name('checkApp');
 

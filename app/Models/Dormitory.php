@@ -9,14 +9,20 @@ class Dormitory extends Model
 {
     use HasFactory;
 
+
+    public function users()
+    {
+        return $this->hasManyThrough(User::class,DormitoryDetail::class,'dormitory_id','dorm_detail_id');
+    }
+
     public function details()
     {
-        return $this->hasMany(\App\Models\DormitoryDetail::class,'dormitory_id');
+        return $this->hasMany(\App\Models\DormitoryDetail::class, 'dormitory_id');
     }
 
     public function rooms()
     {
-        return $this->belongsToMany(Room::class,'dormitory_details','dormitory_id','room_id');
+        return $this->belongsToMany(Room::class, 'dormitory_details', 'dormitory_id', 'room_id');
     }
 
     protected $table = 'dormitories';
