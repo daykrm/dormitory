@@ -15,7 +15,7 @@ class CreateResultsTable extends Migration
     {
         Schema::create('results', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('apllication_id')->constrained('applications');
+            $table->foreignId('application_id')->constrained('applications');
             $table->integer('status');
             $table->timestamps();
         });

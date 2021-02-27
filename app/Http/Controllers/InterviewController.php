@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Activity;
+use App\Models\Application;
 use App\Models\Dormitory;
 use App\Models\Faculty;
 use App\Models\Interview_score;
+use App\Models\Result;
 use App\Models\User;
 use App\Models\YearConfig;
 use Illuminate\Http\Request;
@@ -27,78 +29,32 @@ class InterviewController extends Controller
     public function index()
     {
         //
-        $year = YearConfig::find(1);
-        $returnArr = [];
-        $apps = DB::table('applications as a')
-            ->select(
-                'a.student_id as student_id',
-                'a.id as id',
-                DB::raw('AVG(is.dorm_score) as dorm_score'),
-                DB::raw('AVG(is.family_score) as family_score'),
-                DB::raw('AVG(is.behavior_score) as behavior_score'),
-                DB::raw('AVG(is.kku_score) as kku_score'),
-                DB::raw('(dorm_score + family_score + behavior_score + kku_score) as sum_score'),
-                DB::raw('COUNT(is.id) as count'),
-            )
-            ->leftJoin('interview_scores as is', 'is.application_id', '=', 'a.id')
-            ->where([
-                ['a.year', $year->year],
-                ['a.status', 0],
-            ])->groupBy('student_id', 'a.id')->orderBy('sum_score','desc')->simplePaginate(5);
-
-        foreach ($apps as $app) {
-            $user = User::find($app->student_id);
-            $sumCredit = Activity::where('year', $year->year)->where('dorm_id', $user->dorm->dormitory->id)->sum('credit');
-            $sumUserCredit = DB::table('activity_credits')
-                ->join('activities', 'activity_credits.activity_id', '=', 'activities.id')
-                ->where('activity_credits.student_id', $user->id)
-                ->sum('activities.credit');
-            $percent = round($sumUserCredit / $sumCredit * 100, 2);
-            $arr = array(
-                'username' => $user->username,
-                'name' => $user->name,
-                'faculty' => $user->faculty->name,
-                'percent' => $percent,
-                'credit' => $user->credit,
-                'dorm_score' => $app->dorm_score,
-                'kku_score' => $app->kku_score,
-                'behavior_score' => $app->behavior_score,
-                'family_score' => $app->family_score,
-                'sum_score' => $app->sum_score,
-                'count' => $app->count,
-                'id' => $app->id
-            );
-
-            array_push($returnArr, $arr);
-        }
-
-        //dd($returnArr);
-        // $applications = DB::table('applications as a')
-        //     ->select(
-        //         'u.username as username',
-        //         'u.name as name',
-        //         'f.name as faculty',
-        //         DB::raw(''),
-        //         DB::raw('SUM(is.dorm_score) as dorm_score'),
-        //         DB::raw('SUM(is.family_score) as family_score'),
-        //         DB::raw('SUM(is.behavior_score) as behavior_score'),
-        //         DB::raw('SUM(is.kku_score) as kku_score'),
-        //         DB::raw('(dorm_score + family_score + behavior_score + kku_score) as sum_score')
-        //     )
-        //     ->join('users as u', 'a.student_id', '=', 'u.id')
-        //     ->join('faculties as f', 'u.faculty_id', '=', 'f.id')
-        //     ->leftJoin('interview_scores as is', 'is.application_id', '=', 'a.id')
-        //     ->groupBy('a.id')
-        //     ->get();
-
-        //dd($returnArr);
-        return view('interview.index', ['data' => $returnArr, 'apps' => $apps]);
+        $dorms = Dormitory::all();
+        return view('interview.select', compact('dorms'));
     }
 
-    public function calculateResult(Request $request){
-        dd($request->get('sum'));
+    public function calculateResult(Request $request)
+    {
+        //dd($request->get('sum'));
+        $appId = $request->get('app');
+        //$available = $request->get('available');
         //loop appId to change application status to 1 (calculated)
-        return back()->with('status','ประมวลผลสำเร็จจ้า');
+        for ($i = 0; $i < count($appId); $i++) {
+            $apps = Application::find($appId[$i]);
+            $dorm = Dormitory::find($apps->dorm_id);
+            $available = count($dorm->rooms);
+            if ($i < $available) {
+                $status = 1;
+            } else {
+                $status = 0;
+            }
+            DB::table('results')->insert([
+                'application_id' => $appId[$i],
+                'status' => $status,
+            ]);
+            DB::table('applications')->where('id', $appId[$i])->update(['status' => 1]);
+        }
+        return back()->with('status', 'ประมวลผลสำเร็จจ้า');
     }
 
     public function findStudent(Request $request)
@@ -212,27 +168,62 @@ class InterviewController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($dormId)
     {
-        //
         $year = YearConfig::find(1);
-        $dorm = Dormitory::find($id);
-        $applications = DB::table('applications as a')
+        $returnArr = [];
+        $apps = DB::table('applications as a')
             ->select(
-                'u.username as username',
-                'u.name as name',
-                'f.name as faculty',
-                DB::raw('SUM(is.dorm_score) as dorm_score'),
-                DB::raw('SUM(is.family_score) as family_score'),
-                DB::raw('SUM(is.behavior_score) as behavior_score'),
-                DB::raw('SUM(is.kku_score) as kku_score'),
-                DB::raw('(dorm_score + family_score + behavior_score + kku_score) as sum_score')
+                'a.student_id as student_id',
+                'a.id as id',
+                DB::raw('AVG(is.dorm_score) as dorm_score'),
+                DB::raw('AVG(is.family_score) as family_score'),
+                DB::raw('AVG(is.behavior_score) as behavior_score'),
+                DB::raw('AVG(is.kku_score) as kku_score'),
+                DB::raw('(dorm_score + family_score + behavior_score + kku_score) as sum_score'),
+                DB::raw('COUNT(is.id) as count'),
             )
-            ->join('users as u', 'a.student_id', '=', 'u.id')
-            ->join('faculties as f', 'u.faculty_id', '=', 'f.id')
             ->leftJoin('interview_scores as is', 'is.application_id', '=', 'a.id')
-            ->groupBy('a.id')
-            ->get();
+            ->where([
+                ['a.year', $year->year],
+                ['a.status', 0],
+                ['a.dorm_id', $dormId]
+            ])->groupBy('student_id', 'a.id')->orderBy('sum_score', 'desc')->simplePaginate(5);
+
+        foreach ($apps as $app) {
+            $user = User::find($app->student_id);
+            $sumCredit = Activity::where('year', $year->year)->where('dorm_id', $user->dorm->dormitory->id)->sum('credit');
+            $sumUserCredit = DB::table('activity_credits')
+                ->join('activities', 'activity_credits.activity_id', '=', 'activities.id')
+                ->where('activity_credits.student_id', $user->id)
+                ->sum('activities.credit');
+            $percent = round($sumUserCredit / $sumCredit * 100, 2);
+            $arr = array(
+                'username' => $user->username,
+                'name' => $user->name,
+                'faculty' => $user->faculty->name,
+                'percent' => $percent,
+                'credit' => $user->credit,
+                'dorm_score' => $app->dorm_score,
+                'kku_score' => $app->kku_score,
+                'behavior_score' => $app->behavior_score,
+                'family_score' => $app->family_score,
+                'sum_score' => $app->sum_score,
+                'count' => $app->count,
+                'id' => $app->id
+            );
+
+            array_push($returnArr, $arr);
+        }
+
+        $dorms = Dormitory::all();
+        $dorm = Dormitory::find($dormId);
+
+        return view('interview.index', ['year' => $year, 'data' => $returnArr, 'apps' => $apps, 'dorms' => $dorms, 'dorm' => $dorm]);
+    }
+
+    public function changeStatus($id)
+    {
     }
 
     /**
@@ -243,7 +234,6 @@ class InterviewController extends Controller
      */
     public function edit($id)
     {
-        //
     }
 
     /**
@@ -255,7 +245,17 @@ class InterviewController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $result = Result::find($id);
+        if ($result->status == 1) {
+            $result->status = 0;
+        } else {
+            $result->status = 1;
+        }
+        if ($result->save()) {
+            return back()->with('status', 'แก้ไขสถานะสำเร็จ');
+        } else {
+            return back()->with('error', 'แก้ไขสถานะล้มเหลว');
+        }
     }
 
     /**

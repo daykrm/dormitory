@@ -25,6 +25,8 @@
         "vue-template-compiler": "^2.6.10"
     },
     "dependencies": {
-        "dateformat": "^4.5.1"
+        "@fortawesome/fontawesome-free": "^5.15.2",
+        "dateformat": "^4.5.1",
+        "font-awesome": "^4.7.0"
     }
 }

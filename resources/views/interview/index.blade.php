@@ -3,7 +3,7 @@
 @section('content')
     <div class="card">
         <div class="card-header">
-            การจัดการคะแนนสัมภาษณ์
+            การจัดการคะแนนสัมภาษณ์ ประจำ{{$dorm->name}} ปีการศึกษา {{$year->year + 543}}
         </div>
         <div class="card-body">
             <div class="container">
@@ -142,8 +142,9 @@
                     </thead>
                     <tbody>
                         @foreach ($data as $item)
+                            <!-- Modal -->
                             <input type="hidden" name="app[]" value="{{ $item['id'] }}">
-                            <input type="hidden" name="sum[]" value="{{ $item['sum_score'] }}">
+                            {{-- <input type="hidden" name="sum[]" value="{{ $item['sum_score'] }}"> --}}
                             <tr>
                                 <td>{{ $item['username'] }}</td>
                                 <td>{{ $item['name'] }}</td>
@@ -166,8 +167,28 @@
                 </table>
                 {{ $apps->links() }}
             </div>
+            {{-- <div class="modal fade" id="formModal" tabindex="-1" role="dialog" aria-labelledby="formModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="formModalLabel">จำนวนห้องว่าง</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <input type="number" min="1" required name="available" class="form-control">
+                        </div>
+                        <div class="modal-footer justify-content-center">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">บันทึก</button>
+                        </div>
+                    </div>
+                </div>
+            </div> --}}
             <div class="row justify-content-center mt-2">
-                <button type="submit" class="btn btn-outline-primary">ประมวลผล</button>
+                <button type="submit" class="btn btn-outline-primary" @if (count($data) == 0) disabled @endif>ประมวลผล</button>
             </div>
         </div>
     </form>

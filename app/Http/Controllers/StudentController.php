@@ -49,10 +49,20 @@ class StudentController extends Controller
         } else {
             $user->type_id = 1;
         }
-        if ($user->save()){
+        if ($user->save()) {
             return back()->with('status', 'แก้ไขสถานะสำเร็จ');
-        }else{
+        } else {
             return back()->with('error', 'แก้ไขสถานะล้มเหลว');
+        }
+    }
+
+    public function findByUsername($username)
+    {
+        $user = User::where('username', $username)->first();
+        if ($user != null) {
+            return back()->with('user', $user);
+        } else {
+            return back()->with('error', 'ไม่พบนักศึกษารหัส ' . $username);
         }
     }
 

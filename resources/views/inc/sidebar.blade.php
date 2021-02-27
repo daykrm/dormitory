@@ -77,6 +77,9 @@
                                 <li class="list-group-item"><a
                                         href="{{ route('report.activity.show', ['id' => Auth::user()->id, 'dormId' => Auth::user()->dorm->dormitory->id]) }}">ผลการเข้าร่วมกิจกรรม</a>
                                 </li>
+                                <li class="list-group-item"><a
+                                        href="{{ route('report.activity.showAll', ['id' => Auth::user()->dorm->dormitory->id]) }}">ผลการเข้าร่วมกิจกรรมนักศึกษาในหอพัก</a>
+                                </li>
                                 {{-- <li class="list-group-item"><a href="#">คะแนนการสัมภาษณ์</a></li> --}}
                                 <li class="list-group-item"><a
                                         href="{{ route('report.result.index', Auth::user()->dorm->dormitory->id) }}">ผลการคัดกรองนักศึกษาเข้าพักในหอพักส่วนกลาง</a>
@@ -109,7 +112,7 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link btn btn-primary mt-2" href="{{ route('user.index') }}">
-                        ข้อมูลนักศึกษา
+                        การกำหนดสิทธิ์นักศึกษา
                     </a>
                 </li>
                 <li class="nav-item">
@@ -125,7 +128,7 @@
                                 <li class="list-group-item"><a href="#">รายชื่อสมาชิกในหอพัก</a></li>
                                 <li class="list-group-item"><a href="#">ผลการเข้าร่วมกิจกรรม</a></li> --}}
                                 <li class="list-group-item"><a
-                                        href="{{ route('interview.index') }}">คะแนนการสัมภาษณ์</a></li>
+                                        href="{{ route('report.interview.index') }}">คะแนนการสัมภาษณ์</a></li>
                                 <li class="list-group-item"><a
                                         href="{{ route('report.result.select') }}">ผลการคัดกรองนักศึกษาเข้าพักในหอพักส่วนกลาง</a>
                                 </li>

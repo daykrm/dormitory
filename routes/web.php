@@ -33,6 +33,7 @@ Route::prefix('/personel')->name('personel.')->namespace('Personel')->group(func
 Route::prefix('/report')->name('report.')->namespace('Report')->group(function () {
     Route::prefix('/activity')->name('activity.')->group(function () {
         Route::get('/{id}', 'ActivityController@index')->name('index');
+        Route::get('/showAll/{id}','ActivityController@showAll')->name('showAll');
         Route::get('/show/{id}/{dormId}', 'ActivityController@show')->name('show');
         Route::get('/{dormId}/{start}/{end}', 'ActivityController@search');
     });
@@ -47,6 +48,11 @@ Route::prefix('/report')->name('report.')->namespace('Report')->group(function (
     Route::prefix('/dorm')->name('dorm.')->group(function () {
         Route::get('/{id}', 'DormController@index')->name('index');
     });
+
+    Route::prefix('/interview')->name('interview.')->group(function () {
+        Route::get('/', 'InterviewController@index')->name('index');
+        Route::get('/{id}', 'InterviewController@show')->name('show');
+    });
 });
 
 Route::resource('interview', 'InterviewController');
@@ -54,6 +60,8 @@ Route::resource('interview', 'InterviewController');
 Route::resource('user', 'StudentController');
 
 Route::get('user/all/{id}', 'StudentController@getUserByDormId');
+
+Route::get('/findByUsername/{id}', 'StudentController@findByUsername')->name('findByUsername');
 
 Route::put('user/changeStatus/{id}', 'StudentController@changeStatus')->name('changeStatus');
 
@@ -65,7 +73,7 @@ Route::get('/findStudent', 'ScoreController@findStudent')->name('findStudent');
 
 Route::get('/findApplication', 'InterviewController@findStudent')->name('findApplication');
 
-Route::post('/calculateResult','InterviewController@calculateResult')->name('calculate');
+Route::post('/calculateResult', 'InterviewController@calculateResult')->name('calculate');
 
 Route::post('/storeScore', 'ScoreController@store')->name('storeScore');
 

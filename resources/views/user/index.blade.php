@@ -1,5 +1,11 @@
 @extends('layouts.app')
 
+@php
+if (session('user')) {
+    $users = session('user');
+}
+@endphp
+
 @section('content')
     <div class="card">
         <div class="card-header">
@@ -23,6 +29,11 @@
                 <form action="#" id="form-search" method="get"></form>
             </div>
             <div class="container-fluid mt-4">
+                <div class="row justify-content-end mb-2">
+                    <div class="col-md-4">
+                        <input type="text" id="filter" class="form-control" placeholder="รหัสนักศึกษา">
+                    </div>
+                </div>
                 <table class="table table-striped">
                     <thead>
                         <tr>
@@ -34,7 +45,7 @@
                             <th>จัดการ</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody id="table">
                         @foreach ($users as $key => $item)
                             <tr>
                                 <td>{{ $key + 1 }}</td>
@@ -44,7 +55,7 @@
                                 <td>{{ $item->type->name }}</td>
                                 <td>
                                     <div class="row justify-content center">
-                                        <a href="#" class="btn btn-primary">แก้ไข</a>
+                                        <a href="#" class="btn btn-primary disabled">แก้ไข</a>
                                         <form action="{{ route('changeStatus', $item->id) }}" class="ml-2" method="post">
                                             @csrf
                                             @method('PUT')
@@ -75,6 +86,13 @@
                 $('#form-search').attr('action', '/user/all/' + dormId)
                 $('#form-search').submit()
             })
+
+            $('#filter').on('keyup', function(){
+                var value = $(this).val();
+                $('#table tr').filter(function(){
+                    $(this).toggle($(this).text().indexOf(value) > -1)
+                })
+            });
         })
 
     </script>
