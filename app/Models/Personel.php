@@ -17,7 +17,7 @@ class Personel extends Authenticatable
         'password',
         'email',
         'prefix_id',
-        'dorm_detail_id',
+        'dorm_id',
     ];
 
     protected $hidden = [
@@ -26,7 +26,7 @@ class Personel extends Authenticatable
 
     public function dorm()
     {
-        return $this->belongsTo(DormitoryDetail::class, 'dorm_detail_id');
+        return $this->belongsTo(Dormitory::class, 'dorm_id');
     }
 
     public function prefix()

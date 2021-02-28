@@ -87,18 +87,12 @@
             title="เลือกหอพัก" data-live-search="true">
             @foreach ($dorms as $item)
                 @if (isset($person))
-                    <option value="{{ $item->id }}" @if ($person->dorm->dormitory->id == $item->id) selected @endif>
+                    <option value="{{ $item->id }}" @if ($person->dorm_id == $item->id) selected @endif>
                         {{ $item->name }}</option>
                 @else
                     <option value="{{ $item->id }}">{{ $item->name }}</option>
                 @endif
             @endforeach
-        </select>
-    </div>
-    <div class="form-group col-md-2">
-        <label>ห้อง</label>
-        <select id="room" name="room" required class="selectpicker form-control @error('room') is-invalid @enderror"
-            title="เลือกห้องพัก" data-live-search="true">
         </select>
     </div>
 </div>

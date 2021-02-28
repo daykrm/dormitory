@@ -60,18 +60,13 @@ class PersonController extends Controller
 
         $request->validate($rules);
 
-        $dorm = DB::table('dormitory_details')->where([
-            ['dormitory_id', $request->get('dorm')],
-            ['room_id', $request->get('room')]
-        ])->first();
-
         $person = Personel::firstOrNew([
             'name' => $request->get('name'),
             'username' => $request->get('username'),
             'password' => Hash::make($request->get('password')),
             'email' => $request->get('email'),
             'prefix_id' => $request->get('prefix'),
-            'dorm_detail_id' => $dorm->id,
+            'dorm_id' => $request->get('dorm'),
         ]);
 
         $person->save();
@@ -132,16 +127,11 @@ class PersonController extends Controller
 
         $person = Personel::find($id);
 
-        $dorm = DB::table('dormitory_details')->where([
-            ['dormitory_id', $request->get('dorm')],
-            ['room_id', $request->get('room')]
-        ])->first();
-
         $person->name = $request->get('name');
         $person->username = $request->get('username');
         $person->email = $request->get('email');
         $person->prefix_id = $request->get('prefix');
-        $person->dorm_detail_id = $dorm->id;
+        $person->dorm_id = $request->get('dorm');
 
         if($request->filled('password')){
             $person->password = Hash::make($request->get('password'));

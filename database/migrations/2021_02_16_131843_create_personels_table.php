@@ -20,7 +20,7 @@ class CreatePersonelsTable extends Migration
             $table->string('password');
             $table->string('email');
             $table->foreignId('prefix_id')->constrained('prefixes');
-            $table->foreignId('dorm_detail_id')->constrained('dormitory_details');
+            $table->foreignId('dorm_id')->constrained('dormitories');
             $table->timestamps();
         });
     }
