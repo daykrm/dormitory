@@ -164,7 +164,7 @@ class ActivityController extends Controller
         $table->budget = $request->get('budget');
         $table->activity_date = $request->get('date');
         $table->credit = $request->get('score');
-        $table->council_id = $dorm_id;
+        $table->dorm_id = $dorm_id;
 
         if ($table->save()) {
             return redirect()->action([ActivityController::class, 'show'], ['activity' => $dorm_id])->with('status', 'บันทึกข้อมูลสำเร็จ');

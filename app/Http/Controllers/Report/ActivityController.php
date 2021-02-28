@@ -69,7 +69,7 @@ class ActivityController extends Controller
         }
         $sum_score = array_column($data, 'sum_score');
         array_multisort($sum_score, SORT_DESC, $data);
-        return view('report.activity.showAll', compact('dorm', 'data', 'year','sumCredit'));
+        return view('report.activity.showAll', compact('dorm', 'data', 'year', 'sumCredit'));
     }
 
     public function show($userId, $dormId)
@@ -90,7 +90,11 @@ class ActivityController extends Controller
                 ['ac.student_id', $userId],
                 ['a.year', $year->year]
             ])->get();
-        $percent = round($sumUserCredit / $sumCredit * 100, 2);
+        if ($sumCredit == 0) {
+            $percent = 0;
+        } else {
+            $percent = round($sumUserCredit / $sumCredit * 100, 2);
+        }
         //var_dump($sumCredit);
         //var_dump($sumUserCredit);
         return view('report.activity.show', compact('year', 'sumCredit', 'activity_credit', 'percent', 'sumUserCredit'));

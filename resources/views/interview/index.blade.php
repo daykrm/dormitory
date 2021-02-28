@@ -3,7 +3,7 @@
 @section('content')
     <div class="card">
         <div class="card-header">
-            การจัดการคะแนนสัมภาษณ์ ประจำ{{$dorm->name}} ปีการศึกษา {{$year->year + 543}}
+            การจัดการคะแนนสัมภาษณ์ ประจำ{{ $dorm->name }} ปีการศึกษา {{ $year->year + 543 }}
         </div>
         <div class="card-body">
             <div class="container">
@@ -155,7 +155,9 @@
                                 <td class="text-center">{{ $item['kku_score'] }}</td>
                                 <td class="text-center">{{ $item['family_score'] }}</td>
                                 <td class="text-center">{{ $item['behavior_score'] }}</td>
-                                <td class="text-center">{{ $item['sum_score'] }}</td>
+                                <td class="text-center">
+                                    {{ $item['dorm_score'] + $item['kku_score'] + $item['family_score'] + $item['behavior_score'] }}
+                                </td>
                                 <td class="text-center"><a
                                         href="{{ url('application/detail/' . $item['id']) }}">ใบสมัคร</a></td>
                             <td class="@if ($item['count']>= 2) text-success @else
