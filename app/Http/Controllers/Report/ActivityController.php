@@ -56,7 +56,11 @@ class ActivityController extends Controller
                 ->where('activity_credits.student_id', $user->id)
                 ->where('activities.year', $year->year)
                 ->sum('activities.credit');
-            $percent = round($sumUserCredit / $sumCredit * 100, 2);
+            if ($sumCredit == 0) {
+                $percent = 0;
+            } else {
+                $percent = round($sumUserCredit / $sumCredit * 100, 2);
+            }
             $arr = array(
                 'username' => $user->username,
                 'name' => $user->name,

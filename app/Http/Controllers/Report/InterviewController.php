@@ -57,7 +57,11 @@ class InterviewController extends Controller
                 ->join('activities', 'activity_credits.activity_id', '=', 'activities.id')
                 ->where('activity_credits.student_id', $user->id)
                 ->sum('activities.credit');
-            $percent = round($sumUserCredit / $sumCredit * 100, 2);
+            if ($sumCredit == 0) {
+                $percent = 0;
+            } else {
+                $percent = round($sumUserCredit / $sumCredit * 100, 2);
+            }
             $arr = array(
                 'username' => $user->username,
                 'name' => $user->name,
