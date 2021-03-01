@@ -8,4 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class RegisterRange extends Model
 {
     use HasFactory;
+
+    protected $fillable = ['id', 'startDate', 'endDate'];
 }

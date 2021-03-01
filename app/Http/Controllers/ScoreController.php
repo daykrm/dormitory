@@ -22,7 +22,7 @@ class ScoreController extends Controller
     {
         $year = YearConfig::find(1);
         $activities = Activity::where('year', $year->year)->where('dorm_id', $id)->orderBy('name')->get();
-        return view('score.index', compact('activities'));
+        return view('score.index', compact('activities', 'year'));
     }
 
     public function store(Request $request)
@@ -59,6 +59,11 @@ class ScoreController extends Controller
     {
         $user = User::where('username', $request->get('username'))->first();
         if ($user != null) {
+            $userDorm = $user->dorm->dormitory->id;
+            $dorm = $request->input('dorm');
+            if ($dorm != $userDorm) {
+                return back()->with('error', 'ไม่พบนักศึกษาในหอพักนี้');
+            }
             return back()->with('user', $user);
         } else {
             return back()->with('error', 'ไม่พบนักศึกษา');

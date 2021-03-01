@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\LoginController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,7 +15,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect()->action([LoginController::class, 'showLoginForm']);
 });
 
 Route::prefix('/admin')->name('admin.')->namespace('Admin')->group(function () {
@@ -33,7 +34,7 @@ Route::prefix('/personel')->name('personel.')->namespace('Personel')->group(func
 Route::prefix('/report')->name('report.')->namespace('Report')->group(function () {
     Route::prefix('/activity')->name('activity.')->group(function () {
         Route::get('/{id}', 'ActivityController@index')->name('index');
-        Route::get('/showAll/{id}','ActivityController@showAll')->name('showAll');
+        Route::get('/showAll/{id}', 'ActivityController@showAll')->name('showAll');
         Route::get('/show/{id}/{dormId}', 'ActivityController@show')->name('show');
         Route::get('/{dormId}/{start}/{end}', 'ActivityController@search');
     });
@@ -55,9 +56,17 @@ Route::prefix('/report')->name('report.')->namespace('Report')->group(function (
     });
 });
 
+Route::resource('faculty', 'FacultyController');
+
+Route::resource('yearConfig', 'YearConfigController');
+
+Route::resource('registerRange', 'RegisterRangeController');
+
 Route::resource('interview', 'InterviewController');
 
 Route::resource('user', 'StudentController');
+
+Route::resource('dorm', 'DormController');
 
 Route::get('user/all/{id}', 'StudentController@getUserByDormId');
 

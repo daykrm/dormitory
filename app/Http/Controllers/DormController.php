@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\YearConfig;
+use App\Models\Dormitory;
 use Illuminate\Http\Request;
 
-class YearConfigController extends Controller
+class DormController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,9 +14,8 @@ class YearConfigController extends Controller
      */
     public function index()
     {
-        //
-        $year = YearConfig::find(1);
-        return view('yearConfig.index', compact('year'));
+        $dorms = Dormitory::all()->sortBy('name');
+        return view('dorm.index', compact('dorms'));
     }
 
     /**
@@ -27,6 +26,7 @@ class YearConfigController extends Controller
     public function create()
     {
         //
+        return view('dorm.create');
     }
 
     /**
@@ -38,15 +38,12 @@ class YearConfigController extends Controller
     public function store(Request $request)
     {
         //
-        $year = YearConfig::find(1);
-        $year->year = $request->get('year');
-        $year->startDate = $request->get('startDate');
-        $year->endDate = $request->get('endDate');
-        if ($year->save()) {
-            return back()->with('status', 'แก้ไขข้อมูลสำเร็จ');
-        } else {
-            return back()->with('error', 'แก้ไขข้อมูลไม่สำเร็จ');
+        $dorm = new Dormitory();
+        $dorm->name = $request->get('name');
+        if ($dorm->save()) {
+            return redirect()->action([DormController::class, 'index'])->with('status', 'เพิ่มข้อมูลสำเร็จ');
         }
+        return back()->with('error', 'เพิ่มข้อมูลล้มเหลว');
     }
 
     /**
@@ -69,6 +66,8 @@ class YearConfigController extends Controller
     public function edit($id)
     {
         //
+        $dorm = Dormitory::find($id);
+        return view('dorm.edit', compact('dorm'));
     }
 
     /**
@@ -81,6 +80,12 @@ class YearConfigController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $dorm = Dormitory::find($id);
+        $dorm->name = $request->get('name');
+        if ($dorm->save()) {
+            return redirect()->action([DormController::class, 'index'])->with('status', 'แก้ไขข้อมูลสำเร็จ');
+        }
+        return back()->with('error', 'แก้ไขข้อมูลล้มเหลว');
     }
 
     /**

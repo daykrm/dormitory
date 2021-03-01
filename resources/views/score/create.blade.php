@@ -17,6 +17,7 @@
                                 <div class="form-group col-md-10">
                                     <input type="text" name="username" value="{{ old('username') }}" required
                                         class="form-control">
+                                        <input type="hidden" name="dorm" value="{{Auth::user()->dorm->dormitory->id}}">
                                     @if (session('error'))
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ session('error') }}</strong>

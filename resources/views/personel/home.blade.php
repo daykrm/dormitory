@@ -23,7 +23,7 @@
                             หอพัก :
                         </div>
                         <div class="col-md-10">
-                            {{ Auth::guard('personel')->user()->dorm->name }} ห้อง
+                            {{ Auth::guard('personel')->user()->dorm->name }}
                         </div>
                     @endif
                 </div>

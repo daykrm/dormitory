@@ -13,7 +13,7 @@
                                 <th>รหัสนักศึกษา</th>
                                 <th>ชื่อ - สกุล</th>
                                 @foreach ($data[0]['activities'] as $key => $item)
-                                    <th>กิจกรรมที่ {{ $key + 1 }}</th>
+                                    <th>กิจกรรมที่ {{ $item['name'] }}</th>
                                 @endforeach
                                 <th>คะแนนรวม</th>
                                 <th>ร้อยละ</th>

@@ -11,7 +11,7 @@
                     <select id="ac" name="ac" class="selectpicker form-control" title="เลือกกิจกรรม"
                         data-live-search="true">
                         @foreach ($activities as $item)
-                            <option value="{{ $item->id }}">{{ $item->name }}</option>
+                            <option value="{{ $item->id }}">{{ $item->name }} ปีการศึกษา {{$year->year + 543}}</option>
                         @endforeach
                     </select>
                 </div>

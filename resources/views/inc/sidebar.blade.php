@@ -99,6 +99,52 @@
                         จัดการบุคลากร
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link btn btn-primary mt-2" href="{{ route('faculty.index') }}">
+                        จัดการคณะ
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link btn btn-primary mt-2" href="{{ route('dorm.index') }}">
+                        จัดการหอพัก
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link btn btn-primary mt-2" href="{{ route('yearConfig.index') }}">
+                        ปีการศึกษา
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link btn btn-primary mt-2" href="{{ route('registerRange.index') }}">
+                        ช่วงเวลารับสมัคร
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link btn btn-primary mt-2" href="{{ route('user.index') }}">
+                        การกำหนดสิทธิ์นักศึกษา
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link btn btn-primary mt-2" data-toggle="collapse" href="#collapse1">
+                        รายงาน
+                    </a>
+                </li>
+                <div class="nav-item panel-group">
+                    <div class="panel panel-default">
+                        <div id="collapse1" class="panel-collapse collapse">
+                            <ul class="list-group">
+                                {{-- <li class="list-group-item"><a href="#">รายการกิจกรรมประจำปี</a></li>
+                                <li class="list-group-item"><a href="#">รายชื่อสมาชิกในหอพัก</a></li>
+                                <li class="list-group-item"><a href="#">ผลการเข้าร่วมกิจกรรม</a></li> --}}
+                                <li class="list-group-item"><a
+                                        href="{{ route('report.interview.index') }}">คะแนนการสัมภาษณ์</a></li>
+                                <li class="list-group-item"><a
+                                        href="{{ route('report.result.select') }}">ผลการคัดกรองนักศึกษาเข้าพักในหอพักส่วนกลาง</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
             @elseif (Auth::guard('personel'))
                 <li class="nav-item">
                     <a class="nav-link btn btn-primary mt-2" href="{{ route('personel.home') }}">

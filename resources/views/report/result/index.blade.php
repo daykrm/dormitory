@@ -9,7 +9,7 @@
         </div>
         <div class="card-body">
             <div class="container">
-                @if (Auth::guard('personel')->check())
+                @if (Auth::guard('personel')->check() || Auth::user()->type_id == 3)
                     <form action="{{ route('report.result.store') }}" class="row justify-content-center" method="post"
                         enctype="multipart/form-data">
                         @csrf
