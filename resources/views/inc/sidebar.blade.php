@@ -13,7 +13,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link btn btn-primary mt-2" data-toggle="collapse" href="#collapse1">
+                    <a class="nav-link btn btn-primary mt-2 @if (Auth::user()->dorm == null) disabled @endif" data-toggle="collapse" href="#collapse1">
                         รายงาน
                     </a>
                 </li>
@@ -21,17 +21,29 @@
                     <div class="panel panel-default">
                         <div id="collapse1" class="panel-collapse collapse">
                             <ul class="list-group">
-                                <li class="list-group-item"><a
-                                        href="{{ route('report.activity.index', Auth::user()->dorm->dormitory->id) }}">รายการกิจกรรมประจำปี</a>
-                                </li>
-                                {{-- <li class="list-group-item"><a href="#">รายชื่อสมาชิกในหอพัก</a></li> --}}
-                                <li class="list-group-item"><a
-                                        href="{{ route('report.activity.show', ['id' => Auth::user()->id, 'dormId' => Auth::user()->dorm->dormitory->id]) }}">ผลการเข้าร่วมกิจกรรม</a>
-                                </li>
-                                {{-- <li class="list-group-item"><a href="#">คะแนนการสัมภาษณ์</a></li> --}}
-                                <li class="list-group-item"><a
-                                        href="{{ route('report.result.index', Auth::user()->dorm->dormitory->id) }}">ผลการคัดกรองนักศึกษาเข้าพักในหอพักส่วนกลาง</a>
-                                </li>
+                                @if (Auth::user()->dorm != null)
+                                    <li class="list-group-item"><a
+                                            href="{{ route('report.activity.index', Auth::user()->dorm->dormitory->id) }}">รายการกิจกรรมประจำปี</a>
+                                    </li>
+                                    {{-- <li class="list-group-item"><a href="#">รายชื่อสมาชิกในหอพัก</a></li> --}}
+                                    <li class="list-group-item"><a
+                                            href="{{ route('report.activity.show', ['id' => Auth::user()->id, 'dormId' => Auth::user()->dorm->dormitory->id]) }}">ผลการเข้าร่วมกิจกรรม</a>
+                                    </li>
+                                    {{-- <li class="list-group-item"><a href="#">คะแนนการสัมภาษณ์</a></li> --}}
+                                    <li class="list-group-item"><a
+                                            href="{{ route('report.result.index', Auth::user()->dorm->dormitory->id) }}">ผลการคัดกรองนักศึกษาเข้าพักในหอพักส่วนกลาง</a>
+                                    </li>
+                                @else
+                                    <li class="list-group-item"><a >รายการกิจกรรมประจำปี</a>
+                                    </li>
+                                    {{-- <li class="list-group-item"><a href="#">รายชื่อสมาชิกในหอพัก</a></li> --}}
+                                    <li class="list-group-item"><a >ผลการเข้าร่วมกิจกรรม</a>
+                                    </li>
+                                    {{-- <li class="list-group-item"><a href="#">คะแนนการสัมภาษณ์</a></li> --}}
+                                    <li class="list-group-item"><a
+                                            >ผลการคัดกรองนักศึกษาเข้าพักในหอพักส่วนกลาง</a>
+                                    </li>
+                                @endif
                             </ul>
                         </div>
                     </div>
@@ -42,25 +54,38 @@
                         หน้าแรก <span class="sr-only">(current)</span>
                     </a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link btn btn-primary mt-2"
-                        href="{{ route('activity.show', Auth::user()->dorm->dormitory->id) }}">
-                        การจัดการรายการกิจกรรมประจำปี
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link btn btn-primary mt-2"
-                        href="{{ route('indexScore', Auth::user()->dorm->dormitory->id) }}">
-                        การจัดการคะแนนการเข้าร่วมกิจกรรม
-                    </a>
-                </li>
+                @if (Auth::user()->dorm != null)
+                    <li class="nav-item">
+                        <a class="nav-link btn btn-primary mt-2"
+                            href="{{ route('activity.show', Auth::user()->dorm->dormitory->id) }}">
+                            การจัดการรายการกิจกรรมประจำปี
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link btn btn-primary mt-2"
+                            href="{{ route('indexScore', Auth::user()->dorm->dormitory->id) }}">
+                            การจัดการคะแนนการเข้าร่วมกิจกรรม
+                        </a>
+                    </li>
+                @else
+                    <li class="nav-item">
+                        <a class="nav-link btn btn-primary mt-2 disabled" href="#">
+                            การจัดการรายการกิจกรรมประจำปี
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link btn btn-primary mt-2 disabled" href="#">
+                            การจัดการคะแนนการเข้าร่วมกิจกรรม
+                        </a>
+                    </li>
+                @endif
                 <li class="nav-item">
                     <a class="nav-link btn btn-primary mt-2" href="{{ route('checkApp', Auth::user()->id) }}">
                         บันทึกใบสมัคร
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link btn btn-primary mt-2" data-toggle="collapse" href="#collapse1">
+                    <a class="nav-link btn btn-primary mt-2 @if (Auth::user()->dorm == null) disabled @endif" data-toggle="collapse" href="#collapse1">
                         รายงาน
                     </a>
                 </li>
@@ -68,22 +93,37 @@
                     <div class="panel panel-default">
                         <div id="collapse1" class="panel-collapse collapse">
                             <ul class="list-group">
-                                <li class="list-group-item"><a
-                                        href="{{ route('report.activity.index', Auth::user()->dorm->dormitory->id) }}">รายการกิจกรรมประจำปี</a>
-                                </li>
-                                <li class="list-group-item"><a
-                                        href="{{ route('report.dorm.index', Auth::user()->dorm->dormitory->id) }}">รายชื่อสมาชิกในหอพัก</a>
-                                </li>
-                                <li class="list-group-item"><a
-                                        href="{{ route('report.activity.show', ['id' => Auth::user()->id, 'dormId' => Auth::user()->dorm->dormitory->id]) }}">ผลการเข้าร่วมกิจกรรม</a>
-                                </li>
-                                <li class="list-group-item"><a
-                                        href="{{ route('report.activity.showAll', ['id' => Auth::user()->dorm->dormitory->id]) }}">ผลการเข้าร่วมกิจกรรมนักศึกษาในหอพัก</a>
-                                </li>
-                                {{-- <li class="list-group-item"><a href="#">คะแนนการสัมภาษณ์</a></li> --}}
-                                <li class="list-group-item"><a
-                                        href="{{ route('report.result.index', Auth::user()->dorm->dormitory->id) }}">ผลการคัดกรองนักศึกษาเข้าพักในหอพักส่วนกลาง</a>
-                                </li>
+                                @if (Auth::user()->dorm != null)
+                                    <li class="list-group-item"><a
+                                            href="{{ route('report.activity.index', Auth::user()->dorm->dormitory->id) }}">รายการกิจกรรมประจำปี</a>
+                                    </li>
+                                    <li class="list-group-item"><a
+                                            href="{{ route('report.dorm.index', Auth::user()->dorm->dormitory->id) }}">รายชื่อสมาชิกในหอพัก</a>
+                                    </li>
+                                    <li class="list-group-item"><a
+                                            href="{{ route('report.activity.show', ['id' => Auth::user()->id, 'dormId' => Auth::user()->dorm->dormitory->id]) }}">ผลการเข้าร่วมกิจกรรม</a>
+                                    </li>
+                                    <li class="list-group-item"><a
+                                            href="{{ route('report.activity.showAll', ['id' => Auth::user()->dorm->dormitory->id]) }}">ผลการเข้าร่วมกิจกรรมนักศึกษาในหอพัก</a>
+                                    </li>
+                                    {{-- <li class="list-group-item"><a href="#">คะแนนการสัมภาษณ์</a></li> --}}
+                                    <li class="list-group-item"><a
+                                            href="{{ route('report.result.index', Auth::user()->dorm->dormitory->id) }}">ผลการคัดกรองนักศึกษาเข้าพักในหอพักส่วนกลาง</a>
+                                    </li>
+                                @else
+                                    <li class="list-group-item"><a>รายการกิจกรรมประจำปี</a>
+                                    </li>
+                                    <li class="list-group-item"><a >รายชื่อสมาชิกในหอพัก</a>
+                                    </li>
+                                    <li class="list-group-item"><a >ผลการเข้าร่วมกิจกรรม</a>
+                                    </li>
+                                    <li class="list-group-item"><a >ผลการเข้าร่วมกิจกรรมนักศึกษาในหอพัก</a>
+                                    </li>
+                                    {{-- <li class="list-group-item"><a href="#">คะแนนการสัมภาษณ์</a></li> --}}
+                                    <li class="list-group-item"><a
+                                           >ผลการคัดกรองนักศึกษาเข้าพักในหอพักส่วนกลาง</a>
+                                    </li>
+                                @endif
                             </ul>
                         </div>
                     </div>

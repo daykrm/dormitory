@@ -17,6 +17,7 @@ class CreateDormitoryDetailsTable extends Migration
             $table->id();
             $table->foreignId('dormitory_id')->constrained('dormitories');
             $table->foreignId('room_id')->constrained('rooms');
+            $table->unique(['dormitory_id', 'room_id']);
             $table->timestamps();
         });
     }

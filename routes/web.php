@@ -68,6 +68,8 @@ Route::resource('user', 'StudentController');
 
 Route::resource('dorm', 'DormController');
 
+Route::resource('room','RoomController');
+
 Route::get('user/all/{id}', 'StudentController@getUserByDormId');
 
 Route::get('/findByUsername/{id}', 'StudentController@findByUsername')->name('findByUsername');

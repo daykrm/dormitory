@@ -14,7 +14,7 @@
                             <th>#</th>
                             <th>ชื่อหอพัก</th>
                             <th>จำนวนห้องพัก</th>
-                            <th>จัดการ</th>
+                            <th class="text-right"></th>
                         </thead>
                         <tbody>
                             @foreach ($dorms as $key => $item)
@@ -22,8 +22,12 @@
                                     <td>{{ $key + 1 }}</td>
                                     <td>{{ $item->name }}</td>
                                     <td>{{ $item->rooms->count('id') }}</td>
-                                    <td>
-                                        <a href="{{ route('dorm.edit', $item) }}" class="btn btn-outline-primary">แก้ไข</a>
+                                    <td class="text-right">
+                                        <a href="{{ route('dorm.edit', $item) }}"
+                                            class="btn btn-outline-primary">แก้ไข</a>
+                                        <a href="{{ route('room.show', $item->id) }}"
+                                            class="btn btn-primary ml-2">จัดการห้องพัก
+                                        </a>
                                     </td>
                                 </tr>
                             @endforeach
