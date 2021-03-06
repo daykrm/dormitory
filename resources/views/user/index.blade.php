@@ -17,9 +17,15 @@ if (session('user')) {
                     <div class="col-md-6">
                         <select name="dorm" id="dorm" class="form-control" required>
                             <option value="">เลือกหอพัก</option>
-                            @foreach ($dorms as $item)
-                                <option value="{{ $item->id }}" @if ($dormId == $item->id) selected @endif>{{ $item->name }}</option>
-                            @endforeach
+                            @if (Auth::guard('personel')->check())
+                                @foreach (Auth::guard('personel')->user()->dorms as $item)
+                                    <option value="{{ $item->id }}" @if ($dormId == $item->id) selected @endif>{{ $item->name }}</option>
+                                @endforeach
+                            @else
+                                @foreach ($dorms as $item)
+                                    <option value="{{ $item->id }}" @if ($dormId == $item->id) selected @endif>{{ $item->name }}</option>
+                                @endforeach
+                            @endif
                         </select>
                     </div>
                 </div>
@@ -87,9 +93,9 @@ if (session('user')) {
                 $('#form-search').submit()
             })
 
-            $('#filter').on('keyup', function(){
+            $('#filter').on('keyup', function() {
                 var value = $(this).val();
-                $('#table tr').filter(function(){
+                $('#table tr').filter(function() {
                     $(this).toggle($(this).text().indexOf(value) > -1)
                 })
             });

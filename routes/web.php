@@ -42,9 +42,12 @@ Route::prefix('/report')->name('report.')->namespace('Report')->group(function (
     Route::prefix('/result')->name('result.')->group(function () {
         Route::post('/store', 'ResultController@store')->name('store');
         Route::get('/select', 'ResultController@select')->name('select');
+        Route::get('/select/{id}', 'ResultController@edit')->name('edit');
         Route::post('/find', 'ResultController@show')->name('find');
         Route::get('/{id}', 'ResultController@index')->name('index');
     });
+
+    Route::resource('validate', 'ValidateController');
 
     Route::prefix('/dorm')->name('dorm.')->group(function () {
         Route::get('/{id}', 'DormController@index')->name('index');
@@ -52,6 +55,7 @@ Route::prefix('/report')->name('report.')->namespace('Report')->group(function (
 
     Route::prefix('/interview')->name('interview.')->group(function () {
         Route::get('/', 'InterviewController@index')->name('index');
+        Route::get('/select/{id}', 'InterviewController@edit')->name('edit');
         Route::get('/{id}', 'InterviewController@show')->name('show');
     });
 });
@@ -68,7 +72,7 @@ Route::resource('user', 'StudentController');
 
 Route::resource('dorm', 'DormController');
 
-Route::resource('room','RoomController');
+Route::resource('room', 'RoomController');
 
 Route::get('user/all/{id}', 'StudentController@getUserByDormId');
 
@@ -91,6 +95,8 @@ Route::post('/storeScore', 'ScoreController@store')->name('storeScore');
 Route::get('/getRoom/{id}', 'DormitoryDetailController@getRoom')->name('getRoom');
 
 Route::resource('application', 'ApplicationController');
+
+Route::get('application/showall/{id}', 'ApplicationController@showAll');
 
 Route::get('application/detail/{id}', 'ApplicationController@showApp');
 

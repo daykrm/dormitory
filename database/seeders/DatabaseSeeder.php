@@ -27,6 +27,8 @@ class DatabaseSeeder extends Seeder
             PersonelSeeder::class,
             YearConfigSeeder::class,
             OccupationSeeder::class,
+            PersonDormRelaSeeder::class,
+            RegisterRangeSeeder::class,
         ]);
     }
 }

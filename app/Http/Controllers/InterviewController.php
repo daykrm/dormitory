@@ -7,6 +7,7 @@ use App\Models\Application;
 use App\Models\Dormitory;
 use App\Models\Faculty;
 use App\Models\Interview_score;
+use App\Models\Personel;
 use App\Models\Result;
 use App\Models\User;
 use App\Models\YearConfig;
@@ -242,6 +243,8 @@ class InterviewController extends Controller
      */
     public function edit($id)
     {
+        $dorms = Personel::find($id)->dorms;
+        return view('interview.select', compact('dorms'));
     }
 
     /**

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Report;
 use App\Http\Controllers\Controller;
 use App\Models\Activity;
 use App\Models\Dormitory;
+use App\Models\Personel;
 use App\Models\Result;
 use App\Models\User;
 use App\Models\YearConfig;
@@ -22,6 +23,12 @@ class InterviewController extends Controller
     public function index()
     {
         $dorms = Dormitory::all();
+        return view('report.interview.select', compact('dorms'));
+    }
+
+    public function edit($id)
+    {
+        $dorms = Personel::find($id)->dorms;
         return view('report.interview.select', compact('dorms'));
     }
 

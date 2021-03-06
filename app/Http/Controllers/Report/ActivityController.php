@@ -46,7 +46,7 @@ class ActivityController extends Controller
                     ->select('a.credit')
                     ->join('activities as a', 'ac.activity_id', '=', 'a.id')
                     ->where('a.id', $item->id)
-                    ->where('ac.student_id',$user->id)->first();
+                    ->where('ac.student_id', $user->id)->first();
                 if ($credit != null) {
                     $array['score'] = $credit->credit;
                 }

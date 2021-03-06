@@ -30,6 +30,19 @@ class ApplicationController extends Controller
     public function index()
     {
         //
+        $dorms = Dormitory::all();
+        return view('application.select', compact('dorms'));
+    }
+
+    public function showAll($id)
+    {
+        $year = YearConfig::find(1);
+        $dorm = Dormitory::find($id);
+        $apps = Application::where([
+            ['year', $year->year],
+            ['dorm_id', $id]
+        ])->simplePaginate(5);
+        return view('application.showall', compact('apps','dorm'));
     }
 
     public function checkApplicationThisYear($userId)

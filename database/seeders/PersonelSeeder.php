@@ -22,7 +22,7 @@ class PersonelSeeder extends Seeder
             'password' => Hash::make('123456'),
             'email' => 'personel@gmail.com',
             'prefix_id' => 1,
-            'dorm_id' => 1,
+            //'dorm_id' => 1,
         ]);
     }
 }

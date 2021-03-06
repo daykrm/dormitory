@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Dormitory;
 use App\Models\DormitoryDetail;
+use App\Models\Personel;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -108,6 +109,8 @@ class StudentController extends Controller
     public function edit($id)
     {
         //
+        $dorm = Personel::find($id)->dorms;
+        return view('user.select', compact('dorm'));
     }
 
     /**

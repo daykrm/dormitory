@@ -18,6 +18,7 @@ class CreateReportResultTable extends Migration
             $table->string('year')->default(date('Y'));
             $table->foreignId('dormitory_id')->constrained('dormitories');
             $table->string('path');
+            $table->integer('status')->default(1); // 0 มีสิทธฺ์สัม  1 ประกาศผล 
             $table->timestamps();
         });
     }

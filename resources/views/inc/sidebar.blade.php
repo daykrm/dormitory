@@ -1,3 +1,18 @@
+@inject('range', 'App\Models\RegisterRange')
+
+@php
+$r = $range::find(1);
+$start = strtotime($r->startDate);
+$end = strtotime($r->endDate);
+$now = strtotime(date('Y-m-d'));
+
+if ($now >= $start && $now <= $end) {
+    $isRegisTime = true;
+} else {
+    $isRegisTime = false;
+}
+@endphp
+
 <nav class="col-md-2 d-none d-md-block bg-light sidebar">
     <div class="sidebar-sticky">
         <ul class="nav flex-column">
@@ -8,7 +23,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link btn btn-primary mt-2" href="{{ route('checkApp', Auth::user()->id) }}">
+                    <a class="nav-link btn btn-primary mt-2 @if (!$isRegisTime) disabled @endif" href="{{ route('checkApp', Auth::user()->id) }}">
                         บันทึกใบสมัคร
                     </a>
                 </li>
@@ -31,17 +46,19 @@
                                     </li>
                                     {{-- <li class="list-group-item"><a href="#">คะแนนการสัมภาษณ์</a></li> --}}
                                     <li class="list-group-item"><a
+                                            href="{{ route('report.validate.show', Auth::user()->dorm->dormitory->id) }}">รายชื่อผู้มีสิทธิ์สอบสัมภาษณ์</a>
+                                    </li>
+                                    <li class="list-group-item"><a
                                             href="{{ route('report.result.index', Auth::user()->dorm->dormitory->id) }}">ผลการคัดกรองนักศึกษาเข้าพักในหอพักส่วนกลาง</a>
                                     </li>
                                 @else
-                                    <li class="list-group-item"><a >รายการกิจกรรมประจำปี</a>
+                                    <li class="list-group-item"><a>รายการกิจกรรมประจำปี</a>
                                     </li>
                                     {{-- <li class="list-group-item"><a href="#">รายชื่อสมาชิกในหอพัก</a></li> --}}
-                                    <li class="list-group-item"><a >ผลการเข้าร่วมกิจกรรม</a>
+                                    <li class="list-group-item"><a>ผลการเข้าร่วมกิจกรรม</a>
                                     </li>
                                     {{-- <li class="list-group-item"><a href="#">คะแนนการสัมภาษณ์</a></li> --}}
-                                    <li class="list-group-item"><a
-                                            >ผลการคัดกรองนักศึกษาเข้าพักในหอพักส่วนกลาง</a>
+                                    <li class="list-group-item"><a>ผลการคัดกรองนักศึกษาเข้าพักในหอพักส่วนกลาง</a>
                                     </li>
                                 @endif
                             </ul>
@@ -108,20 +125,22 @@
                                     </li>
                                     {{-- <li class="list-group-item"><a href="#">คะแนนการสัมภาษณ์</a></li> --}}
                                     <li class="list-group-item"><a
+                                            href="{{ route('report.validate.show', Auth::user()->dorm->dormitory->id) }}">รายชื่อผู้มีสิทธิ์สอบสัมภาษณ์</a>
+                                    </li>
+                                    <li class="list-group-item"><a
                                             href="{{ route('report.result.index', Auth::user()->dorm->dormitory->id) }}">ผลการคัดกรองนักศึกษาเข้าพักในหอพักส่วนกลาง</a>
                                     </li>
                                 @else
                                     <li class="list-group-item"><a>รายการกิจกรรมประจำปี</a>
                                     </li>
-                                    <li class="list-group-item"><a >รายชื่อสมาชิกในหอพัก</a>
+                                    <li class="list-group-item"><a>รายชื่อสมาชิกในหอพัก</a>
                                     </li>
-                                    <li class="list-group-item"><a >ผลการเข้าร่วมกิจกรรม</a>
+                                    <li class="list-group-item"><a>ผลการเข้าร่วมกิจกรรม</a>
                                     </li>
-                                    <li class="list-group-item"><a >ผลการเข้าร่วมกิจกรรมนักศึกษาในหอพัก</a>
+                                    <li class="list-group-item"><a>ผลการเข้าร่วมกิจกรรมนักศึกษาในหอพัก</a>
                                     </li>
                                     {{-- <li class="list-group-item"><a href="#">คะแนนการสัมภาษณ์</a></li> --}}
-                                    <li class="list-group-item"><a
-                                           >ผลการคัดกรองนักศึกษาเข้าพักในหอพักส่วนกลาง</a>
+                                    <li class="list-group-item"><a>ผลการคัดกรองนักศึกษาเข้าพักในหอพักส่วนกลาง</a>
                                     </li>
                                 @endif
                             </ul>
@@ -179,6 +198,9 @@
                                 <li class="list-group-item"><a
                                         href="{{ route('report.interview.index') }}">คะแนนการสัมภาษณ์</a></li>
                                 <li class="list-group-item"><a
+                                        href="{{ route('report.validate.index') }}">รายชื่อผู้มีสิทธิ์สอบสัมภาษณ์</a>
+                                </li>
+                                <li class="list-group-item"><a
                                         href="{{ route('report.result.select') }}">ผลการคัดกรองนักศึกษาเข้าพักในหอพักส่วนกลาง</a>
                                 </li>
                             </ul>
@@ -192,12 +214,19 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link btn btn-primary mt-2" href="{{ route('interview.index') }}">
+                    <a class="nav-link btn btn-primary mt-2"
+                        href="{{ route('interview.edit', Auth::guard('personel')->user()->id) }}">
                         การจัดการคะแนนการสัมภาษณ์
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link btn btn-primary mt-2" href="{{ route('user.index') }}">
+                    <a href="{{ route('application.index') }}" class="nav-link btn btn-primary mt-2">
+                        ข้อมูลใบสมัคร
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link btn btn-primary mt-2"
+                        href="{{ route('user.edit', Auth::guard('personel')->user()->id) }}">
                         การกำหนดสิทธิ์นักศึกษา
                     </a>
                 </li>
@@ -214,9 +243,13 @@
                                 <li class="list-group-item"><a href="#">รายชื่อสมาชิกในหอพัก</a></li>
                                 <li class="list-group-item"><a href="#">ผลการเข้าร่วมกิจกรรม</a></li> --}}
                                 <li class="list-group-item"><a
-                                        href="{{ route('report.interview.index') }}">คะแนนการสัมภาษณ์</a></li>
+                                        href="{{ route('report.interview.edit', Auth::guard('personel')->user()->id) }}">คะแนนการสัมภาษณ์</a>
+                                </li>
                                 <li class="list-group-item"><a
-                                        href="{{ route('report.result.select') }}">ผลการคัดกรองนักศึกษาเข้าพักในหอพักส่วนกลาง</a>
+                                        href="{{ route('report.validate.index') }}">รายชื่อผู้มีสิทธิ์สอบสัมภาษณ์</a>
+                                </li>
+                                <li class="list-group-item"><a
+                                        href="{{ route('report.result.edit', Auth::guard('personel')->user()->id) }}">ผลการคัดกรองนักศึกษาเข้าพักในหอพักส่วนกลาง</a>
                                 </li>
                             </ul>
                         </div>

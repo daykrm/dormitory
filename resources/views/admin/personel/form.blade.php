@@ -83,15 +83,19 @@
 <div class="row justify-content-center">
     <div class="form-group col-md-4">
         <label>หอพัก</label>
-        <select id="dorm" name="dorm" required class="selectpicker form-control @error('dorm') is-invalid @enderror"
-            title="เลือกหอพัก" data-live-search="true">
+        <select id="dorm" name="dorm[]" multiple required
+            class="selectpicker form-control @error('dorm') is-invalid @enderror" title="เลือกหอพัก"
+            data-live-search="true">
             @foreach ($dorms as $item)
                 @if (isset($person))
-                    <option value="{{ $item->id }}" @if ($person->dorm_id == $item->id) selected @endif>
-                        {{ $item->name }}</option>
-                @else
-                    <option value="{{ $item->id }}">{{ $item->name }}</option>
-                @endif
+                    <option value="{{ $item->id }}" @foreach ($person->dorms as $val)  @if ($val->id==$item->id)
+                        selected @endif
+                @endforeach
+                >
+                {{ $item->name }}</option>
+            @else
+                <option value="{{ $item->id }}">{{ $item->name }}</option>
+            @endif
             @endforeach
         </select>
     </div>

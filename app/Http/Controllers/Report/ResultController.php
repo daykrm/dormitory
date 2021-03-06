@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Report;
 
 use App\Http\Controllers\Controller;
 use App\Models\Dormitory;
+use App\Models\Personel;
 use App\Models\YearConfig;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -64,6 +65,13 @@ class ResultController extends Controller
     {
         $year = YearConfig::find(1);
         $dorm = Dormitory::all();
+        return view('report.result.select', compact('year', 'dorm'));
+    }
+
+    public function edit($id)
+    {
+        $year = YearConfig::find(1);
+        $dorm = Personel::find($id)->dorms;
         return view('report.result.select', compact('year', 'dorm'));
     }
 }

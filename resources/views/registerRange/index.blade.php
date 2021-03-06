@@ -10,12 +10,12 @@
                     <div class="row justify-content-center">
                         <div class="col-md-3">
                             <label>วันที่เริ่มต้น</label>
-                            <input type="text" id="startDate" required name="startDate"
+                            <input type="text" id="startDate" required autocomplete="off" name="startDate"
                                 value="{{ $range->startDate ?? '' }}" class="form-control">
                         </div>
                         <div class="col-md-3">
                             <label>วันที่สิ้นสุด</label>
-                            <input type="text" id="endDate" required name="endDate" value="{{ $range->endDate ?? '' }}"
+                            <input type="text" id="endDate" required name="endDate" autocomplete="off" value="{{ $range->endDate ?? '' }}"
                                 class="form-control">
                         </div>
                     </div>

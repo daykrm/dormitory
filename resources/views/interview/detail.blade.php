@@ -103,6 +103,9 @@
                     @endif
                 </div>
             </div>
+            <div class="row justify-content-center mt-4">
+                <button class="btn btn-primary" onclick="window.history.back()">กลับ</button>
+            </div>
         </div>
     </div>
 @endsection

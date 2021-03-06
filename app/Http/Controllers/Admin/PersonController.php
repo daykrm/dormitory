@@ -60,18 +60,29 @@ class PersonController extends Controller
 
         $request->validate($rules);
 
+
+
         $person = Personel::firstOrNew([
             'name' => $request->get('name'),
             'username' => $request->get('username'),
             'password' => Hash::make($request->get('password')),
             'email' => $request->get('email'),
             'prefix_id' => $request->get('prefix'),
-            'dorm_id' => $request->get('dorm'),
         ]);
 
-        $person->save();
+        if ($person->save()) {
 
-        return redirect()->action([PersonController::class, 'index'])->with('status', 'เพิ่มข้อมูลสำเร็จ');
+            $dorms = $request->get('dorm');
+
+            foreach ($dorms as $item) {
+                DB::table('person_dorm_relas')->insert([
+                    'personel_id' => $person->id,
+                    'dorm_id' => $item,
+                ]);
+            }
+
+            return redirect()->action([PersonController::class, 'index'])->with('status', 'เพิ่มข้อมูลสำเร็จ');
+        }
     }
 
     /**
@@ -131,15 +142,25 @@ class PersonController extends Controller
         $person->username = $request->get('username');
         $person->email = $request->get('email');
         $person->prefix_id = $request->get('prefix');
-        $person->dorm_id = $request->get('dorm');
 
-        if($request->filled('password')){
+        if ($request->filled('password')) {
             $person->password = Hash::make($request->get('password'));
         }
 
-        $person->save();
+        if ($person->save()) {
+            $dorms = $request->get('dorm');
 
-        return redirect()->action([PersonController::class, 'index'])->with('status', 'อัพเดทข้อมูลสำเร็จ');
+            DB::table('person_dorm_relas')->where('personel_id', $id)->whereNotIn('dorm_id', $dorms)->delete();
+
+            foreach ($dorms as $item) {
+                DB::table('person_dorm_relas')->upsert([
+                    'personel_id' => $person->id,
+                    'dorm_id' => $item,
+                ], 'person_dorm_relas_personel_id_dorm_id_unique');
+            }
+
+            return redirect()->action([PersonController::class, 'index'])->with('status', 'อัพเดทข้อมูลสำเร็จ');
+        }
     }
 
     /**

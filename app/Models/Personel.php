@@ -24,9 +24,9 @@ class Personel extends Authenticatable
         'password',
     ];
 
-    public function dorm()
+    public function dorms()
     {
-        return $this->belongsTo(Dormitory::class, 'dorm_id');
+        return $this->belongsToMany(Dormitory::class, 'person_dorm_relas', 'personel_id', 'dorm_id');
     }
 
     public function prefix()
