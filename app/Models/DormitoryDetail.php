@@ -9,6 +9,11 @@ class DormitoryDetail extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'dormitory_id',
+        'room_id'
+    ];
+
     public function dormitory()
     {
         return $this->belongsTo(Dormitory::class);

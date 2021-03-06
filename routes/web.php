@@ -94,6 +94,8 @@ Route::post('/storeScore', 'ScoreController@store')->name('storeScore');
 
 Route::get('/getRoom/{id}', 'DormitoryDetailController@getRoom')->name('getRoom');
 
+Route::post('/dormitorydetail', 'DormitoryDetailController@store')->name('dormRoomStore');
+
 Route::resource('application', 'ApplicationController');
 
 Route::get('application/showall/{id}', 'ApplicationController@showAll');

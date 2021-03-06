@@ -40,6 +40,17 @@ class RoomController extends Controller
     public function store(Request $request)
     {
         //
+        $room = new Room();
+
+        $name = $request->get('name');
+
+        $room = Room::firstOrNew(['name' => $name]);
+
+        $room->name = $name;
+
+        if ($room->save()) {
+            return back()->with('status', 'เพิ่มห้องใหม่สำเร็จ');
+        }
     }
 
     /**
@@ -54,12 +65,12 @@ class RoomController extends Controller
         $dorm = Dormitory::find($id);
         $rooms = $dorm->rooms;
         $in_room = [];
-        foreach($rooms as $item){
+        foreach ($rooms as $item) {
             $in_room[] = $item->id;
         }
         $allRooms = Room::all();
-        $availableRoom = Room::whereNotIn('id',$in_room)->get();
-        return view('dorm.room.index', compact('dorm', 'rooms', 'availableRoom','allRooms'));
+        $availableRoom = Room::whereNotIn('id', $in_room)->get();
+        return view('dorm.room.index', compact('dorm', 'rooms', 'availableRoom', 'allRooms'));
     }
 
     /**
