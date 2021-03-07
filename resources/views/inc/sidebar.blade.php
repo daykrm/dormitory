@@ -149,7 +149,7 @@ if ($now >= $start && $now <= $end) {
                 </div>
             @elseif (Auth::guard('web')->check() && Auth::guard('web')->user()->type->id == 3)
                 <li class="nav-item">
-                    <a class="nav-link btn btn-primary mt-2" href="#">
+                    <a class="nav-link btn btn-primary mt-2" href="{{ route('home') }}">
                         หน้าแรก <span class="sr-only">(current)</span>
                     </a>
                 </li>
