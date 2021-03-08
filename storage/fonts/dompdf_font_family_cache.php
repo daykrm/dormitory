@@ -79,5 +79,12 @@
   ),
   'th' => array(
     'normal' => $fontDir . '/th_normal_aa30662ae9aa01b978373a282358181c',
+    'bold' => $fontDir . '/th_bold_31a498485618787d0dc5302adfa4fa41',
+  ),
+  'th-b' => array(
+    'bold' => $fontDir . '/th_b_bold_31a498485618787d0dc5302adfa4fa41',
+  ),
+  'thb' => array(
+    'bold' => $fontDir . '/thb_bold_31a498485618787d0dc5302adfa4fa41',
   ),
 ) ?>

@@ -3,7 +3,13 @@
 @section('content')
     <div class="card">
         <div class="card-header">
-            รายชื่อผู้กรอกใบสมัคร{{ $dorm->name }}
+            <div class="row justify-content-between">
+                <div class="col-md-2"></div>
+                <div class="col-md-8">รายชื่อผู้กรอกใบสมัคร{{ $dorm->name }}</div>
+                <div class="col-md-2">
+                    <a target="_blank" href="{{ route('showValidate', $dorm->id) }}" class="btn btn-light">พิมพ์</a>
+                </div>
+            </div>
         </div>
         <div class="card-body">
             <div class="container">
@@ -16,7 +22,6 @@
                                 <th>ชื่อ - สกุล</th>
                                 <th>คณะ</th>
                                 <th>ชั้นปี</th>
-                                <th></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -27,7 +32,6 @@
                                     <td>{{ $item->student->prefix->name }}{{ $item->student->name }}</td>
                                     <td>{{ $item->student->faculty->name }}</td>
                                     <td>{{ $item->student->year() }}</td>
-                                    <td class="text-right"><a href="{{ url('application/detail/' . $item->id) }}">พิมพ์</a></td>
                                 </tr>
                             @endforeach
                         </tbody>

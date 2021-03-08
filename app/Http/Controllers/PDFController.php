@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Activity;
+use App\Models\Application;
 use App\Models\Dormitory;
 use App\Models\YearConfig;
 use Illuminate\Http\Request;
@@ -12,6 +13,19 @@ use PDF;
 class PDFController extends Controller
 {
     //
+
+    public function showValidate($id)
+    {
+        $year = YearConfig::find(1);
+        $dorm = Dormitory::find($id);
+        $apps = Application::where([
+            ['year', $year->year],
+            ['dorm_id', $id]
+        ])->get();
+        $pdf = PDF::loadView('application.pdf', compact('apps', 'dorm', 'year'));
+        return $pdf->stream();
+        //return view('application.pdf', compact('apps', 'dorm', 'year'));
+    }
 
     public function showDormActivities($dormId)
     {
