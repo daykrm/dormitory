@@ -97,7 +97,7 @@ if ($now >= $start && $now <= $end) {
                     </li>
                 @endif
                 <li class="nav-item">
-                    <a class="nav-link btn btn-primary mt-2" href="{{ route('checkApp', Auth::user()->id) }}">
+                    <a class="nav-link btn btn-primary mt-2 @if (!$isRegisTime) disabled @endif" href="{{ route('checkApp', Auth::user()->id) }}">
                         บันทึกใบสมัคร
                     </a>
                 </li>
