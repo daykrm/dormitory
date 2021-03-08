@@ -1,7 +1,7 @@
-$path-to-font: '../fonts/';
+$path-to-font: "../fonts/";
 @font-face {
-    font-family: 'DB';
-    src: url('#{$path-to-font}Heven.ttf');
+    font-family: "DB";
+    src: url("#{$path-to-font}Heven.ttf");
     font-weight: normal;
     font-style: normal;
 }
@@ -10,7 +10,7 @@ $path-to-font: '../fonts/';
 $body-bg: #f8fafc;
 
 // Typography
-$font-family-sans-serif: 'DB';
+$font-family-sans-serif: "DB";
 $font-size-base: 1.2rem;
 $line-height-base: 1.6;
 

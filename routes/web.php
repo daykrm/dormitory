@@ -102,6 +102,8 @@ Route::get('application/showall/{id}', 'ApplicationController@showAll');
 
 Route::get('application/detail/{id}', 'ApplicationController@showApp');
 
+Route::get('pdf-dorm-activity/{id}', 'PDFController@showDormActivities')->name('showPDFDormActivity');
+
 Route::get('/checkApp/{id}', 'ApplicationController@checkApplicationThisYear')->name('checkApp');
 
 Route::resource('activity', 'ActivityController');

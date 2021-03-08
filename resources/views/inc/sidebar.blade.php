@@ -221,7 +221,7 @@ if ($now >= $start && $now <= $end) {
                 </li>
                 <li class="nav-item">
                     <a href="{{ route('application.index') }}" class="nav-link btn btn-primary mt-2">
-                        ข้อมูลใบสมัคร
+                        รายชื่อผู้กรอกใบสมัคร
                     </a>
                 </li>
                 <li class="nav-item">

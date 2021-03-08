@@ -2,7 +2,15 @@
 
 @section('content')
     <div class="card">
-        <div class="card-header">ผลการเข้าร่วมกิจกรรม{{ $dorm->name }} ปีการศึกษา {{ $year->year + 543 }}</div>
+        <div class="card-header">
+            <div class="row justify-content-between">
+                <div class="col-md-2"></div>
+                <div class="col-md-8">ผลการเข้าร่วมกิจกรรม{{ $dorm->name }} ปีการศึกษา {{ $year->year + 543 }}</div>
+                <div class="col-md-2">
+                    <a target="_blank" href="{{ route('showPDFDormActivity', $dorm->id) }}" class="btn btn-light">พิมพ์</a>
+                </div>
+            </div>
+        </div>
         <div class="card-body">
             <div class="container">
                 <div class="table-responsive">
@@ -28,7 +36,7 @@
                                     @foreach ($item['activities'] as $val)
                                         <td>{{ $val['score'] }}</td>
                                     @endforeach
-                                    <td>{{ $item['sum_score'] }} / {{$sumCredit}}</td>
+                                    <td>{{ $item['sum_score'] }} / {{ $sumCredit }}</td>
                                     <td>{{ $item['percent'] }}</td>
                                 </tr>
                             @endforeach

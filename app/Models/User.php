@@ -50,6 +50,12 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    public function year()
+    {
+        $year = YearConfig::find(1);
+        return $year->year - $this->enrolled_year;
+    }
+
     public function type()
     {
         return $this->belongsTo(UserType::class);
