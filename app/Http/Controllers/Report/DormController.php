@@ -26,7 +26,7 @@ class DormController extends Controller
         ->join('rooms','dd.room_id','=','rooms.id')
         ->where('users.type_id','<>','3')
         ->orderBy('rooms.name','ASC')
-        ->get();
+        ->simplePaginate(2);
         return view('report.dorm.index', compact('year', 'users'));
     }
 }

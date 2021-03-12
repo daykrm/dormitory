@@ -50,6 +50,9 @@
                     @endif
                 @endif
             </div>
+            <div class="row justify-content-center mt-4">
+                <a class="btn btn-outline-primary" href="{{ route('student.edit', Auth::user()->id) }}">แก้ไข</a>
+            </div>
         </div>
     </div>
 @endsection

@@ -44,7 +44,7 @@
                                 <td class="text-center">{{ $item['kku_score'] }}</td>
                                 <td class="text-center">{{ $item['family_score'] }}</td>
                                 <td class="text-center">{{ $item['behavior_score'] }}</td>
-                                <td class="text-center">{{ $item['sum_score'] }}</td>
+                                <td class="text-center">{{ $item['dorm_score'] + $item['kku_score'] + $item['family_score'] + $item['behavior_score'] }}</td>
                                 @if ($item['status'] == 1)
                                     <td class="text-center text-success">ผ่าน</td>
                                 @else

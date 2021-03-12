@@ -3,8 +3,17 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\Personel\HomeController as PersonelHomeController;
+use App\Models\Dormitory;
+use App\Models\Faculty;
+use App\Models\Prefix;
+use App\Models\Province;
+use App\Models\Room;
+use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Auth;
 
 class LoginController extends Controller
 {
@@ -45,11 +54,32 @@ class LoginController extends Controller
 
     public function showLoginForm()
     {
+        if (Auth::guard('web')->check()) {
+            return redirect()->action([HomeController::class, 'index']);
+        }
+
+        if (Auth::guard('personel')->check()) {
+            return redirect()->action([PersonelHomeController::class, 'index']);
+        }
+
         return view('auth.login', [
             'title' => 'Login',
             'loginRoute' => 'login',
             'forgotPasswordRoute' => 'password.request',
         ]);
+    }
+
+    public function edit($id)
+    {
+        dd($id);
+        $user = User::find($id);
+        $prefixes = Prefix::all();
+        $provinces = Province::all();
+        $faculties = Faculty::all();
+        $dorms = Dormitory::all();
+        $rooms = Room::all();
+        $dorm_detail = Dormitory::all();
+        return view('auth.edit', compact('user', 'prefixes', 'provinces', 'faculties', 'dorms', 'rooms', 'dorm_detail'));
     }
 
     // public function authenticated()
