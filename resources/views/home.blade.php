@@ -50,9 +50,11 @@
                     @endif
                 @endif
             </div>
-            <div class="row justify-content-center mt-4">
-                <a class="btn btn-outline-primary" href="{{ route('student.edit', Auth::user()->id) }}">แก้ไข</a>
-            </div>
+            @if (Auth::user()->type_id != 3)
+                <div class="row justify-content-center mt-4">
+                    <a class="btn btn-outline-primary" href="{{ route('student.edit', Auth::user()->id) }}">แก้ไข</a>
+                </div>
+            @endif
         </div>
     </div>
 @endsection

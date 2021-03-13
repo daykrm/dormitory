@@ -69,6 +69,9 @@ class ActivityController extends Controller
                 'sum_score' => $sumUserCredit,
                 'percent' => $percent,
                 'activities' => $score,
+                'room' => $user->dorm->room->name,
+                'faculty' => $user->faculty->name,
+                'enroll' => $user->enrolled_year,
             );
             array_push($data, $arr);
         }

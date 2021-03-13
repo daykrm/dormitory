@@ -111,11 +111,11 @@ $n = 100;
         <thead>
             <tr>
                 <th class="text-center">ที่</th>
+                <th class="text-center">ห้องพัก</th>
                 <th class="text-center">รหัสนักศึกษา</th>
                 <th class="text-center">ชื่อ - สกุล</th>
-                @foreach ($data[0]['activities'] as $key => $item)
-                    <th class="text-center">กิจกรรม{{ $item['name'] }}</th>
-                @endforeach
+                <th class="text-center">คณะ</th>
+                <th class="text-center">ชั้นปี</th>
                 <th class="text-center">คะแนนรวม</th>
                 <th class="text-center">ร้อยละ</th>
             </tr>
@@ -124,11 +124,11 @@ $n = 100;
             @foreach ($data as $key => $item)
                 <tr>
                     <td class="text-center">{{ $key + 1 }}</td>
+                    <td class="text-center">{{ $item['room'] }}</td>
                     <td class="text-center">{{ $item['username'] }}</td>
                     <td class="text-center">{{ $item['prefix'] }}{{ $item['name'] }}</td>
-                    @foreach ($item['activities'] as $val)
-                        <td class="text-center">{{ $val['score'] }}</td>
-                    @endforeach
+                    <td class="text-center">{{ $item['faculty'] }}</td>
+                    <td class="text-center">{{ $year->year - $item['enroll'] }}</td>
                     <td class="text-center">{{ $item['sum_score'] }} / {{ $sumCredit }}</td>
                     <td class="text-center">{{ $item['percent'] }}</td>
                 </tr>

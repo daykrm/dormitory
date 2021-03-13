@@ -7,7 +7,8 @@
                 <div class="col-md-2"></div>
                 <div class="col-md-8">ผลการเข้าร่วมกิจกรรม{{ $dorm->name }} ปีการศึกษา {{ $year->year + 543 }}</div>
                 <div class="col-md-2">
-                    <a target="_blank" href="{{ route('showPDFDormActivity', $dorm->id) }}" class="btn btn-light">พิมพ์</a>
+                    <a target="_blank" href="{{ route('showPDFDormActivity', $dorm->id) }}"
+                        class="btn btn-light">พิมพ์</a>
                 </div>
             </div>
         </div>
@@ -18,11 +19,11 @@
                         <thead>
                             <tr>
                                 <th>#</th>
+                                <th>ห้องพัก</th>
                                 <th>รหัสนักศึกษา</th>
                                 <th>ชื่อ - สกุล</th>
-                                @foreach ($data[0]['activities'] as $key => $item)
-                                    <th>กิจกรรม{{ $item['name'] }}</th>
-                                @endforeach
+                                <th>คณะ</th>
+                                <th>ชั้นปี</th>
                                 <th>คะแนนรวม</th>
                                 <th>ร้อยละ</th>
                             </tr>
@@ -31,11 +32,11 @@
                             @foreach ($data as $key => $item)
                                 <tr>
                                     <td>{{ $key + 1 }}</td>
+                                    <td>{{ $item['room'] }}</td>
                                     <td>{{ $item['username'] }}</td>
                                     <td>{{ $item['prefix'] }}{{ $item['name'] }}</td>
-                                    @foreach ($item['activities'] as $val)
-                                        <td>{{ $val['score'] }}</td>
-                                    @endforeach
+                                    <td>{{ $item['faculty'] }}</td>
+                                    <td>{{ $year->year - $item['enroll'] }}</td>
                                     <td>{{ $item['sum_score'] }} / {{ $sumCredit }}</td>
                                     <td>{{ $item['percent'] }}</td>
                                 </tr>
