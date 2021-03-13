@@ -24,13 +24,17 @@
                         </div>
                         <div class="col-md-10">
                             @foreach (Auth::guard('personel')->user()->dorms as $key => $item)
-                                {{$item->name}}
-                                @if ($key != count(Auth::guard('personel')->user()->dorms) -1)
+                                {{ $item->name }}
+                                @if ($key != count(Auth::guard('personel')->user()->dorms) - 1)
                                     ,
                                 @endif
                             @endforeach
                         </div>
                     @endif
+                </div>
+                <div class="row justify-content-center mt-2">
+                    <a class="btn btn-outline-primary"
+                        href="{{ route('personel.edit', Auth::guard('personel')->user()->id) }}">แก้ไข</a>
                 </div>
             </div>
         </div>

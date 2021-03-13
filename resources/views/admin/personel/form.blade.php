@@ -49,20 +49,22 @@
 
     </div>
 </div>
-<div class="row justify-content-center">
-    <div class="form-group col-md-6">
-        <label>Username</label>
-        <input id="username" type="text" value="{{ $person->username ?? old('username') }}"
-            class="form-control @error('username') is-invalid @enderror" name="username"
-            value="{{ old('username') }}" autofocus>
+@if (!isset($edit))
+    <div class="row justify-content-center">
+        <div class="form-group col-md-6">
+            <label>Username</label>
+            <input id="username" type="text" value="{{ $person->username ?? old('username') }}"
+                class="form-control @error('username') is-invalid @enderror" name="username"
+                value="{{ old('username') }}" autofocus>
 
-        @error('username')
-            <span class="invalid-feedback" role="alert">
-                <strong>{{ $message }}</strong>
-            </span>
-        @enderror
+            @error('username')
+                <span class="invalid-feedback" role="alert">
+                    <strong>{{ $message }}</strong>
+                </span>
+            @enderror
+        </div>
     </div>
-</div>
+@endif
 <div class="row justify-content-center">
     <div class="form-group col-md-3">
         <label>Password</label>

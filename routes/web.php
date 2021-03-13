@@ -60,6 +60,8 @@ Route::prefix('/report')->name('report.')->namespace('Report')->group(function (
     });
 });
 
+Route::resource('personel', 'PersonelController');
+
 Route::resource('student', 'UserController');
 
 Route::resource('faculty', 'FacultyController');
