@@ -9,6 +9,8 @@ use App\Models\Province;
 use App\Models\Room;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -83,6 +85,50 @@ class UserController extends Controller
     public function update(Request $request, $id)
     {
         //
+        if ($request->filled('password')) {
+            $request->validate([
+                'prefix' => 'required',
+                'name' => 'required|string|max:100',
+                'nickname' => 'required|string',
+                'email' => 'required|email|unique:users,email,' . $id,
+                'password' => 'required|string|min:6|confirmed',
+            ]);
+        } else {
+            $request->validate([
+                'prefix' => 'required',
+                'name' => 'required|string|max:100',
+                'nickname' => 'required|string',
+                'email' => 'required|email|unique:users,email,' . $id,
+            ]);
+        }
+
+        $dormDetail = DB::table('dormitory_details')->where([
+            ['dormitory_id', $request->get('dorm')],
+            ['room_id', $request->get('room')]
+        ])->first();
+
+        $user = User::find($id);
+
+        $user->prefix_id = $request->get('prefix');
+        $user->name = $request->get('name');
+        $user->nickname = $request->get('nickname');
+        $user->phone = $request->get('phone');
+        $user->dob = $request->get('dob');
+        $user->province_id = $request->get('province');
+        $user->email = $request->get('email');
+        $user->faculty_id = $request->get('faculty');
+        $user->enrolled_year = $request->get('enroll');
+        $user->dorm_detail_id = $dormDetail->id;
+
+        if ($request->filled('password')) {
+            $user->password = Hash::make($request->get('password'));
+        }
+
+        if ($user->save()) {
+            return redirect()->action([HomeController::class, 'index'])->with('status', 'แก้ไขข้อมูลสำเร็จ');
+        } else {
+            return redirect()->action([HomeController::class, 'index'])->with('error', 'แก้ไขข้อมูลล้มเหลว');
+        }
     }
 
     /**
