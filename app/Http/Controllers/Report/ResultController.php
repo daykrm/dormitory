@@ -32,7 +32,7 @@ class ResultController extends Controller
         $model = Dormitory::find($id);
         $dorm = $model->name;
         $year = YearConfig::find(1);
-        $file = DB::table('report_result')->where('year', $year->year)->where('dormitory_id', $id)->first();
+        $file = DB::table('report_result')->where('year', $year->year)->where('dormitory_id', $id)->where('status', 1)->first();
         return view('report.result.index', compact('year', 'file', 'dorm', 'id'));
     }
 
@@ -45,7 +45,7 @@ class ResultController extends Controller
         $dorm = $model->name;
         $pdf = $request->file('file');
         $path = $pdf->storeAs('file/' . $year->year, $dorm . '.pdf');
-        $old = DB::table('report_result')->where([['year', $year->year], ['dormitory_id', $id]])->first();
+        $old = DB::table('report_result')->where([['year', $year->year], ['dormitory_id', $id], ['status', 1]])->first();
         if ($old != null) {
             DB::table('report_result')->where('id', $old->id)->update(['path' => $path]);
         } else {
