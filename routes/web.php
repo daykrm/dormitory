@@ -108,6 +108,8 @@ Route::get('pdf-dorm-activity/{id}', 'PDFController@showDormActivities')->name('
 
 Route::get('pdf-show-validate/{id}', 'PDFController@showValidate')->name('showValidate');
 
+Route::get('pdf-show-interview/{id}', 'PDFController@showInterview')->name('showInterview');
+
 Route::get('/checkApp/{id}', 'ApplicationController@checkApplicationThisYear')->name('checkApp');
 
 Route::resource('activity', 'ActivityController');

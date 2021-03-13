@@ -71,7 +71,7 @@ class InterviewController extends Controller
             }
             $arr = array(
                 'username' => $user->username,
-                'name' => $user->name,
+                'name' => $user->prefix->name.$user->name,
                 'faculty' => $user->faculty->name,
                 'percent' => $percent,
                 'credit' => $user->credit,

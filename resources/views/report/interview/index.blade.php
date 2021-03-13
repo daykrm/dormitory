@@ -2,7 +2,16 @@
 
 @section('content')
     <div class="card">
-        <div class="card-header">สรุปคะแนนการสัมภาษณ์{{ $dorm->name }} ประจำปีการศึกษา {{ $year->year + 543 }}</div>
+        <div class="card-header">
+            <div class="row justify-content-between">
+                <div class="col-md-2"></div>
+                <div class="col-md-8"> สรุปคะแนนการสัมภาษณ์{{ $dorm->name }} ประจำปีการศึกษา {{ $year->year + 543 }}
+                </div>
+                <div class="col-md-2">
+                    <a target="_blank" href="{{ route('showInterview', $dorm->id) }}" class="btn btn-light">พิมพ์</a>
+                </div>
+            </div>
+        </div>
         <div class="card-body">
             <div class="table-responsive">
                 <table class="table table-striped table-bordered">
@@ -44,14 +53,17 @@
                                 <td class="text-center">{{ $item['kku_score'] }}</td>
                                 <td class="text-center">{{ $item['family_score'] }}</td>
                                 <td class="text-center">{{ $item['behavior_score'] }}</td>
-                                <td class="text-center">{{ $item['dorm_score'] + $item['kku_score'] + $item['family_score'] + $item['behavior_score'] }}</td>
+                                <td class="text-center">
+                                    {{ $item['dorm_score'] + $item['kku_score'] + $item['family_score'] + $item['behavior_score'] }}
+                                </td>
                                 @if ($item['status'] == 1)
                                     <td class="text-center text-success">ผ่าน</td>
                                 @else
                                     <td class="text-center text-danger">ไม่ผ่าน</td>
                                 @endif
                                 <td>
-                                    <form action="{{ route('interview.update', $item['resultId']) }}" class="ml-2" method="post">
+                                    <form action="{{ route('interview.update', $item['resultId']) }}" class="ml-2"
+                                        method="post">
                                         @csrf
                                         @method('PUT')
                                         <button type="submit" class="btn btn-outline-primary">เปลี่ยน</button>
