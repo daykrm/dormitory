@@ -193,7 +193,7 @@ class InterviewController extends Controller
                 ['a.year', $year->year],
                 ['a.status', 0],
                 ['a.dorm_id', $dormId]
-            ])->groupBy('student_id', 'a.id')->orderBy('sum_score', 'desc')->simplePaginate(5);
+            ])->groupBy('student_id', 'a.id')->orderBy('sum_score', 'desc')->get();
 
         foreach ($apps as $app) {
             $user = User::find($app->student_id);

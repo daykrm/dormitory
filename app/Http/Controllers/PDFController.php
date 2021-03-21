@@ -77,7 +77,8 @@ class PDFController extends Controller
 
         //dd($dompdf);
 
-        $pdf = PDF::loadView('report.interview.pdf', compact('dorm', 'year', 'data', 'apps'))->setPaper('a4', 'landscape');
+        $pdf = PDF::loadView('report.interview.pdf', compact('dorm', 'year', 'data', 'apps'));
+        // $pdf = PDF::loadView('report.interview.pdf', compact('dorm', 'year', 'data', 'apps'))->setPaper('a4', 'landscape');
         return $pdf->stream();
         // return view('report.interview.index', compact('dorm', 'year', 'data', 'apps'));
     }

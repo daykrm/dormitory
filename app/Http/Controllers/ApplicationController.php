@@ -5,9 +5,11 @@ namespace App\Http\Controllers;
 use App\Models\Application;
 use App\Models\Dormitory;
 use App\Models\Faculty;
+use App\Models\Interview_score;
 use App\Models\Occupation;
 use App\Models\Prefix;
 use App\Models\Province;
+use App\Models\Result;
 use App\Models\YearConfig;
 use Exception;
 use Illuminate\Database\QueryException;
@@ -41,8 +43,8 @@ class ApplicationController extends Controller
         $apps = Application::where([
             ['year', $year->year],
             ['dorm_id', $id]
-        ])->simplePaginate(5);
-        return view('application.showall', compact('apps','dorm'));
+        ])->get();
+        return view('application.showall', compact('apps', 'dorm'));
     }
 
     public function checkApplicationThisYear($userId)
@@ -295,5 +297,10 @@ class ApplicationController extends Controller
     public function destroy($id)
     {
         //
+        $app = Application::find($id);
+        $interview  = Interview_score::where('application_id',$id)->delete();
+        $result = Result::where('application_id',$id)->delete();
+        $app->delete();
+        return back()->with('status', 'ลบข้อมูลสำเร็จ');
     }
 }

@@ -3,7 +3,7 @@
 @section('content')
     <div class="card">
         <div class="card-header">
-            รายชื่อนักศึกษา {{ Auth::user()->dorm->dormitory->name }} ประจำปีการศึกษา {{ $year->year }}
+            รายชื่อนักศึกษา {{ Auth::user()->dorm->dormitory->name }} ประจำปีการศึกษา {{ $year->year + 543 }}
         </div>
         <div class="card-body">
             <div class="container">
@@ -36,5 +36,4 @@
             </div>
         </div>
     </div>
-    {{ $users->links() }}
 @endsection

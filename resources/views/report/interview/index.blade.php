@@ -13,6 +13,11 @@
             </div>
         </div>
         <div class="card-body">
+            <div class="row justify-content-end mb-2">
+                <div class="col-md-4">
+                    <input type="text" id="filter" class="form-control" placeholder="รหัสนักศึกษา">
+                </div>
+            </div>
             <div class="table-responsive">
                 <table class="table table-striped table-bordered">
                     <thead>
@@ -38,7 +43,7 @@
                             <th>คะแนนที่ได้</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody id="table">
                         @foreach ($data as $item)
                             <!-- Modal -->
                             <input type="hidden" name="app[]" value="{{ $item['id'] }}">
@@ -73,8 +78,22 @@
                         @endforeach
                     </tbody>
                 </table>
-                {{ $apps->links() }}
+                {{-- {{ $apps->links() }} --}}
             </div>
         </div>
     </div>
 @endsection
+
+@push('scripts')
+    <script>
+        $(document).ready(function() {
+            $('#filter').on('keyup', function() {
+                var value = $(this).val();
+                $('#table tr').filter(function() {
+                    $(this).toggle($(this).text().indexOf(value) > -1)
+                })
+            })
+        })
+
+    </script>
+@endpush

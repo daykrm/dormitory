@@ -36,7 +36,7 @@ class StudentController extends Controller
         // ])->get();
         $dorms = Dormitory::all();
         $dorm = Dormitory::find($dormId);
-        $users = $dorm->users()->where('type_id', '<>', 3)->simplePaginate(5);
+        $users = $dorm->users()->where('type_id', '<>', 3)->get();
         return view('user.index', compact('users', 'dormId', 'dorms', 'dorm'));
         //$users = User::where('username', 'testtest')->first();
         return back()->with('users', $users);

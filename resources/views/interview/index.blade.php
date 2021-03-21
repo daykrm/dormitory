@@ -167,7 +167,7 @@
                         @endforeach
                     </tbody>
                 </table>
-                {{ $apps->links() }}
+                {{-- {{ $apps->links() }} --}}
             </div>
             {{-- <div class="modal fade" id="formModal" tabindex="-1" role="dialog" aria-labelledby="formModalLabel"
                 aria-hidden="true">
