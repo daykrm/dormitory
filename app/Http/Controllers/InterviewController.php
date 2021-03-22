@@ -136,19 +136,28 @@ class InterviewController extends Controller
 
         $interview = DB::table('interview_scores')->where([
             ['application_id', $appId],
-        ])->count();
-
-        if ($interview == 2) {
-            return back()->with('error', 'ไม่สามารถบันทึกคะแนนได้ เนื่องจากบันทึกใบสมัครครบ 2 ครั้งแล้ว');
-        }
-
-        $interview = DB::table('interview_scores')->where([
-            ['application_id', $appId],
             ['personel_id', $personel_id]
         ])->count();
 
         if ($interview == 1) {
-            return back()->with('error', 'ไม่สามารถบันทึกคะแนนได้ เนื่องจากเคยบันทึกคะแนนแล้ว');
+            DB::table('interview_scores')->where([
+                ['application_id', $appId],
+                ['personel_id', $personel_id],
+            ])->update([
+                'dorm_score' => $dorm_score,
+                'kku_score' => $kku_score,
+                'family_score' => $family_score,
+                'behavior_score' => $behavior_score,
+            ]);
+            return back()->with('status', 'แก้ไขข้อมูลสำเร็จ');
+        }
+
+        $interview = DB::table('interview_scores')->where([
+            ['application_id', $appId],
+        ])->count();
+
+        if ($interview == 2) {
+            return back()->with('error', 'ไม่สามารถบันทึกคะแนนได้ เนื่องจากบันทึกใบสมัครครบ 2 ครั้งแล้ว');
         }
 
         $id = DB::table('interview_scores')->insertGetId([
