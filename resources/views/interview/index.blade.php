@@ -156,7 +156,7 @@
                                 <td class="text-center">{{ $item['family_score'] }}</td>
                                 <td class="text-center">{{ $item['behavior_score'] }}</td>
                                 <td class="text-center">
-                                    {{ $item['dorm_score'] + $item['kku_score'] + $item['family_score'] + $item['behavior_score'] }}
+                                    {{ $item['dorm_score'] + $item['kku_score'] + $item['family_score'] + $item['behavior_score'] }} ({{$item['sum_score']}})
                                 </td>
                                 <td class="text-center"><a
                                         href="{{ url('application/detail/' . $item['id']) }}">ใบสมัคร</a></td>

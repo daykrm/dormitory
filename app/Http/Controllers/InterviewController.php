@@ -194,7 +194,7 @@ class InterviewController extends Controller
                 DB::raw('AVG(is.family_score) as family_score'),
                 DB::raw('AVG(is.behavior_score) as behavior_score'),
                 DB::raw('AVG(is.kku_score) as kku_score'),
-                DB::raw('(dorm_score + family_score + behavior_score + kku_score) as sum_score'),
+                DB::raw('AVG(dorm_score + family_score + behavior_score + kku_score) as sum_score'),
                 DB::raw('COUNT(is.id) as count'),
             )
             ->leftJoin('interview_scores as is', 'is.application_id', '=', 'a.id')
