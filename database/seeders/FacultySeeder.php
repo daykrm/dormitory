@@ -16,11 +16,13 @@ class FacultySeeder extends Seeder
     {
         //
         DB::table('faculties')->insert([
+            'id' => 1,
             'name' => 'ศึกษาศาสตร์',
             'years' => 5
         ]);
 
         DB::table('faculties')->insert([
+            'id' => 2,
             'name' => 'วิทยาศาสตร์',
             'years' => 4
         ]);

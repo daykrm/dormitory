@@ -20,8 +20,9 @@ class ProvinceSeeder extends Seeder
             'มหาสารคาม'
         ];
 
-        foreach($provinces as $val){
+        foreach($provinces as $key => $val){
             DB::table('provinces')->insert([
+                'id' => $key + 1,
                 'name' => $val
             ]);
         }

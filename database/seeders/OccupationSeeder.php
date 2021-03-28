@@ -22,8 +22,9 @@ class OccupationSeeder extends Seeder
             'เกษตรกร',
             'ค้าขาย',
         ];
-        foreach ($list as $item) {
+        foreach ($list as $key => $item) {
             DB::table('occupations')->insert([
+                'id' => $key + 1,
                 'name' => $item
             ]);
         }

@@ -17,6 +17,7 @@ class PersonelSeeder extends Seeder
     {
         //
         DB::table('personels')->insert([
+            'id' => 1,
             'name' => 'Personel Test',
             'username' => 'personels',
             'password' => Hash::make('123456'),

@@ -16,6 +16,7 @@ class RegisterRangeSeeder extends Seeder
     {
         //
         DB::table('register_ranges')->insert([
+            'id' => 1,
             'startDate' => '2021-03-01',
             'endDate' => '2021-04-25'
         ]);

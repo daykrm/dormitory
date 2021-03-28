@@ -20,8 +20,9 @@ class DormitorySeeder extends Seeder
             'หอพักชายที่ 7'
         ];
 
-        foreach ($dorm as $val) {
+        foreach ($dorm as $key => $val) {
             DB::table('dormitories')->insert([
+                'id' => $key + 1,
                 'name' => $val
             ]);
         }

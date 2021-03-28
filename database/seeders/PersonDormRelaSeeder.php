@@ -16,11 +16,13 @@ class PersonDormRelaSeeder extends Seeder
     {
         //
         DB::table('person_dorm_relas')->insert([
+            'id' => 1,
             'dorm_id' => 1,
             'personel_id' => 1,
         ]);
 
         DB::table('person_dorm_relas')->insert([
+            'id' => 2,
             'dorm_id' => 2,
             'personel_id' => 1,
         ]);

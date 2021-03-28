@@ -21,8 +21,9 @@ class PrefixSeeder extends Seeder
             'นางสาว'
         ];
 
-        foreach ($prefixes as $val) {
+        foreach ($prefixes as $key => $val) {
             DB::table('prefixes')->insert([
+                'id' => $key + 1,
                 'name' => $val
             ]);
         }

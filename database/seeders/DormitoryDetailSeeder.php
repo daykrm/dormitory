@@ -16,31 +16,37 @@ class DormitoryDetailSeeder extends Seeder
     {
         //
         DB::table('dormitory_details')->insert([
+            'id' => 1,
             'dormitory_id' => 1,
             'room_id' => 1
         ]);
 
         DB::table('dormitory_details')->insert([
+            'id' => 2,
             'dormitory_id' => 1,
             'room_id' => 2
         ]);
 
         DB::table('dormitory_details')->insert([
+            'id' => 3,
             'dormitory_id' => 1,
             'room_id' => 3
         ]);
 
         DB::table('dormitory_details')->insert([
+            'id' => 4,
             'dormitory_id' => 2,
             'room_id' => 1
         ]);
 
         DB::table('dormitory_details')->insert([
+            'id' => 5,
             'dormitory_id' => 2,
             'room_id' => 2
         ]);
 
         DB::table('dormitory_details')->insert([
+            'id' => 6,
             'dormitory_id' => 2,
             'room_id' => 3
         ]);

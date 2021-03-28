@@ -19,6 +19,7 @@ class StudentSeeder extends Seeder
         $date = strtotime('01/21/1996');
 
         DB::table('users')->insert([
+            'id' => 1,
             'name' => 'ทดสอบ หอ5',
             'prefix_id' => 1,
             'nickname' => 'ทดสอบ',
@@ -34,6 +35,7 @@ class StudentSeeder extends Seeder
         ]);
 
         DB::table('users')->insert([
+            'id' => 2,
             'name' => 'ทดสอบ หอ7',
             'prefix_id' => 1,
             'nickname' => 'ทดสอบ',
@@ -49,6 +51,7 @@ class StudentSeeder extends Seeder
         ]);
 
         DB::table('users')->insert([
+            'id' => 3,
             'name' => 'กรรมการ หอ5',
             'prefix_id' => 1,
             'nickname' => 'กรรมการ',
@@ -64,6 +67,7 @@ class StudentSeeder extends Seeder
         ]);
 
         DB::table('users')->insert([
+            'id' => 4,
             'name' => 'กรรมการ หอ7',
             'prefix_id' => 1,
             'nickname' => 'กรรมการ',
@@ -79,6 +83,7 @@ class StudentSeeder extends Seeder
         ]);
 
         DB::table('users')->insert([
+            'id' => 5,
             'name' => 'Admin Admin',
             'prefix_id' => 1,
             'nickname' => 'Admin',

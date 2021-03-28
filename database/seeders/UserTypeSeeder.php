@@ -16,14 +16,17 @@ class UserTypeSeeder extends Seeder
     {
         //
         DB::table('user_types')->insert([
+            'id' => 1,
             'name' => 'Student'
         ]);
 
         DB::table('user_types')->insert([
+            'id' => 2,
             'name' => 'Council'
         ]);
 
         DB::table('user_types')->insert([
+            'id' => 3,
             'name' => 'Admin'
         ]);
     }

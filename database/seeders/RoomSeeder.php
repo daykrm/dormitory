@@ -16,11 +16,12 @@ class RoomSeeder extends Seeder
     {
         //
         $rooms = [
-            '101','102','103'
+            '101', '102', '103'
         ];
 
-        foreach($rooms as $val){
+        foreach ($rooms as $key => $val) {
             DB::table('rooms')->insert([
+                'id' => $key + 1,
                 'name' => $val
             ]);
         }
