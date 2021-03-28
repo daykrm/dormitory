@@ -15,9 +15,9 @@ class CreateReportResultTable extends Migration
     {
         Schema::create('report_result', function (Blueprint $table) {
             $table->id();
-            $table->string('year')->default(date('Y'));
+            $table->string('year',4)->default(date('Y'));
             $table->foreignId('dormitory_id')->constrained('dormitories');
-            $table->string('path');
+            $table->string('path',191);
             $table->integer('status')->default(1); // 0 มีสิทธฺ์สัม  1 ประกาศผล 
             $table->timestamps();
         });

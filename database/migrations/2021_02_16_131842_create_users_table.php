@@ -15,16 +15,16 @@ class CreateUsersTable extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->string('name')->nullable();
+            $table->string('name',100)->nullable();
             $table->foreignId('prefix_id')->nullable()->constrained('prefixes');
-            $table->string('nickname')->nullable();
+            $table->string('nickname',100)->nullable();
             $table->date('dob')->nullable();
-            $table->string('phone')->nullable();
-            $table->string('email')->unique()->nullable();
+            $table->string('phone',100)->nullable();
+            $table->string('email',191)->unique()->nullable();
             $table->timestamp('email_verified_at')->nullable();
-            $table->string('username');
-            $table->string('password');
-            $table->string('enrolled_year')->nullable();
+            $table->string('username',100);
+            $table->string('password',191);
+            $table->string('enrolled_year',4)->nullable();
             $table->foreignId('dorm_detail_id')->nullable()->constrained('dormitory_details');
             $table->foreignId('province_id')->nullable()->constrained('provinces');
             $table->foreignId('faculty_id')->nullable()->constrained('faculties');

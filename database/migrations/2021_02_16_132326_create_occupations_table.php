@@ -15,7 +15,7 @@ class CreateOccupationsTable extends Migration
     {
         Schema::create('occupations', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->string('name',100);
             $table->timestamps();
         });
     }

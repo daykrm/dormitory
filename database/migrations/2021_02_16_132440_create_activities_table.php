@@ -16,10 +16,10 @@ class CreateActivitiesTable extends Migration
         Schema::create('activities', function (Blueprint $table) {
             $table->id();
             $table->foreignId('dorm_id')->constrained('dormitories');
-            $table->string('name');
+            $table->string('name',191);
             $table->text('detail');
             $table->float('budget');
-            $table->string('year');
+            $table->string('year',4);
             $table->date('activity_date');
             $table->float('credit');
             $table->timestamps();

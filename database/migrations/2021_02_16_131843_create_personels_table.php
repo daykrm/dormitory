@@ -15,10 +15,10 @@ class CreatePersonelsTable extends Migration
     {
         Schema::create('personels', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('username');
-            $table->string('password');
-            $table->string('email');
+            $table->string('name',100);
+            $table->string('username',100);
+            $table->string('password',191);
+            $table->string('email',191);
             $table->foreignId('prefix_id')->constrained('prefixes');
             //$table->foreignId('dorm_id')->constrained('dormitories');
             $table->timestamps();
