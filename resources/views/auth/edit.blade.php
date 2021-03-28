@@ -4,7 +4,7 @@
     <div class="card">
         <div class="card-header">แก้ไขข้อมูลส่วนตัว</div>
         <div class="card-body">
-            <form action="{{ route('student.update', $user) }}" method="POST">
+            <form action="{{ route($route, $user) }}" method="POST">
                 @csrf
                 @method('PUT')
                 <div class="row">

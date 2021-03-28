@@ -4,9 +4,15 @@ namespace App\Http\Controllers;
 
 use App\Models\Dormitory;
 use App\Models\DormitoryDetail;
+use App\Models\Faculty;
 use App\Models\Personel;
+use App\Models\Prefix;
+use App\Models\Province;
+use App\Models\Room;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 class StudentController extends Controller
 {
@@ -113,6 +119,19 @@ class StudentController extends Controller
         return view('user.select', compact('dorm'));
     }
 
+    public function editStudent($id)
+    {
+        $user = User::find($id);
+        $prefixes = Prefix::all();
+        $provinces = Province::all();
+        $faculties = Faculty::all();
+        $dorms = Dormitory::all();
+        $rooms = Room::all();
+        $dorm_detail = Dormitory::all();
+        $route = 'user.update';
+        return view('auth.edit', compact('user', 'prefixes', 'provinces', 'faculties', 'dorms', 'rooms', 'dorm_detail', 'route'));
+    }
+
     /**
      * Update the specified resource in storage.
      *
@@ -123,6 +142,50 @@ class StudentController extends Controller
     public function update(Request $request, $id)
     {
         //
+        if ($request->filled('password')) {
+            $request->validate([
+                'prefix' => 'required',
+                'name' => 'required|string|max:100',
+                'nickname' => 'required|string',
+                'email' => 'required|email|unique:users,email,' . $id,
+                'password' => 'required|string|min:6|confirmed',
+            ]);
+        } else {
+            $request->validate([
+                'prefix' => 'required',
+                'name' => 'required|string|max:100',
+                'nickname' => 'required|string',
+                'email' => 'required|email|unique:users,email,' . $id,
+            ]);
+        }
+
+        $dormDetail = DB::table('dormitory_details')->where([
+            ['dormitory_id', $request->get('dorm')],
+            ['room_id', $request->get('room')]
+        ])->first();
+
+        $user = User::find($id);
+
+        $user->prefix_id = $request->get('prefix');
+        $user->name = $request->get('name');
+        $user->nickname = $request->get('nickname');
+        $user->phone = $request->get('phone');
+        $user->dob = $request->get('dob');
+        $user->province_id = $request->get('province');
+        $user->email = $request->get('email');
+        $user->faculty_id = $request->get('faculty');
+        $user->enrolled_year = $request->get('enroll');
+        $user->dorm_detail_id = $dormDetail->id;
+
+        if ($request->filled('password')) {
+            $user->password = Hash::make($request->get('password'));
+        }
+
+        if ($user->save()) {
+            return back()->with('status', 'แก้ไขข้อมูลสำเร็จ');
+        } else {
+            return back()->with('error', 'แก้ไขข้อมูลล้มเหลว');
+        }
     }
 
     /**
@@ -134,5 +197,6 @@ class StudentController extends Controller
     public function destroy($id)
     {
         //
+
     }
 }

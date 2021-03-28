@@ -80,6 +80,8 @@ Route::resource('room', 'RoomController');
 
 Route::get('user/all/{id}', 'StudentController@getUserByDormId');
 
+Route::get('editstudent/{id}', 'StudentController@editStudent')->name('editStudent');
+
 Route::get('/findByUsername/{id}', 'StudentController@findByUsername')->name('findByUsername');
 
 Route::put('user/changeStatus/{id}', 'StudentController@changeStatus')->name('changeStatus');

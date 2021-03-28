@@ -1,16 +1,14 @@
 <nav class="navbar navbar-expand-md navbar-dark bg-primary text-white ">
     <div class="container-fluid">
-        <a  href="{{ url('/home') }}">
-            <table class="table-sm">
-                <tr>
-                    <th rowspan="2"><img src="{{ asset('images/kku_logo.png') }}" height="auto" width="100%" style="max-width: 40px"/></th>
-                    <th>สวัสดีครับ</th>
-                </tr>
-                <tr>
-                    <th>asdasda</th>
-                </tr>
-            </table>
-        </a>
+        <div class="row">
+            <div class="text-center mb-auto col-md-2"><img src="{{ asset('images/kku_logo.png') }}" height="auto"
+                    width="100%" style="max-width: 80px" />
+            </div>
+            <div class="col-md-10 text-left align-bottom mt-auto" style="line-height: 1.5rem">
+                การคัดกรองนักศึกษาเข้าพักในหอพักส่วนกลาง<br>Khon
+                Kaen University
+            </div>
+        </div>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
             <span class="navbar-toggler-icon"></span>

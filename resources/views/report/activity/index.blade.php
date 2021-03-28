@@ -15,37 +15,40 @@
                             <input type="text" name="start" id="start" autocomplete="off" class="form-control">
                             <label class="ml-2 mr-2">สิ้นสุด</label>
                             <input type="text" name="end" id="end" autocomplete="off" class="form-control">
-                            <button type="submit" id="search" class="btn btn-outline-primary ml-2">ค้นหา</button>
+                            <button type="submit" id="search"
+                                class="btn btn-outline-primary mt-md-0 mt-2 ml-0 ml-md-2">ค้นหา</button>
                         </div>
                         <form id="search-form" action="#" method="get"></form>
                     </div>
                 @endif
-                <table class="table table-striped mt-4">
-                    <thead>
-                        <th>#</th>
-                        <th>ชื่อกิจกรรม</th>
-                        <th>รายละเอียด</th>
-                        @if (Auth::user()->type_id == 2)
-                            <th>งบประมาณ</th>
-                        @endif
-                        <th>วันที่จัดกิจกรรม</th>
-                        <th>คะแนน</th>
-                    </thead>
-                    <tbody>
-                        @foreach ($activities as $key => $item)
-                            <tr>
-                                <td>{{ $key + 1 }}</td>
-                                <td>{{ $item->name }}</td>
-                                <td>{{ $item->detail }}</td>
-                                @if (Auth::user()->type_id == 2)
-                                    <td>{{ $item->budget }}</td>
-                                @endif
-                                <td>{{ $item->activity_date }}</td>
-                                <td>{{ $item->credit }}</td>
-                            </tr>
-                        @endforeach
-                    </tbody>
-                </table>
+                <div class="table-responsive">
+                    <table class="table table-striped mt-4">
+                        <thead>
+                            <th>#</th>
+                            <th>ชื่อกิจกรรม</th>
+                            <th>รายละเอียด</th>
+                            @if (Auth::user()->type_id == 2)
+                                <th>งบประมาณ</th>
+                            @endif
+                            <th>วันที่จัดกิจกรรม</th>
+                            <th>คะแนน</th>
+                        </thead>
+                        <tbody>
+                            @foreach ($activities as $key => $item)
+                                <tr>
+                                    <td>{{ $key + 1 }}</td>
+                                    <td>{{ $item->name }}</td>
+                                    <td>{{ $item->detail }}</td>
+                                    @if (Auth::user()->type_id == 2)
+                                        <td>{{ $item->budget }}</td>
+                                    @endif
+                                    <td>{{ $item->activity_date }}</td>
+                                    <td>{{ $item->credit }}</td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
@@ -74,7 +77,7 @@
                 var dormId = $('#dorm_id').val();
                 if (start != '' && end != '') {
                     $('#search-form').attr('action', '/report/activity/' + dormId + '/' + start + '/' +
-                    end);
+                        end);
                     $('#search-form').submit();
                 } else {
                     alert('กรุณาเลือกช่วงปี')

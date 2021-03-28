@@ -8,16 +8,16 @@
         <div class="card-body">
             <div class="container">
                 <div class="row justify-content-center">
-                    <div class="col-md-2 text-right">
+                    <div class="col-4 col-md-2 text-right">
                         รหัสนักศึกษา :
                     </div>
-                    <div class="form-group col-md-10">
+                    <div class="col-8 form-group col-md-10">
                         <form method="GET" action="{{ route('findStudent') }}">
                             <div class="row">
                                 <div class="form-group col-md-10">
                                     <input type="text" name="username" value="{{ old('username') }}" required
                                         class="form-control">
-                                        <input type="hidden" name="dorm" value="{{Auth::user()->dorm->dormitory->id}}">
+                                    <input type="hidden" name="dorm" value="{{ Auth::user()->dorm->dormitory->id }}">
                                     @if (session('error'))
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ session('error') }}</strong>
@@ -31,10 +31,10 @@
                         </form>
                     </div>
                     @if (session('user'))
-                        <div class="col-md-2 text-right">
+                        <div class="col-4 col-md-2 text-right">
                             ชื่อ-สกุล :
                         </div>
-                        <div class="col-md-10">
+                        <div class="col-8 col-md-10">
                             {{ session('user')->name }}
                         </div>
                         <form method="POST" action="{{ route('storeScore') }}">
@@ -60,26 +60,28 @@
         </div>
         <div class="card-body">
             <div class="container">
-                <table class="table table-striped">
-                    <thead>
-                        <th>รหัสนักศึกษา</th>
-                        <th>ชื่อ - สกุล</th>
-                        <th>ชื่อเล่น</th>
-                        <th>หอพัก</th>
-                        <th>ห้อง</th>
-                    </thead>
-                    <tbody>
-                        @foreach ($data as $item)
-                            <tr>
-                                <td>{{ $item->student->username }}</td>
-                                <td>{{ $item->student->name }}</td>
-                                <td>{{$item->student->nickname}}</td>
-                                <td>{{$item->student->dorm->dormitory->name}}</td>
-                                <td>{{$item->student->dorm->room->name}}</td>
-                            </tr>
-                        @endforeach
-                    </tbody>
-                </table>
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <th>รหัสนักศึกษา</th>
+                            <th>ชื่อ - สกุล</th>
+                            <th>ชื่อเล่น</th>
+                            <th>หอพัก</th>
+                            <th>ห้อง</th>
+                        </thead>
+                        <tbody>
+                            @foreach ($data as $item)
+                                <tr>
+                                    <td>{{ $item->student->username }}</td>
+                                    <td>{{ $item->student->name }}</td>
+                                    <td>{{ $item->student->nickname }}</td>
+                                    <td>{{ $item->student->dorm->dormitory->name }}</td>
+                                    <td>{{ $item->student->dorm->room->name }}</td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>

@@ -72,7 +72,8 @@ class UserController extends Controller
         $dorms = Dormitory::all();
         $rooms = Room::all();
         $dorm_detail = Dormitory::all();
-        return view('auth.edit', compact('user', 'prefixes', 'provinces', 'faculties', 'dorms', 'rooms', 'dorm_detail'));
+        $route = 'student.update';
+        return view('auth.edit', compact('user', 'prefixes', 'provinces', 'faculties', 'dorms', 'rooms', 'dorm_detail','route'));
     }
 
     /**

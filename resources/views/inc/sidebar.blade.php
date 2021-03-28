@@ -13,7 +13,7 @@ if ($now >= $start && $now <= $end) {
 }
 @endphp
 
-<nav class="d-none d-md-block bg-light sidebar">
+<nav class="bg-light sidebar">
     <div class="sidebar-sticky">
         <ul class="nav flex-column">
             @if (Auth::guard('web')->check() && Auth::guard('web')->user()->type->id == 1)
