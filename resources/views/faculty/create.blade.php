@@ -10,7 +10,7 @@
                 @csrf
                 @include('faculty.form')
                 <div class="row justify-content-center mt-4">
-                    <button class="btn btn-primary" type="submit">บันทึก</button>
+                    <button class="btn btn-success" type="submit">บันทึก</button>
                 </div>
             </form>
         </div>

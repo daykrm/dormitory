@@ -39,7 +39,7 @@
                                     <td>{{ $item->student->faculty->name }}</td>
                                     <td>{{ $item->student->year() }}</td>
                                     <td class="text-right">
-                                        <button class="btn btn-primary" data-toggle="modal" data-target="#confirmDelete"
+                                        <button class="btn btn-danger" data-toggle="modal" data-target="#confirmDelete"
                                             data-id="{{ $item->id }}">ลบ</button>
                                     </td>
                                 </tr>
@@ -72,7 +72,7 @@
                     <input type="hidden" class="form-control" id="app_id">
                     <div class="row justify-content-center">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary ml-2">ตกลง</button>
+                        <button type="submit" class="btn btn-success ml-2">ตกลง</button>
                     </div>
                 </form>
             </div>

@@ -98,9 +98,9 @@
                                 </td>
                                 <td>
                                     @if (session('score') != null)
-                                        <button type="submit" class="btn btn-outline-primary">แก้ไข</button>
+                                        <button type="submit" class="btn btn-warning">แก้ไข</button>
                                     @else
-                                        <button type="submit" class="btn btn-outline-primary">บันทึก</button>
+                                        <button type="submit" class="btn btn-success">บันทึก</button>
                                     @endif
                                 </td>
                             </tr>
@@ -190,7 +190,7 @@
                 </div>
             </div> --}}
             <div class="row justify-content-center mt-2">
-                <button type="submit" class="btn btn-outline-primary" @if (count($data) == 0) disabled @endif>ประมวลผล</button>
+                <button type="submit" class="btn btn-primary" @if (count($data) == 0) disabled @endif>ประมวลผล</button>
             </div>
         </div>
     </form>

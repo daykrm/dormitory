@@ -41,7 +41,7 @@
                                     {{-- <a href="{{ route('createScore', $item->id) }}"
                                     class="btn btn-outline-primary">บันทึกการเข้าร่วมกิจกรรม</a> --}}
                                     <a href="{{ url('activity/' . $item->id . '/edit') }}"
-                                        class="btn btn-primary ml-2">แก้ไข</a>
+                                        class="btn btn-warning ml-2">แก้ไข</a>
                                 </div>
                             </td>
                         </tr>

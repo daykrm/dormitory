@@ -18,7 +18,7 @@
                 <br>
                 <div class="row justify-content-center">
                     <form id="form-search" action="#" method="GET">
-                        <button type="submit" class="btn btn-primary">ตกลง</button>
+                        <button type="submit" class="btn btn-success">ตกลง</button>
                     </form>
                 </div>
             </div>

@@ -50,7 +50,7 @@
                             <td>{{ $item->type->name }}</td>
                             <td>
                                 <div class="row justify-content center">
-                                    <a href="#" class="btn btn-primary">แก้ไข</a>
+                                    <a href="#" class="btn btn-warning">แก้ไข</a>
                                     <form action="{{route('changeStatus', $item->id)}}" class="ml-2" method="post">
                                     @csrf
                                     @method('PUT')

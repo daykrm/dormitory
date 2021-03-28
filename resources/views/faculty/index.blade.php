@@ -25,7 +25,7 @@
                                 <td>{{ $item->years }}</td>
                                 <td>
                                     <a href="{{ route('faculty.edit', $item->id) }}"
-                                        class="btn btn-outline-primary">แก้ไข</a>
+                                        class="btn btn-warning">แก้ไข</a>
                                 </td>
                             </tr>
                         @endforeach

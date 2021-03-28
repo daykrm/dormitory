@@ -33,7 +33,7 @@
                     @endif
                 </div>
                 <div class="row justify-content-center mt-2">
-                    <a class="btn btn-outline-primary"
+                    <a class="btn btn-warning"
                         href="{{ route('personel.edit', Auth::guard('personel')->user()->id) }}">แก้ไข</a>
                 </div>
             </div>

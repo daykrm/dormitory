@@ -102,10 +102,10 @@
                 </div>
                 <div class="row justify-content-center mt-4">
                     @if ($app->status == 0)
-                        <a href="{{ url('application/' . $app->id . '/edit') }}" class="btn btn-primary">แก้ไข</a>
+                        <a href="{{ url('application/' . $app->id . '/edit') }}" class="btn btn-warning">แก้ไข</a>
                     @else
                         <a href="{{ url('application/' . $app->id . '/edit') }}"
-                            class="btn btn-primary disabled">แก้ไข</a>
+                            class="btn btn-warning disabled">แก้ไข</a>
                     @endif
                 </div>
             </div>

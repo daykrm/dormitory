@@ -11,7 +11,7 @@
                 {{ method_field('PUT') }}
                 @include('application.form')
                 <div class="row justify-content-center">
-                    <button class="btn btn-primary" type="submit">บันทึก</button>
+                    <button class="btn btn-success" type="submit">บันทึก</button>
                 </div>
             </form>
         </div>

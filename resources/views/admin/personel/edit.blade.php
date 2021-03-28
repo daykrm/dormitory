@@ -11,7 +11,7 @@
                 @method('PUT')
                 @include('admin.personel.form')
                 <div class="row justify-content-center mt-2">
-                    <button class="btn btn-outline-primary">บันทึก</button>
+                    <button class="btn btn-success">บันทึก</button>
                 </div>
             </form>
         </div>

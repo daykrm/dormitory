@@ -26,7 +26,7 @@
                         </div>
                     </div>
                     <div class="row justify-content-center mt-2">
-                        <button type="submit" class="btn btn-primary">บันทึก</button>
+                        <button type="submit" class="btn btn-success">บันทึก</button>
                     </div>
                 </form>
             </div>
@@ -53,7 +53,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary close-modal" data-dismiss="modal">ปิด</button>
-                    <button type="submit" id="add-teacher" class="btn btn-primary">บันทึก</button>
+                    <button type="submit" id="add-teacher" class="btn btn-success">บันทึก</button>
                 </div>
             </div>
         </div>

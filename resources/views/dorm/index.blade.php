@@ -24,7 +24,7 @@
                                     <td>{{ $item->rooms->count('id') }}</td>
                                     <td class="text-right">
                                         <a href="{{ route('dorm.edit', $item) }}"
-                                            class="btn btn-outline-primary">แก้ไข</a>
+                                            class="btn btn-warning">แก้ไข</a>
                                         <a href="{{ route('room.show', $item->id) }}"
                                             class="btn btn-primary ml-2">จัดการห้องพัก
                                         </a>

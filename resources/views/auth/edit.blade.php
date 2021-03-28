@@ -161,7 +161,7 @@
                     <div class="form-group col-md-2" id="room_container" style="display: none"></div>
                 </div>
                 <div class="row justify-content-center mt-4">
-                    <button type="submit" class="btn btn-primary">บันทึก</button>
+                    <button type="submit" class="btn btn-success">บันทึก</button>
                 </div>
             </form>
         </div>

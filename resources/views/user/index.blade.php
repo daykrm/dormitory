@@ -61,7 +61,7 @@ if (session('user')) {
                                 <td>{{ $item->type->name }}</td>
                                 <td>
                                     <div class="row justify-content center">
-                                        <a href="#" class="btn btn-primary disabled">แก้ไข</a>
+                                        <a href="#" class="btn btn-warning disabled">แก้ไข</a>
                                         <form action="{{ route('changeStatus', $item->id) }}" class="ml-2" method="post">
                                             @csrf
                                             @method('PUT')

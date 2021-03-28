@@ -11,7 +11,7 @@
                     @csrf
                     @include('admin.personel.form')
                     <div class="row justify-content-center mt-2">
-                        <button type="submit" class="btn btn-outline-primary">บันทึก</button>
+                        <button type="submit" class="btn btn-success">บันทึก</button>
                     </div>
                 </div>
             </form>

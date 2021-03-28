@@ -1,7 +1,15 @@
 <nav class="navbar navbar-expand-md navbar-dark bg-primary text-white ">
-    <div class="container">
-        <a class="navbar-brand" href="{{ url('/home') }}">
-            {{ config('app.name', 'Laravel') }}
+    <div class="container-fluid">
+        <a  href="{{ url('/home') }}">
+            <table class="table-sm">
+                <tr>
+                    <th rowspan="2"><img src="{{ asset('images/kku_logo.png') }}" height="auto" width="100%" style="max-width: 40px"/></th>
+                    <th>สวัสดีครับ</th>
+                </tr>
+                <tr>
+                    <th>asdasda</th>
+                </tr>
+            </table>
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
@@ -14,7 +22,7 @@
                 <!-- Authentication Links -->
                 @if (Auth::guard('web')->check())
                     <li class="nav-item dropdown">
-                        <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
+                        <a id="navbarDropdown" class="nav-link dropdown-toggle text-white" href="#" role="button"
                             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                             {{ Auth::guard('web')->user()->name }}
                             ({{ Auth::user()->type->name }})<span class="caret"></span>
@@ -33,7 +41,7 @@
                     </li>
                 @elseif (Auth::guard('personel')->check())
                     <li class="nav-item dropdown">
-                        <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
+                        <a id="navbarDropdown" class="nav-link dropdown-toggle text-white" href="#" role="button"
                             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                             {{ Auth::guard('personel')->user()->name }}
                             ( บุคลากร )<span class="caret"></span>
@@ -52,7 +60,7 @@
                     </li>
                 @else
                     <li class="nav-item dropdown">
-                        <a id="loginDropdown" class="nav-link dropdown-toggle" href="#" role="button"
+                        <a id="loginDropdown" class="nav-link dropdown-toggle text-white" href="#" role="button"
                             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                             เข้าสู่ระบบ
                             <span class="caret"></span>
@@ -66,7 +74,7 @@
                         <a class="nav-link" href="{{ route('login') }}">Login</a>
                     </li> --}}
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('register') }}">สมัครสมาชิก</a>
+                        <a class="nav-link text-white" href="{{ route('register') }}">สมัครสมาชิก</a>
                     </li>
                 @endif
             </ul>

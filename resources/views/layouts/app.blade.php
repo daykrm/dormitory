@@ -52,8 +52,10 @@
         <div class="container-fluid">
             <div class="row">
                 @if (Auth::guard('web')->check() || Auth::guard('personel')->check())
-                    @include('inc.sidebar')
-                    <main role="main" class="col-md-10 ml-sm-auto pt-3 pl-0 pr-3">
+                    <div class="col-md-3">
+                        @include('inc.sidebar')
+                    </div>
+                    <main role="main" class="col-md-9 ml-sm-auto pt-2 pl-0 pr-3">
                         @yield('content')
                     </main>
                 @else
