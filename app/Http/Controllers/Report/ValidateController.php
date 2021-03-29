@@ -7,6 +7,7 @@ use App\Models\Dormitory;
 use App\Models\YearConfig;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class ValidateController extends Controller
 {
@@ -45,7 +46,9 @@ class ValidateController extends Controller
         $dorm = Dormitory::find($id);
         $pdf = $request->file('file');
         $year = YearConfig::find(1);
-        $path = $pdf->storeAs('file/' . $year->year, 'validate_' . $dorm->name . '.pdf');
+        // $path = $pdf->storeAs('file/' . $year->year, 'validate_' . $dorm->name . '.pdf');
+        $path = 'dormitory/file/' . $year->year . '/validate_' . $dorm->name . '.pdf';
+        Storage::disk('s3')->put($path, file_get_contents($pdf), 'public-read');
         $old = DB::table('report_result')->where([['year', $year->year], ['dormitory_id', $id], ['status', 0]])->first();
         if ($old != null) {
             DB::table('report_result')->where('id', $old->id)->update(['path' => $path]);
