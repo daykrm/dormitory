@@ -45,9 +45,9 @@ class ResultController extends Controller
         $model = Dormitory::find($id);
         $dorm = $model->name;
         $pdf = $request->file('file');
-        $path = 'dormitory/file/'.$year->year.'/'.$dorm.'.pdf';
-        Storage::disk('s3')->put($path, file_get_contents($pdf), 'public-read');
-        // $path = $pdf->storeAs('file/' . $year->year, $dorm . '.pdf');
+        // $path = 'dormitory/file/'.$year->year.'/'.$dorm.'.pdf';
+        // Storage::disk('s3')->put($path, file_get_contents($pdf), 'public-read');
+        $path = $pdf->storeAs('file/' . $year->year, $dorm . '.pdf');
         $old = DB::table('report_result')->where([['year', $year->year], ['dormitory_id', $id], ['status', 1]])->first();
         if ($old != null) {
             DB::table('report_result')->where('id', $old->id)->update(['path' => $path]);
