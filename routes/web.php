@@ -33,6 +33,8 @@ Route::prefix('/personel')->name('personel.')->namespace('Personel')->group(func
 
 Route::prefix('/report')->name('report.')->namespace('Report')->group(function () {
     Route::prefix('/activity')->name('activity.')->group(function () {
+        Route::get('/admin', 'ActivityController@adminIndex')->name('select');
+        Route::get('/admin/showAll', 'ActivityController@adminShowall')->name('showallSelect');
         Route::get('/{id}', 'ActivityController@index')->name('index');
         Route::get('/showAll/{id}', 'ActivityController@showAll')->name('showAll');
         Route::get('/show/{id}/{dormId}', 'ActivityController@show')->name('show');
@@ -50,6 +52,7 @@ Route::prefix('/report')->name('report.')->namespace('Report')->group(function (
     Route::resource('validate', 'ValidateController');
 
     Route::prefix('/dorm')->name('dorm.')->group(function () {
+        Route::get('/admin', 'DormController@adminIndex')->name('select');
         Route::get('/{id}', 'DormController@index')->name('index');
     });
 
@@ -98,6 +101,8 @@ Route::post('/calculateResult', 'InterviewController@calculateResult')->name('ca
 
 Route::post('/storeScore', 'ScoreController@store')->name('storeScore');
 
+Route::get('/score/admin', 'ScoreController@adminIndex')->name('scoreAdminIndex');
+
 Route::get('/getRoom/{id}', 'DormitoryDetailController@getRoom')->name('getRoom');
 
 Route::post('/dormitorydetail', 'DormitoryDetailController@store')->name('dormRoomStore');
@@ -115,6 +120,8 @@ Route::get('pdf-show-validate/{id}', 'PDFController@showValidate')->name('showVa
 Route::get('pdf-show-interview/{id}', 'PDFController@showInterview')->name('showInterview');
 
 Route::get('/checkApp/{id}', 'ApplicationController@checkApplicationThisYear')->name('checkApp');
+
+Route::get('activity/admin', 'ActivityController@adminIndex')->name('activityAdminIndex');
 
 Route::resource('activity', 'ActivityController');
 

@@ -7,7 +7,7 @@
         </div>
         <div class="card-body">
             <div class="container">
-                @if (Auth::user()->type_id == 2)
+                @if (Auth::user()->type_id == 2 || Auth::user()->type_id == 3)
                     <div class="form-inline mt-2">
                         <div class="form-group">
                             <input type="hidden" id="dorm_id" value="{{ Auth::user()->dorm->dormitory->id }}">
@@ -57,6 +57,11 @@
 @push('scripts')
     <script>
         $(document).ready(function() {
+
+            path = window.location.pathname
+            $('#dorm_id').val(path.split('/')[3])
+            // console.log(path.split('/')[3]);
+
             $('#start').datepicker({
                 format: 'yyyy',
                 startView: 'years',

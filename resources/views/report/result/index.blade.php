@@ -23,7 +23,7 @@
                     </form>
                 @endif
                 @if ($file != null)
-                    <embed type="application/pdf" scrolling="auto" src="{{ asset('storage/' . $file->path) }}"
+                    <embed type="application/pdf" scrolling="auto" src="{{ Storage::disk('s3')->url($file->path) }}"
                         width="100%" height="800px" />
                 @endif
             </div>

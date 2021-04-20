@@ -184,6 +184,21 @@ if ($now >= $start && $now <= $end) {
                     </a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link btn btn-primary2 mt-2" href="{{ route('activityAdminIndex') }}">
+                        การจัดการรายการกิจกรรมประจำปี
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link btn btn-primary2 mt-2" href="{{ route('scoreAdminIndex') }}">
+                        การจัดการคะแนนการเข้าร่วมกิจกรรม
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ route('application.index') }}" class="nav-link btn btn-primary2 mt-2">
+                        รายชื่อผู้กรอกใบสมัคร
+                    </a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link btn btn-primary2 mt-2" data-toggle="collapse" href="#collapse1">
                         รายงาน
                     </a>
@@ -192,9 +207,9 @@ if ($now >= $start && $now <= $end) {
                     <div class="panel panel-default">
                         <div id="collapse1" class="panel-collapse collapse">
                             <ul class="list-group">
-                                {{-- <li class="list-group-item"><a href="#">รายการกิจกรรมประจำปี</a></li>
-                                <li class="list-group-item"><a href="#">รายชื่อสมาชิกในหอพัก</a></li>
-                                <li class="list-group-item"><a href="#">ผลการเข้าร่วมกิจกรรม</a></li> --}}
+                                <li class="list-group-item"><a href="{{ route('report.activity.select') }}">รายการกิจกรรมประจำปี</a></li>
+                                <li class="list-group-item"><a href="{{ route('report.dorm.select') }}">รายชื่อสมาชิกในหอพัก</a></li>
+                                <li class="list-group-item"><a href="{{ route('report.activity.showallSelect') }}">ผลการเข้าร่วมกิจกรรมนักศึกษาในหอพัก</a></li>
                                 <li class="list-group-item"><a
                                         href="{{ route('report.interview.index') }}">คะแนนการสัมภาษณ์</a></li>
                                 <li class="list-group-item"><a
@@ -239,9 +254,6 @@ if ($now >= $start && $now <= $end) {
                     <div class="panel panel-default">
                         <div id="collapse1" class="panel-collapse collapse">
                             <ul class="list-group">
-                                {{-- <li class="list-group-item"><a href="#">รายการกิจกรรมประจำปี</a></li>
-                                <li class="list-group-item"><a href="#">รายชื่อสมาชิกในหอพัก</a></li>
-                                <li class="list-group-item"><a href="#">ผลการเข้าร่วมกิจกรรม</a></li> --}}
                                 <li class="list-group-item"><a
                                         href="{{ route('report.interview.edit', Auth::guard('personel')->user()->id) }}">คะแนนการสัมภาษณ์</a>
                                 </li>

@@ -19,6 +19,9 @@
 @push('scripts')
     <script>
         $(document).ready(function() {
+            var path = window.location.pathname;
+            console.log(path);
+
             $('#date').datepicker({
                 format: 'yyyy-mm-dd',
                 startView: 'years',
