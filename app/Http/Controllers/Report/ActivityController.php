@@ -27,6 +27,18 @@ class ActivityController extends Controller
         return view('report.activity.index', compact('activities', 'year'));
     }
 
+    public function adminIndex()
+    {
+        $dorms = Dormitory::all();
+        return view('report.activity.select', compact('dorms'));
+    }
+
+    public function adminShowAll()
+    {
+        $dorms = Dormitory::all();
+        return view('report.activity.showallSelect', compact('dorms'));
+    }
+
     public function showAll($dormId)
     {
         $year = YearConfig::find(1);

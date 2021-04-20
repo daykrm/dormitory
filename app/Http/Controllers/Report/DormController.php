@@ -21,12 +21,18 @@ class DormController extends Controller
     {
         $year = YearConfig::find(1);
         $users = User::where('dd.dormitory_id', $dormDetailId)
-        ->select('rooms.name as room','users.*')
-        ->join('dormitory_details as dd','users.dorm_detail_id','=','dd.id')
-        ->join('rooms','dd.room_id','=','rooms.id')
-        ->where('users.type_id','<>','3')
-        ->orderBy('rooms.name','ASC')
-        ->get();
+            ->select('rooms.name as room', 'users.*')
+            ->join('dormitory_details as dd', 'users.dorm_detail_id', '=', 'dd.id')
+            ->join('rooms', 'dd.room_id', '=', 'rooms.id')
+            ->where('users.type_id', '<>', '3')
+            ->orderBy('rooms.name', 'ASC')
+            ->get();
         return view('report.dorm.index', compact('year', 'users'));
+    }
+
+    public function adminIndex()
+    {
+        $dorms = Dormitory::all();
+        return view('report.dorm.select', compact('dorms'));
     }
 }

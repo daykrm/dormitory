@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Activity;
 use App\Models\Activity_credit;
+use App\Models\Dormitory;
 use App\Models\User;
 use App\Models\YearConfig;
 use Illuminate\Http\Request;
@@ -23,6 +24,12 @@ class ScoreController extends Controller
         $year = YearConfig::find(1);
         $activities = Activity::where('year', $year->year)->where('dorm_id', $id)->orderBy('name')->get();
         return view('score.index', compact('activities', 'year'));
+    }
+
+    public function adminIndex()
+    {
+        $dorms = Dormitory::all();
+        return view('score.select', compact('dorms'));
     }
 
     public function store(Request $request)

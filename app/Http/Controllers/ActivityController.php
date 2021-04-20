@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Activity;
+use App\Models\Dormitory;
 use App\Models\YearConfig;
 use Illuminate\Http\Request;
 
@@ -108,6 +109,12 @@ class ActivityController extends Controller
         //dd(date('Y-m-d'));
         //$sql = Activity::where('activity_date', '>=', date('yyyy-mm-dd'))->orderBy('activity_date')->toSql();
         return view('activity.index', compact('activities'));
+    }
+
+    public function adminIndex()
+    {
+        $dorms = Dormitory::all();
+        return view('activity.select', compact('dorms'));
     }
 
     /**
