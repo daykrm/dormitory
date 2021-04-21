@@ -62,7 +62,7 @@
                         </div>
                         
                     </div>
-                    <main role="main" class="col-12 col-md-9 ml-sm-auto pt-2 pl-0 pr-3">
+                    <main role="main" class="col-12 col-md-9 pt-md-2 pl-md-0 pr-md-3">
                         @yield('content')
                     </main>
                 @else
