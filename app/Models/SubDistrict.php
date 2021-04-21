@@ -12,4 +12,9 @@ class SubDistrict extends Model
     protected $fillable = [
         'id', 'zip_code', 'name_th', 'name_en', 'district_id'
     ];
+
+    public function district()
+    {
+        return $this->belongsTo(District::class);
+    }
 }

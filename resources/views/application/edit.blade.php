@@ -6,6 +6,7 @@
             แก้ไขใบสมัคร
         </div>
         <div class="card-body">
+            {{ $app->sub_dist_fa->district->province->id }}
             <form method="POST" action="{{ route('application.update', $app->id) }}">
                 @csrf
                 {{ method_field('PUT') }}
@@ -21,6 +22,65 @@
 @push('scripts')
     <script>
         $(document).ready(function() {
+
+            function getSelectOption(id, type, district = '#district_fa', subdistrict = '#subdistrict_fa') {
+                var option = ""
+                var url = ""
+                if (type === 1) {
+                    option += ""
+                    url += "/getDistrict/" + id
+                } else {
+                    option += ""
+                    url += "/getSubDistrict/" + id
+                }
+                $.ajax({
+                    type: 'get',
+                    url: url,
+                    success: function(data) {
+                        var select
+                        if (type === 1) {
+                            select = $(district)
+                            select.html('')
+                            $(subdistrict).html('')
+                        } else {
+                            select = $(subdistrict)
+                            select.html('')
+                        }
+                        for (let i = 0; i < data.length; i++) {
+                            option += "<option value='" + data[i].id + "'>" + data[i].name_th +
+                                "</option>"
+                        }
+                        select.append(option)
+                        select.selectpicker('refresh');
+                            $(subdistrict).selectpicker('refresh');
+                    }
+                })
+            }
+
+            $('#province_fa').change(function(){
+                getSelectOption($(this).val(),1)
+            })
+
+            $('#district_fa').change(function(){
+                getSelectOption($(this).val(),2)
+            })
+
+            $('#province_mo').change(function(){
+                getSelectOption($(this).val(),1,'#district_mo','#subdistrict_mo')
+            })
+
+            $('#district_mo').change(function(){
+                getSelectOption($(this).val(),2,'#district_mo','#subdistrict_mo')
+            })
+
+            $('#province_sp').change(function(){
+                getSelectOption($(this).val(),1,'#district_sp','#subdistrict_sp')
+            })
+
+            $('#district_sp').change(function(){
+                getSelectOption($(this).val(),2,'#district_sp','#subdistrict_sp')
+            })
+
             $('#dob').datepicker({
                 format: 'yyyy-mm-dd',
                 startView: "years",

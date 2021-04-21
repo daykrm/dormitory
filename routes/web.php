@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Auth\LoginController;
+use App\Models\SubDistrict;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,6 +14,14 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+Route::post('crop-image-upload','CropImageController@uploadCropImage');
+
+Route::get('/test', 'ProvinceListController@index');
+
+Route::get('/getDistrict/{id}', 'ProvinceListController@getDistrict');
+
+Route::get('/getSubDistrict/{id}', 'ProvinceListController@getSubDistrict');
 
 Route::get('/', function () {
     return redirect()->action([LoginController::class, 'showLoginForm']);
