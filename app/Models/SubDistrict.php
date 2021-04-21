@@ -5,11 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Province extends Model
+class SubDistrict extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'id', 'name', 'name_en', 'code', 'geography_id'
+        'id', 'zip_code', 'name_th', 'name_en', 'district_id'
     ];
 }
