@@ -1,6 +1,6 @@
 <input type="hidden" name="student_id" value="{{ Auth::user()->id }}">
 <input type="hidden" name="year" value="{{ $app->year ?? $year->year }}">
-<input type="hidden" name="image_blob">
+<input type="hidden" name="image_path" id="image_path" value="{{ $app->img_path ?? '' }}">
 <hr>
 <h5>หอพักที่ต้องการสมัคร</h5>
 <div class="row justify-content-center">
@@ -19,14 +19,13 @@
 </div>
 <h5>ข้อมูลส่วนตัว</h5>
 <div class="container">
-    <h1>Laravel Cropper Js - Crop Image Before Upload - Tutsmake.com</h1>
-    <input type="file" name="image" class="image">
+    <input type="file" name="image" class="image" id="selectFile" {{ $app->img_path == null ? 'required' : '' }}>
 </div>
 <div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="modalLabel">Laravel Cropper Js - Crop Image Before Upload - Tutsmake.com
+                <h5 class="modal-title" id="modalLabel">ปรับขนาดรูปภาพ
                 </h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">×</span>
@@ -45,8 +44,8 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-primary" id="crop">Crop</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">ยกเลิก</button>
+                <button type="button" class="btn btn-primary" id="crop">อัพโหลด</button>
             </div>
         </div>
     </div>

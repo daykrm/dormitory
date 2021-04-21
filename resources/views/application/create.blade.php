@@ -71,18 +71,19 @@
             });
             $modal.on('shown.bs.modal', function() {
                 cropper = new Cropper(image, {
-                    aspectRatio: 1,
+                    // aspectRatio: 1,
                     viewMode: 3,
                     preview: '.preview'
                 });
             }).on('hidden.bs.modal', function() {
                 cropper.destroy();
                 cropper = null;
+                $('#selectFile').val('')
             });
             $("#crop").click(function() {
                 canvas = cropper.getCroppedCanvas({
-                    width: 160,
-                    height: 160,
+                    width: 700,
+                    height: 700,
                 });
 
                 // console.log($('meta[name="_token"]').attr('content'));
@@ -103,7 +104,8 @@
                             success: function(data) {
                                 console.log(data);
                                 $modal.modal('hide');
-                                alert("Crop image successfully uploaded");
+                                $('#image_path').val(data);
+                                alert("Upload ไฟล์สำเร็จ");
                             }
                         });
                     }

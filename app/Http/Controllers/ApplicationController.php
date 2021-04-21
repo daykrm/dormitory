@@ -164,6 +164,7 @@ class ApplicationController extends Controller
             'vehicle_number' => $request->get('vehicle_number'),
             'vehicle_year' => $request->get('vehicle_year'),
             'vehicle_month' => $request->get('vehicle_month'),
+            'img_path' => $request->input('image_path')
         ];
 
         if ($sp == 0) {
@@ -300,14 +301,28 @@ class ApplicationController extends Controller
             'age_fa' => $request->get('age_fa'),
             'occupation_fa' => $request->get('occ_fa'),
             'other_fa' => $request->get('other_fa'),
+            'address_fa' => $request->get('address_fa'),
+            'sub_district_id_fa' => $request->get('subdistrict_fa'),
+            'phone_fa' => $request->get('phone_fa'),
             'status_fa' => $request->get('status_fa'),
             'name_mo' => $request->get('name_mo'),
             'age_mo' => $request->get('age_mo'),
             'occupation_mo' => $request->get('occ_mo'),
             'other_mo' => $request->get('other_mo'),
+            'address_mo' => $request->get('address_mo'),
+            'sub_district_id_mo' => $request->get('subdistrict_mo'),
+            'phone_mo' => $request->get('phone_mo'),
             'status_mo' => $request->get('status_mo'),
             'family_monthly_income' => $request->get('fam_monthly_income'),
             'marital_status' => $request->get('marital_status'),
+            'vehicle_type' =>  $request->get('vehicle_type'),
+            'vehicle_brand' => $request->get('vehicle_brand'),
+            'vehicle_model' => $request->get('vehicle_model'),
+            'vehicle_color' => $request->get('vehicle_color'),
+            'vehicle_number' => $request->get('vehicle_number'),
+            'vehicle_year' => $request->get('vehicle_year'),
+            'vehicle_month' => $request->get('vehicle_month'),
+            'img_path' => $request->input('image_path')
         ];
 
         if ($sp == 0) {
@@ -317,6 +332,9 @@ class ApplicationController extends Controller
             $applicationData['other_sp'] = $request->get('other_sp');
             $applicationData['monthly_income_sp'] = $request->get('monthly_income_sp');
             $applicationData['relevance'] = $request->get('relevance');
+            $applicationData['address_sp'] = $request->get('address_sp');
+            $applicationData['sub_district_id_sp'] = $request->get('subdistrict_sp');
+            $applicationData['phone_sp'] = $request->get('phone_sp');
         } else {
             $applicationData['name_sp'] = null;
             $applicationData['age_sp'] = null;
@@ -324,6 +342,9 @@ class ApplicationController extends Controller
             $applicationData['other_sp'] = null;
             $applicationData['monthly_income_sp'] = null;
             $applicationData['relevance'] = null;
+            $applicationData['address_sp'] = null;
+            $applicationData['sub_district_id_sp'] = null;
+            $applicationData['phone_sp'] = null;
         }
 
         DB::table('applications')->where('id', $id)->update($applicationData);
