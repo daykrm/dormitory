@@ -7,7 +7,7 @@
         </div>
         <div class="card-body">
             <div class="container">
-                <form method="POST" action="{{ route('application.store') }}" enctype="multipart/form-data">
+                <form method="POST" action="{{ route('application.store') }}">
                     @csrf
                     @include('application.form')
                     <div class="row justify-content-center">

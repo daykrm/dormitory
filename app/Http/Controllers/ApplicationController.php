@@ -96,6 +96,8 @@ class ApplicationController extends Controller
             'name.required' => 'กรุณาระบุชื่อ'
         ];
 
+        //dd($request);
+
         $sp = $request->get('sp');
 
         if ($sp == 0) {
@@ -125,6 +127,8 @@ class ApplicationController extends Controller
             'credit' => $request->get('credit'),
             'province_id' => $request->get('province'),
         ];
+
+        // dd($request);
 
         DB::table('users')->where('id', $student_id)->update($studentData);
 
@@ -166,6 +170,8 @@ class ApplicationController extends Controller
             'vehicle_month' => $request->get('vehicle_month'),
             'img_path' => $request->input('image_path')
         ];
+
+        // dd($applicationData);
 
         if ($sp == 0) {
             $applicationData['name_sp'] = $request->get('name_sp');
@@ -235,6 +241,8 @@ class ApplicationController extends Controller
         $faculties = Faculty::all();
         $occs = Occupation::where('id', '<>', 1)->get();
         $app = Application::findOrFail($id);
+
+        // dd($app);
 
         $fa_province_id = $app->sub_dist_fa->district->province->id;
         $fa_district_list = $prov::find($fa_province_id)->districts;

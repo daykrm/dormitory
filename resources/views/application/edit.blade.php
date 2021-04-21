@@ -6,7 +6,6 @@
             แก้ไขใบสมัคร
         </div>
         <div class="card-body">
-            {{ $app->sub_dist_fa->district->province->id }}
             <form method="POST" action="{{ route('application.update', $app->id) }}">
                 @csrf
                 {{ method_field('PUT') }}

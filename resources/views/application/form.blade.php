@@ -19,7 +19,7 @@
 </div>
 <h5>ข้อมูลส่วนตัว</h5>
 <div class="container">
-    <input type="file" name="image" class="image" id="selectFile" {{ $app->img_path == null ? 'required' : '' }}>
+    <input type="file" name="image" class="image" id="selectFile" {{$app->img_path == null ? 'required' : ''}}>
 </div>
 <div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
@@ -49,8 +49,6 @@
             </div>
         </div>
     </div>
-</div>
-</div>
 </div>
 @include('auth.form')
 <div class="row justify-content center">
