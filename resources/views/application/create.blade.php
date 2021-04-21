@@ -78,7 +78,7 @@
             }).on('hidden.bs.modal', function() {
                 cropper.destroy();
                 cropper = null;
-                $('#selectFile').val('')
+                // $('#selectFile').val('')
             });
             $("#crop").click(function() {
                 canvas = cropper.getCroppedCanvas({
