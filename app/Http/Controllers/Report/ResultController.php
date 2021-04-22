@@ -8,6 +8,7 @@ use App\Models\Personel;
 use App\Models\YearConfig;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 
 class ResultController extends Controller
@@ -45,16 +46,21 @@ class ResultController extends Controller
         // $model = Dormitory::find($id);
         // $dorm = $model->name;
         $pdf = $request->file('file');
-        $path = 'dormitory/file/' . $year->year . '/' . uniqid() . '.pdf';
-        Storage::disk('s3')->put($path, fopen($pdf, 'r+'));
-        // $path = $pdf->storeAs('file/' . $year->year, $dorm . '.pdf');
+        $path = 'dormitory/file/' . $year->year;
+        $filename = uniqid() . '.pdf';
+
+        //old method remove cause slow upload
+        // Storage::disk('s3')->put($path, fopen($pdf, 'r+'));
+
+        File::streamUpload($path, $filename, $pdf, true);
+
         $old = DB::table('report_result')->where([['year', $year->year], ['status', 1]])->first();
         if ($old != null) {
-            DB::table('report_result')->where('id', $old->id)->update(['path' => $path]);
+            DB::table('report_result')->where('id', $old->id)->update(['path' => $path . '/' . $filename]);
         } else {
             DB::table('report_result')->insert([
                 'year' => $year->year,
-                'path' => $path
+                'path' => $path . '/' . $filename
             ]);
         }
         $file = DB::table('report_result')->where('year', $year->year)->where('status', 1)->first();
