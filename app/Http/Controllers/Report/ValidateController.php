@@ -52,9 +52,11 @@ class ValidateController extends Controller
         // $path = $pdf->storeAs('file/' . $year->year, 'validate_' . $dorm->name . '.pdf');
         $path = 'dormitory/file/' . $year->year;
         $filename = uniqid() . '.pdf';
+
+        $Fullpath = $pdf->store($path, 's3');
         // Storage::disk('s3')->put($path, fopen($pdf, 'r+'));
 
-        File::streamUpload($path, $filename, $pdf, true);
+        // File::streamUpload($path, $filename, $pdf, true);
 
         $old = DB::table('report_result')->where([['year', $year->year], ['status', 0]])->first();
         if ($old != null) {

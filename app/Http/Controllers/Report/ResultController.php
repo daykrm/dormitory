@@ -52,7 +52,9 @@ class ResultController extends Controller
         //old method remove cause slow upload
         // Storage::disk('s3')->put($path, fopen($pdf, 'r+'));
 
-        File::streamUpload($path, $filename, $pdf, true);
+        $Fullpath = $pdf->store($path, 's3');
+
+        // File::streamUpload($path, $filename, $pdf, true);
 
         $old = DB::table('report_result')->where([['year', $year->year], ['status', 1]])->first();
         if ($old != null) {
