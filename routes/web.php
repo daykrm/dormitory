@@ -55,7 +55,7 @@ Route::prefix('/report')->name('report.')->namespace('Report')->group(function (
         Route::get('/select', 'ResultController@select')->name('select');
         Route::get('/select/{id}', 'ResultController@edit')->name('edit');
         Route::post('/find', 'ResultController@show')->name('find');
-        Route::get('/{id}', 'ResultController@index')->name('index');
+        Route::get('/', 'ResultController@index')->name('index');
     });
 
     Route::resource('validate', 'ValidateController');

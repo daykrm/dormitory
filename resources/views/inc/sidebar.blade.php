@@ -46,10 +46,10 @@ if ($now >= $start && $now <= $end) {
                                     </li>
                                     {{-- <li class="list-group-item"><a href="#">คะแนนการสัมภาษณ์</a></li> --}}
                                     <li class="list-group-item"><a
-                                            href="{{ route('report.validate.show', Auth::user()->dorm->dormitory->id) }}">รายชื่อผู้มีสิทธิ์สอบสัมภาษณ์</a>
+                                            href="{{ route('report.validate.index') }}">รายชื่อผู้มีสิทธิ์สอบสัมภาษณ์</a>
                                     </li>
                                     <li class="list-group-item"><a
-                                            href="{{ route('report.result.index', Auth::user()->dorm->dormitory->id) }}">ผลการคัดกรองนักศึกษาเข้าพักในหอพักส่วนกลาง</a>
+                                            href="{{ route('report.result.index') }}">ผลการคัดกรองนักศึกษาเข้าพักในหอพักส่วนกลาง</a>
                                     </li>
                                 @else
                                     <li class="list-group-item"><a>รายการกิจกรรมประจำปี</a>
@@ -125,10 +125,10 @@ if ($now >= $start && $now <= $end) {
                                     </li>
                                     {{-- <li class="list-group-item"><a href="#">คะแนนการสัมภาษณ์</a></li> --}}
                                     <li class="list-group-item"><a
-                                            href="{{ route('report.validate.show', Auth::user()->dorm->dormitory->id) }}">รายชื่อผู้มีสิทธิ์สอบสัมภาษณ์</a>
+                                            href="{{ route('report.validate.index') }}">รายชื่อผู้มีสิทธิ์สอบสัมภาษณ์</a>
                                     </li>
                                     <li class="list-group-item"><a
-                                            href="{{ route('report.result.index', Auth::user()->dorm->dormitory->id) }}">ผลการคัดกรองนักศึกษาเข้าพักในหอพักส่วนกลาง</a>
+                                            href="{{ route('report.result.index') }}">ผลการคัดกรองนักศึกษาเข้าพักในหอพักส่วนกลาง</a>
                                     </li>
                                 @else
                                     <li class="list-group-item"><a>รายการกิจกรรมประจำปี</a>
@@ -216,7 +216,7 @@ if ($now >= $start && $now <= $end) {
                                         href="{{ route('report.validate.index') }}">รายชื่อผู้มีสิทธิ์สอบสัมภาษณ์</a>
                                 </li>
                                 <li class="list-group-item"><a
-                                        href="{{ route('report.result.select') }}">ผลการคัดกรองนักศึกษาเข้าพักในหอพักส่วนกลาง</a>
+                                        href="{{ route('report.result.index') }}">ผลการคัดกรองนักศึกษาเข้าพักในหอพักส่วนกลาง</a>
                                 </li>
                             </ul>
                         </div>
@@ -261,7 +261,7 @@ if ($now >= $start && $now <= $end) {
                                         href="{{ route('report.validate.index') }}">รายชื่อผู้มีสิทธิ์สอบสัมภาษณ์</a>
                                 </li>
                                 <li class="list-group-item"><a
-                                        href="{{ route('report.result.edit', Auth::guard('personel')->user()->id) }}">ผลการคัดกรองนักศึกษาเข้าพักในหอพักส่วนกลาง</a>
+                                        href="{{ route('report.result.index') }}">ผลการคัดกรองนักศึกษาเข้าพักในหอพักส่วนกลาง</a>
                                 </li>
                             </ul>
                         </div>

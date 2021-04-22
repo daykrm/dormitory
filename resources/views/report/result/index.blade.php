@@ -3,17 +3,14 @@
 @section('content')
     <div class="card">
         <div class="card-header">
-            สรุปผลการคัดกรองนักศึกษาที่มีสิทธิ์เข้าในหอพักส่วนกลาง มหาวิทยาลัยขอนแก่น
-            {{ $dorm ?? Auth::user()->dorm->dormitory->name }} ประจำปีการศึกษา
-            {{ $year->year + 543 }}
+            สรุปผลการคัดกรองนักศึกษาที่มีสิทธิ์เข้าในหอพักส่วนกลาง มหาวิทยาลัยขอนแก่น ประจำปีการศึกษา {{ $year->year + 543 }}
         </div>
         <div class="card-body">
             <div class="container">
-                @if (Auth::guard('personel')->check() || Auth::user()->type_id == 3)
+                @if (Auth::user() && Auth::user()->type_id == 3)
                     <form action="{{ route('report.result.store') }}" class="row justify-content-center" method="post"
                         enctype="multipart/form-data">
                         @csrf
-                        <input type="hidden" name="dorm" value="{{ $id }}">
                         <div class="col-md-4">
                             <input type="file" accept="application/pdf" name="file" class="form-control-file" required>
                         </div>
