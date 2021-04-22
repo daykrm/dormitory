@@ -50,7 +50,7 @@ class ValidateController extends Controller
         $year = YearConfig::find(1);
         // $path = $pdf->storeAs('file/' . $year->year, 'validate_' . $dorm->name . '.pdf');
         $path = 'dormitory/file/' . $year->year . '/validate_' . uniqid() . '.pdf';
-        Storage::disk('s3')->put($path, file_get_contents($pdf), 'public-read');
+        Storage::disk('s3')->put($path, fopen($pdf, 'r+'));
         $old = DB::table('report_result')->where([['year', $year->year], ['status', 0]])->first();
         if ($old != null) {
             DB::table('report_result')->where('id', $old->id)->update(['path' => $path]);

@@ -46,7 +46,7 @@ class ResultController extends Controller
         // $dorm = $model->name;
         $pdf = $request->file('file');
         $path = 'dormitory/file/' . $year->year . '/' . uniqid() . '.pdf';
-        Storage::disk('s3')->put($path, file_get_contents($pdf), 'public-read');
+        Storage::disk('s3')->put($path, fopen($pdf, 'r+'));
         // $path = $pdf->storeAs('file/' . $year->year, $dorm . '.pdf');
         $old = DB::table('report_result')->where([['year', $year->year], ['status', 1]])->first();
         if ($old != null) {
