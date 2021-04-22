@@ -47,7 +47,7 @@ class ValidateController extends Controller
         //
         // $id = $request->input('dorm');
         // $dorm = Dormitory::find($id);
-        $pdf = $request->file('file');
+        // $pdf = $request->file('file');
         $year = YearConfig::find(1);
         // $path = $pdf->storeAs('file/' . $year->year, 'validate_' . $dorm->name . '.pdf');
         $path = 'dormitory/file/' . $year->year;
@@ -56,7 +56,7 @@ class ValidateController extends Controller
         // $Fullpath = $pdf->store($path, 's3');
         // Storage::disk('s3')->put($path, fopen($pdf, 'r+'));
 
-        File::streamUpload($path, $filename, $pdf, true);
+        File::streamUpload($path, $filename, $request->file('file'), true);
 
         $old = DB::table('report_result')->where([['year', $year->year], ['status', 0]])->first();
         if ($old != null) {

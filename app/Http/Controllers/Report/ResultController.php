@@ -45,7 +45,7 @@ class ResultController extends Controller
         $year = YearConfig::find(1);
         // $model = Dormitory::find($id);
         // $dorm = $model->name;
-        $pdf = $request->file('file');
+        // $pdf = $request->file('file');
         $path = 'dormitory/file/' . $year->year;
         $filename = uniqid() . '.pdf';
 
@@ -54,7 +54,7 @@ class ResultController extends Controller
 
         // $Fullpath = $pdf->store($path, 's3');
 
-        File::streamUpload($path, $filename, $pdf, true);
+        File::streamUpload($path, $filename, $request->file('file'), true);
 
         $old = DB::table('report_result')->where([['year', $year->year], ['status', 1]])->first();
         if ($old != null) {
