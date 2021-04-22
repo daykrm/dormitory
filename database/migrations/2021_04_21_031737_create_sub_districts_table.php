@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateProvincesTable extends Migration
+class CreateSubDistrictsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,12 @@ class CreateProvincesTable extends Migration
      */
     public function up()
     {
-        Schema::create('provinces', function (Blueprint $table) {
+        Schema::create('sub_districts', function (Blueprint $table) {
             $table->id();
-            $table->string('code',100);
-            $table->string('name',100);
-            $table->string('name_en',191);
-            $table->integer('geography_id');
+            $table->string('zip_code', 5);
+            $table->string('name_th', 191);
+            $table->string('name_en', 191);
+            $table->integer('district_id');
             $table->timestamps();
         });
     }
@@ -30,6 +30,6 @@ class CreateProvincesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('provinces');
+        Schema::dropIfExists('sub_districts');
     }
 }

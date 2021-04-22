@@ -1,5 +1,6 @@
 <input type="hidden" name="student_id" value="{{ Auth::user()->id }}">
 <input type="hidden" name="year" value="{{ $app->year ?? $year->year }}">
+<input type="hidden" name="image_path" id="image_path" value="{{ $app->img_path ?? '' }}">
 <hr>
 <h5>หอพักที่ต้องการสมัคร</h5>
 <div class="row justify-content-center">
@@ -17,6 +18,38 @@
     </div>
 </div>
 <h5>ข้อมูลส่วนตัว</h5>
+<div class="container">
+    <input type="file" name="image" class="image" id="selectFile" {{$app->img_path == null ? 'required' : ''}}>
+</div>
+<div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalLabel">ปรับขนาดรูปภาพ
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="img-container">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <img id="image" src="https://avatars0.githubusercontent.com/u/3456749">
+                        </div>
+                        <div class="col-md-4">
+                            <div class="preview"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">ยกเลิก</button>
+                <button type="button" class="btn btn-primary" id="crop">อัพโหลด</button>
+            </div>
+        </div>
+    </div>
+</div>
 @include('auth.form')
 <div class="row justify-content center">
     <div class="form-group col-md-2">
@@ -57,9 +90,60 @@
         <input type="text" name="monthly_expense" value="{{ $app->monthly_expense ?? old('monthly_expense') }}"
             required class="form-control">
     </div>
+    <div class="form-group col-md-6">
+        <label>ยานพาหนะที่นำมาใช้ในมหาวิทยาลัย</label>
+        <input type="text" name="vehicle_type" value="{{ $app->vehicle_type ?? old('vehicle_type') }}"
+            class="form-control">
+    </div>
+    <div class="form-group col-md-2">
+        <label>ยี่ห้อ</label>
+        <input type="text" name="vehicle_brand" value="{{ $app->vehicle_brand ?? old('vehicle_brand') }}"
+            class="form-control">
+    </div>
+    <div class="form-group col-md-2">
+        <label>รุ่น</label>
+        <input type="text" name="vehicle_model" value="{{ $app->vehicle_model ?? old('vehicle_model') }}"
+            class="form-control">
+    </div>
+    <div class="form-group col-md-2">
+        <label>สี</label>
+        <input type="text" name="vehicle_color" value="{{ $app->vehicle_color ?? old('vehicle_color') }}"
+            class="form-control">
+    </div>
+</div>
+<div class="row justify-content-center">
+    <div class="form-group col-md-4">
+        <label>อายุการใช้งาน ปี / เดือน</label>
+        <div class="row">
+            <div class="col-md-5">
+                <div class="input-group">
+                    <input type="number" name="vehicle_year" min="0" class="form-control"
+                        value="{{ $app->vehicle_year ?? old('vehicle_year') }}" aria-describedby="basic-addon2">
+                    <div class="input-group-append">
+                        <span class="input-group-text" id="basic-addon2">ปี</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-7">
+                <div class="input-group">
+                    <input type="number" name="vehicle_month" max="11" min="0" class="form-control"
+                        value="{{ $app->vehicle_month ?? old('vehicle_month') }}" aria-describedby="basic-addon2">
+                    <div class="input-group-append">
+                        <span class="input-group-text" id="basic-addon2">เดือน</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="form-group col-md-3">
+        <label>หมายเลขทะเบียน</label>
+        <input type="text" name="vehicle_number" value="{{ $app->vehicle_number ?? old('vehicle_number') }}"
+            class="form-control">
+    </div>
 </div>
 <h5>ข้อมูลครอบครัว</h5>
 <hr>
+<h5>ข้อมูลบิดา</h5>
 <div class="row justify-content-center">
     <div class="form-group col-md-4">
         <label>ชื่อบิดา</label>
@@ -107,7 +191,67 @@
             <option value="0" {{ $app->status_fa == 0 ? 'selected' : '' }}>ไม่มีชีวิต</option>
         </select>
     </div>
+    <div class="form-group col-md-2">
+        <label>เบอร์โทรศัพท์</label>
+        <input type="text" name="phone_fa" value="{{ $app->phone_fa ?? old('phone_fa') }}" required
+            class="form-control">
+    </div>
 </div>
+<div class="row justify-content-center">
+    <div class="form-group col-md-3">
+        <label>ที่อยู่</label>
+        <input type="text" name="address_fa" value="{{ $app->address_fa ?? old('address_fa') }}" class="form-control"
+            required>
+    </div>
+    <div class="form-group col-md-3">
+        <label>จังหวัด</label>
+        <select name="province_fa" id="province_fa" data-live-search="true" title="เลือกจังหวัด"
+            class="selectpicker form-control" required>
+            @foreach ($provinces as $item)
+                @if ($app->sub_dist_fa != null)
+                    @if ($app->sub_dist_fa->district->province->id == $item->id)
+                        <option value="{{ $item->id }}" selected>{{ $item->name }}</option>
+                    @else
+                        <option value="{{ $item->id }}">{{ $item->name }}</option>
+                    @endif
+                @else
+                    <option value="{{ $item->id }}">{{ $item->name }}</option>
+                @endif
+            @endforeach
+        </select>
+    </div>
+    <div class="form-group col-md-3">
+        <label>อำเภอ</label>
+        <select name="district_fa" id="district_fa" data-live-search="true" title="เลือกอำเภอ"
+            class="selectpicker form-control" required>
+            @if (isset($fa_district_list))
+                @foreach ($fa_district_list as $item)
+                    @if ($app->sub_dist_fa->district->id == $item->id)
+                        <option value="{{ $item->id }}" selected>{{ $item->name_th }}</option>
+                    @else
+                        <option value="{{ $item->id }}">{{ $item->name_th }}</option>
+                    @endif
+                @endforeach
+            @endif
+        </select>
+    </div>
+    <div class="form-group col-md-3">
+        <label>ตำบล</label>
+        <select name="subdistrict_fa" id="subdistrict_fa" data-live-search="true" title="เลือกตำบล"
+            class="selectpicker form-control" required>
+            @if (isset($fa_subdistrict_list))
+                @foreach ($fa_subdistrict_list as $item)
+                    @if ($app->sub_district_id_fa == $item->id)
+                        <option value="{{ $item->id }}" selected>{{ $item->name_th }}</option>
+                    @else
+                        <option value="{{ $item->id }}">{{ $item->name_th }}</option>
+                    @endif
+                @endforeach
+            @endif
+        </select>
+    </div>
+</div>
+<h5>ข้อมูลมารดา</h5>
 <div class="row justify-content-center">
     <div class="form-group col-md-4">
         <label>ชื่อมารดา</label>
@@ -156,9 +300,68 @@
             <option value="0" {{ $app->status_mo == 0 ? 'selected' : '' }}>ไม่มีชีวิต</option>
         </select>
     </div>
+    <div class="form-group col-md-2">
+        <label>เบอร์โทรศัพท์</label>
+        <input type="text" name="phone_mo" value="{{ $app->phone_mo ?? old('phone_mo') }}" required
+            class="form-control">
+    </div>
 </div>
 <div class="row justify-content-center">
-    <div class="form-group col-md-2">
+    <div class="form-group col-md-3">
+        <label>ที่อยู่</label>
+        <input type="text" name="address_mo" value="{{ $app->address_mo ?? old('address_mo') }}" class="form-control"
+            required>
+    </div>
+    <div class="form-group col-md-3">
+        <label>จังหวัด</label>
+        <select name="province_mo" id="province_mo" data-live-search="true" title="เลือกจังหวัด"
+            class="selectpicker form-control" required>
+            @foreach ($provinces as $item)
+                @if ($app->sub_dist_mo != null)
+                    @if ($app->sub_dist_mo->district->province->id == $item->id)
+                        <option value="{{ $item->id }}" selected>{{ $item->name }}</option>
+                    @else
+                        <option value="{{ $item->id }}">{{ $item->name }}</option>
+                    @endif
+                @else
+                    <option value="{{ $item->id }}">{{ $item->name }}</option>
+                @endif
+            @endforeach
+        </select>
+    </div>
+    <div class="form-group col-md-3">
+        <label>อำเภอ</label>
+        <select name="district_mo" id="district_mo" data-live-search="true" title="เลือกอำเภอ"
+            class="selectpicker form-control" required>
+            @if (isset($mo_district_list))
+                @foreach ($mo_district_list as $item)
+                    @if ($app->sub_dist_mo->district->id == $item->id)
+                        <option value="{{ $item->id }}" selected>{{ $item->name_th }}</option>
+                    @else
+                        <option value="{{ $item->id }}">{{ $item->name_th }}</option>
+                    @endif
+                @endforeach
+            @endif
+        </select>
+    </div>
+    <div class="form-group col-md-3">
+        <label>ตำบล</label>
+        <select name="subdistrict_mo" id="subdistrict_mo" data-live-search="true" title="เลือกตำบล"
+            class="selectpicker form-control" required>
+            @if (isset($mo_subdistrict_list))
+                @foreach ($mo_subdistrict_list as $item)
+                    @if ($app->sub_district_id_mo == $item->id)
+                        <option value="{{ $item->id }}" selected>{{ $item->name_th }}</option>
+                    @else
+                        <option value="{{ $item->id }}">{{ $item->name_th }}</option>
+                    @endif
+                @endforeach
+            @endif
+        </select>
+    </div>
+</div>
+<div class="row justify-content-center">
+    <div class="form-group col-md-3">
         <label>สถานภาพสมรสบิดา - มารดา</label>
         <select name="marital_status" class="form-control" required>
             <option value="">เลือกสถานภาพ</option>
@@ -167,31 +370,35 @@
             <option value="3" {{ $app->marital_status == 3 ? 'selected' : '' }}>หย่าร้าง</option>
         </select>
     </div>
-    <div class="form-group col-md-2">
+    <div class="form-group col-md-3">
         <label>รายได้ครอบครัวต่อเดือน</label>
         <input type="text" name="fam_monthly_income"
             value="{{ $app->family_monthly_income ?? old('fam_monthly_income') }}" class="form-control" required>
     </div>
-    <div class="form-group col-md-2">
+    <div class="form-group col-md-3">
         <label>มีพี่น้องรวม (รวมตนเอง)</label>
         <input type="text" name="relative_number" value="{{ $app->relative_number ?? old('relative_number') }}"
             class="form-control" required>
     </div>
-    <div class="form-group col-md-2">
+    <div class="form-group col-md-3">
         <label>นักศึกษาเป็นบุตรคนที่</label>
         <input type="text" name="being_number" value="{{ $app->being_number ?? old('being_number') }}"
             class="form-control" required>
     </div>
-    <div class="form-group col-md-2">
+</div>
+<div class="row justify-content-center">
+    <div class="form-group col-md-3">
         <label>จำนวนพี่น้องที่เรียนจบแล้ว</label>
         <input type="text" name="graduated" value="{{ $app->graduated ?? old('graduated') }}" class="form-control"
             required>
     </div>
-    <div class="form-group col-md-2">
+    <div class="form-group col-md-3">
         <label>จำนวนที่อยู่ในความดูแล</label>
         <input type="text" name="in_progress" value="{{ $app->in_progress ?? old('in_progress') }}"
             class="form-control" required>
     </div>
+</div>
+<div class="row justify-content-center">
     <div class="form-group col-md-6">
         <label>ผู้อุปการะ</label>
         <select name="sp" id="sp" class="form-control">
@@ -287,6 +494,66 @@
                     <strong>{{ $message }}</strong>
                 </span>
             @enderror
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="form-group col-md-3">
+            <label>ที่อยู่</label>
+            <input type="text" name="address_sp" value="{{ $app->address_sp ?? old('address_sp') }}"
+                class="form-control">
+        </div>
+        <div class="form-group col-md-3">
+            <label>จังหวัด</label>
+            <select name="province_sp" id="province_sp" data-live-search="true" title="เลือกจังหวัด"
+                class="selectpicker form-control">
+                @foreach ($provinces as $item)
+                    @if ($app->sub_dist_sp != null)
+                        @if ($app->sub_dist_sp->district->province->id == $item->id)
+                            <option value="{{ $item->id }}" selected>{{ $item->name }}</option>
+                        @else
+                            <option value="{{ $item->id }}">{{ $item->name }}</option>
+                        @endif
+                    @else
+                        <option value="{{ $item->id }}">{{ $item->name }}</option>
+                    @endif
+                @endforeach
+            </select>
+        </div>
+        <div class="form-group col-md-3">
+            <label>อำเภอ</label>
+            <select name="district_sp" id="district_sp" data-live-search="true" title="เลือกอำเภอ"
+                class="selectpicker form-control">
+                @if (isset($sp_district_list))
+                    @foreach ($sp_district_list as $item)
+                        @if ($app->sub_dist_sp->district->id == $item->id)
+                            <option value="{{ $item->id }}" selected>{{ $item->name_th }}</option>
+                        @else
+                            <option value="{{ $item->id }}">{{ $item->name_th }}</option>
+                        @endif
+                    @endforeach
+                @endif
+            </select>
+        </div>
+        <div class="form-group col-md-3">
+            <label>ตำบล</label>
+            <select name="subdistrict_sp" id="subdistrict_sp" data-live-search="true" title="เลือกตำบล"
+                class="selectpicker form-control">
+                @if (isset($sp_subdistrict_list))
+                    @foreach ($sp_subdistrict_list as $item)
+                        @if ($app->sub_district_id_sp == $item->id)
+                            <option value="{{ $item->id }}" selected>{{ $item->name_th }}</option>
+                        @else
+                            <option value="{{ $item->id }}">{{ $item->name_th }}</option>
+                        @endif
+                    @endforeach
+                @endif
+            </select>
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="form-group col-md-3">
+            <label>เบอร์โทรศัพท์</label>
+            <input type="text" name="phone_sp" value="{{ $app->phone_sp ?? old('phone_sp') }}" class="form-control">
         </div>
     </div>
 </div>

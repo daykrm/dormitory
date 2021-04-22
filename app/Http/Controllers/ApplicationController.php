@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Application;
+use App\Models\District;
 use App\Models\Dormitory;
 use App\Models\Faculty;
 use App\Models\Interview_score;
@@ -16,6 +17,8 @@ use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+
+use function PHPSTORM_META\map;
 
 class ApplicationController extends Controller
 {
@@ -93,6 +96,8 @@ class ApplicationController extends Controller
             'name.required' => 'กรุณาระบุชื่อ'
         ];
 
+        //dd($request);
+
         $sp = $request->get('sp');
 
         if ($sp == 0) {
@@ -123,6 +128,8 @@ class ApplicationController extends Controller
             'province_id' => $request->get('province'),
         ];
 
+        // dd($request);
+
         DB::table('users')->where('id', $student_id)->update($studentData);
 
         $applicationData = [
@@ -140,15 +147,31 @@ class ApplicationController extends Controller
             'age_fa' => $request->get('age_fa'),
             'occupation_fa' => $request->get('occ_fa'),
             'other_fa' => $request->get('other_fa'),
+            'address_fa' => $request->get('address_fa'),
+            'sub_district_id_fa' => $request->get('subdistrict_fa'),
+            'phone_fa' => $request->get('phone_fa'),
             'status_fa' => $request->get('status_fa'),
             'name_mo' => $request->get('name_mo'),
             'age_mo' => $request->get('age_mo'),
             'occupation_mo' => $request->get('occ_mo'),
             'other_mo' => $request->get('other_mo'),
+            'address_mo' => $request->get('address_mo'),
+            'sub_district_id_mo' => $request->get('subdistrict_mo'),
+            'phone_mo' => $request->get('phone_mo'),
             'status_mo' => $request->get('status_mo'),
             'family_monthly_income' => $request->get('fam_monthly_income'),
             'marital_status' => $request->get('marital_status'),
+            'vehicle_type' =>  $request->get('vehicle_type'),
+            'vehicle_brand' => $request->get('vehicle_brand'),
+            'vehicle_model' => $request->get('vehicle_model'),
+            'vehicle_color' => $request->get('vehicle_color'),
+            'vehicle_number' => $request->get('vehicle_number'),
+            'vehicle_year' => $request->get('vehicle_year'),
+            'vehicle_month' => $request->get('vehicle_month'),
+            'img_path' => $request->input('image_path')
         ];
+
+        // dd($applicationData);
 
         if ($sp == 0) {
             $applicationData['name_sp'] = $request->get('name_sp');
@@ -157,6 +180,9 @@ class ApplicationController extends Controller
             $applicationData['other_sp'] = $request->get('other_sp');
             $applicationData['monthly_income_sp'] = $request->get('monthly_income_sp');
             $applicationData['relevance'] = $request->get('relevance');
+            $applicationData['address_sp'] = $request->get('address_sp');
+            $applicationData['sub_district_id_sp'] = $request->get('subdistrict_sp');
+            $applicationData['phone_sp'] = $request->get('phone_sp');
         }
 
         $id = DB::table('applications')->insertGetId($applicationData);
@@ -206,6 +232,8 @@ class ApplicationController extends Controller
     public function edit($id)
     {
         //
+        $prov = new Province();
+        $dist = new District();
         $dorms = Dormitory::all();
         $year = YearConfig::find(1);
         $prefixes = Prefix::all();
@@ -213,8 +241,32 @@ class ApplicationController extends Controller
         $faculties = Faculty::all();
         $occs = Occupation::where('id', '<>', 1)->get();
         $app = Application::findOrFail($id);
+
+        // dd($app);
+
+        $fa_province_id = $app->sub_dist_fa->district->province->id;
+        $fa_district_list = $prov::find($fa_province_id)->districts;
+        $fa_district_id = $app->sub_dist_fa->district->id;
+        $fa_subdistrict_list = $dist::find($fa_district_id)->subdistricts;
+
+        $mo_province_id = $app->sub_dist_mo->district->province->id;
+        $mo_district_list = $prov::find($mo_province_id)->districts;
+        $mo_district_id = $app->sub_dist_mo->district->id;
+        $mo_subdistrict_list = $dist::find($mo_district_id)->subdistricts;
+
         $edit = 1;
-        return view('application.edit', compact('app', 'year', 'occs', 'prefixes', 'provinces', 'dorms', 'edit'));
+
+        if ($app->name_sp != null) {
+            $sp_province_id = $app->sub_dist_sp->district->province->id;
+            $sp_district_list = $prov::find($sp_province_id)->districts;
+            $sp_district_id = $app->sub_dist_sp->district->id;
+            $sp_subdistrict_list = $dist::find($sp_district_id)->subdistricts;
+
+            return view('application.edit', compact('app', 'year', 'occs', 'prefixes', 'provinces', 'dorms', 'edit', 'fa_district_list', 'fa_subdistrict_list', 'mo_district_list', 'mo_subdistrict_list', 'sp_district_list', 'sp_subdistrict_list'));
+        }
+
+
+        return view('application.edit', compact('app', 'year', 'occs', 'prefixes', 'provinces', 'dorms', 'edit', 'fa_district_list', 'fa_subdistrict_list', 'mo_district_list', 'mo_subdistrict_list'));
     }
 
     /**
@@ -257,14 +309,28 @@ class ApplicationController extends Controller
             'age_fa' => $request->get('age_fa'),
             'occupation_fa' => $request->get('occ_fa'),
             'other_fa' => $request->get('other_fa'),
+            'address_fa' => $request->get('address_fa'),
+            'sub_district_id_fa' => $request->get('subdistrict_fa'),
+            'phone_fa' => $request->get('phone_fa'),
             'status_fa' => $request->get('status_fa'),
             'name_mo' => $request->get('name_mo'),
             'age_mo' => $request->get('age_mo'),
             'occupation_mo' => $request->get('occ_mo'),
             'other_mo' => $request->get('other_mo'),
+            'address_mo' => $request->get('address_mo'),
+            'sub_district_id_mo' => $request->get('subdistrict_mo'),
+            'phone_mo' => $request->get('phone_mo'),
             'status_mo' => $request->get('status_mo'),
             'family_monthly_income' => $request->get('fam_monthly_income'),
             'marital_status' => $request->get('marital_status'),
+            'vehicle_type' =>  $request->get('vehicle_type'),
+            'vehicle_brand' => $request->get('vehicle_brand'),
+            'vehicle_model' => $request->get('vehicle_model'),
+            'vehicle_color' => $request->get('vehicle_color'),
+            'vehicle_number' => $request->get('vehicle_number'),
+            'vehicle_year' => $request->get('vehicle_year'),
+            'vehicle_month' => $request->get('vehicle_month'),
+            'img_path' => $request->input('image_path')
         ];
 
         if ($sp == 0) {
@@ -274,6 +340,9 @@ class ApplicationController extends Controller
             $applicationData['other_sp'] = $request->get('other_sp');
             $applicationData['monthly_income_sp'] = $request->get('monthly_income_sp');
             $applicationData['relevance'] = $request->get('relevance');
+            $applicationData['address_sp'] = $request->get('address_sp');
+            $applicationData['sub_district_id_sp'] = $request->get('subdistrict_sp');
+            $applicationData['phone_sp'] = $request->get('phone_sp');
         } else {
             $applicationData['name_sp'] = null;
             $applicationData['age_sp'] = null;
@@ -281,6 +350,9 @@ class ApplicationController extends Controller
             $applicationData['other_sp'] = null;
             $applicationData['monthly_income_sp'] = null;
             $applicationData['relevance'] = null;
+            $applicationData['address_sp'] = null;
+            $applicationData['sub_district_id_sp'] = null;
+            $applicationData['phone_sp'] = null;
         }
 
         DB::table('applications')->where('id', $id)->update($applicationData);
@@ -298,8 +370,8 @@ class ApplicationController extends Controller
     {
         //
         $app = Application::find($id);
-        $interview  = Interview_score::where('application_id',$id)->delete();
-        $result = Result::where('application_id',$id)->delete();
+        $interview  = Interview_score::where('application_id', $id)->delete();
+        $result = Result::where('application_id', $id)->delete();
         $app->delete();
         return back()->with('status', 'ลบข้อมูลสำเร็จ');
     }

@@ -19,6 +19,18 @@ class Application extends Model
         return $this->belongsTo(Dormitory::class,'dorm_id');
     }
 
+    public function sub_dist_fa(){
+        return $this->belongsTo(SubDistrict::class,'sub_district_id_fa');
+    }
+
+    public function sub_dist_mo(){
+        return $this->belongsTo(SubDistrict::class,'sub_district_id_mo');
+    }
+
+    public function sub_dist_sp(){
+        return $this->belongsTo(SubDistrict::class,'sub_district_id_sp');
+    }
+
     public function occ_fa(){
         return $this->belongsTo(Occupation::class,'occupation_fa');
     }

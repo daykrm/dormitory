@@ -9,6 +9,10 @@
                     <div class="col-md-12">
                         <h5>ข้อมูลส่วนตัว</h5>
                         <hr>
+                        <div class="row mb-2">
+                            <img src="{{ Storage::disk('s3')->url($app->img_path) }}"
+                                    height="auto" width="100%" style="max-width: 120px" />
+                        </div>
                         <div class="row">
                             <div class="col-6 col-md-2">รหัสนักศึกษา</div>
                             <div class="col-6 col-md-9">{{ $app->student->username }}</div>
@@ -46,7 +50,8 @@
                             <div class="col-6 col-md-4">{{ $app->name_fa }}</div>
                             <div class="col-6 col-md-2">อายุ {{ $app->age_fa }} ปี</div>
                             @if ($app->occupation_fa == 1)
-                                <div class="col-6 col-md-4">อาชีพ {{ $app->occ_fa->name }} ( {{ $app->other_fa }} )</div>
+                                <div class="col-6 col-md-4">อาชีพ {{ $app->occ_fa->name }} ( {{ $app->other_fa }} )
+                                </div>
                             @else
                                 <div class="col-6 col-md-4">อาชีพ {{ $app->occ_fa->name }}</div>
                             @endif
@@ -56,7 +61,8 @@
                             <div class="col-6 col-md-4">{{ $app->name_mo }}</div>
                             <div class="col-6 col-md-2">อายุ {{ $app->age_mo }} ปี</div>
                             @if ($app->occupation_mo == 1)
-                                <div class="col-6 col-md-4">อาชีพ {{ $app->occ_mo->name }} ( {{ $app->other_mo }} )</div>
+                                <div class="col-6 col-md-4">อาชีพ {{ $app->occ_mo->name }} ( {{ $app->other_mo }} )
+                                </div>
                             @else
                                 <div class="col-6 col-md-4">อาชีพ {{ $app->occ_mo->name }}</div>
                             @endif

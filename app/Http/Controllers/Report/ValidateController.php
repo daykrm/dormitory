@@ -19,8 +19,10 @@ class ValidateController extends Controller
     public function index()
     {
         //
-        $dorms = Dormitory::all();
-        return view('report.validate.select', compact('dorms'));
+        $year = YearConfig::find(1);
+        $file = DB::table('report_result')->where('year', $year->year)->where('status', 0)->first();
+        // $dorms = Dormitory::all();
+        return view('report.validate.index', compact('file', 'year'));
     }
 
     /**
@@ -42,25 +44,24 @@ class ValidateController extends Controller
     public function store(Request $request)
     {
         //
-        $id = $request->input('dorm');
-        $dorm = Dormitory::find($id);
+        // $id = $request->input('dorm');
+        // $dorm = Dormitory::find($id);
         $pdf = $request->file('file');
         $year = YearConfig::find(1);
         // $path = $pdf->storeAs('file/' . $year->year, 'validate_' . $dorm->name . '.pdf');
-        $path = 'dormitory/file/' . $year->year . '/validate_' . $dorm->name . '.pdf';
+        $path = 'dormitory/file/' . $year->year . '/validate_' . uniqid() . '.pdf';
         Storage::disk('s3')->put($path, file_get_contents($pdf), 'public-read');
-        $old = DB::table('report_result')->where([['year', $year->year], ['dormitory_id', $id], ['status', 0]])->first();
+        $old = DB::table('report_result')->where([['year', $year->year], ['status', 0]])->first();
         if ($old != null) {
             DB::table('report_result')->where('id', $old->id)->update(['path' => $path]);
         } else {
             DB::table('report_result')->insert([
                 'year' => $year->year,
-                'dormitory_id' => $id,
                 'path' => $path,
                 'status' => 0
             ]);
         }
-        return redirect()->action([ValidateController::class, 'show'], ['validate' => $id])->with('status', 'อัพโหลดไฟล์สำเร็จ');
+        return redirect()->action([ValidateController::class, 'index'])->with('status', 'อัพโหลดไฟล์สำเร็จ');
     }
 
     /**
