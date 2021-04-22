@@ -42,27 +42,29 @@ class ResultController extends Controller
     {
         //dd($request->hasFile('file'));
         // $id = $request->input('dorm');
-        $year = YearConfig::find(1);
+        
         // $model = Dormitory::find($id);
         // $dorm = $model->name;
         // $pdf = $request->file('file');
-        $path = 'dormitory/file/' . $year->year;
-        $filename = uniqid() . '.pdf';
+        // $path = 'dormitory/file/' . $year->year;
+        // $filename = uniqid() . '.pdf';
 
         //old method remove cause slow upload
         // Storage::disk('s3')->put($path, fopen($pdf, 'r+'));
 
-        $Fullpath = $request->file('file')->store($path, 's3');
+        $path = $request->file('file')->store('dormitory/file', 's3');
 
         // File::streamUpload($path, $filename, $request->file('file'), true);
 
+        $year = YearConfig::find(1);
+
         $old = DB::table('report_result')->where([['year', $year->year], ['status', 1]])->first();
         if ($old != null) {
-            DB::table('report_result')->where('id', $old->id)->update(['path' => $path . '/' . $filename]);
+            DB::table('report_result')->where('id', $old->id)->update(['path' => $path]);
         } else {
             DB::table('report_result')->insert([
                 'year' => $year->year,
-                'path' => $path . '/' . $filename
+                'path' => $path
             ]);
         }
         $file = DB::table('report_result')->where('year', $year->year)->where('status', 1)->first();
