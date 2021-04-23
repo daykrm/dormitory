@@ -91,17 +91,17 @@ class ResultController extends Controller
             // echo '<img src="' . $result['ObjectURL'] . '">';
             //End Test upload
 
-            // $old = DB::table('report_result')->where([['year', $year->year], ['status', 1]])->first();
-            // if ($old != null) {
-            //     DB::table('report_result')->where('id', $old->id)->update(['path' => $fullPath]);
-            // } else {
-            //     DB::table('report_result')->insert([
-            //         'year' => $year->year,
-            //         'path' => $fullPath
-            //     ]);
-            // }
-            // $file = DB::table('report_result')->where('year', $year->year)->where('status', 1)->first();
-            // return view('report.result.index', compact('year', 'file'));
+            $old = DB::table('report_result')->where([['year', $year->year], ['status', 1]])->first();
+            if ($old != null) {
+                DB::table('report_result')->where('id', $old->id)->update(['path' => $fullPath]);
+            } else {
+                DB::table('report_result')->insert([
+                    'year' => $year->year,
+                    'path' => $fullPath
+                ]);
+            }
+            $file = DB::table('report_result')->where('year', $year->year)->where('status', 1)->first();
+            return view('report.result.index', compact('year', 'file'));
 
         } catch (S3Exception $e) {
 
