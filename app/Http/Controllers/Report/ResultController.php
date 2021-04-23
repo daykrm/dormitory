@@ -7,9 +7,11 @@ use App\Models\Dormitory;
 use App\Models\Personel;
 use App\Models\YearConfig;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Config;
 
 class ResultController extends Controller
 {
@@ -42,29 +44,41 @@ class ResultController extends Controller
     {
         //dd($request->hasFile('file'));
         // $id = $request->input('dorm');
-        
+
         // $model = Dormitory::find($id);
         // $dorm = $model->name;
         // $pdf = $request->file('file');
-        // $path = 'dormitory/file/' . $year->year;
-        // $filename = uniqid() . '.pdf';
+        $year = YearConfig::find(1);
+        $path = 'dormitory/file/' . $year->year;
+        $filename = uniqid() . '.pdf';
+        $fullPath = $path . '/' . $filename;
 
         //old method remove cause slow upload
         // Storage::disk('s3')->put($path, fopen($pdf, 'r+'));
 
-        $path = $request->file('file')->store('dormitory/file', 's3');
+        // $config = Config::get('filesystems.disks.s3');
 
-        // File::streamUpload($path, $filename, $request->file('file'), true);
+        // $s3 = App::make('aws')->createClient('s3');
 
-        $year = YearConfig::find(1);
+        // $s3->putObject(array(
+        //     'ACL' => 'public_read',
+        //     'Bucket' => $config['bucket'],
+        //     'Key' => $config['']
+        // ));
+
+        // dd($s3);
+
+        // $path = $request->file('file')->store('dormitory/file', 's3');
+
+        File::streamUpload($path, $filename, $request->file('file'), true);
 
         $old = DB::table('report_result')->where([['year', $year->year], ['status', 1]])->first();
         if ($old != null) {
-            DB::table('report_result')->where('id', $old->id)->update(['path' => $path]);
+            DB::table('report_result')->where('id', $old->id)->update(['path' => $fullPath]);
         } else {
             DB::table('report_result')->insert([
                 'year' => $year->year,
-                'path' => $path
+                'path' => $fullPath
             ]);
         }
         $file = DB::table('report_result')->where('year', $year->year)->where('status', 1)->first();
