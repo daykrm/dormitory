@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\Dormitory;
 use App\Models\Personel;
 use App\Models\YearConfig;
+use Aws\S3\Exception\S3Exception;
+use Aws\S3\S3Client;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\DB;
@@ -53,38 +55,57 @@ class ResultController extends Controller
         $filename = uniqid() . '.pdf';
         $fullPath = $path . '/' . $filename;
 
-        //old method remove cause slow upload
-        // Storage::disk('s3')->put($path, fopen($pdf, 'r+'));
+        $config = Config::get('filesystems.disks.s3');
+        $client = new S3Client([
+            'credentials' => [
+                'key'    => $config['key'],
+                'secret' => $config['secret'],
+            ],
+            'region' => $config['region'],
+            'version' => 'latest',
+        ]);
 
-        // $config = Config::get('filesystems.disks.s3');
+        try {
 
-        // $s3 = App::make('aws')->createClient('s3');
+            $result = $client->putObject(array(
+                'Bucket' => $config['bucket'],
+                'Key' => $fullPath,
+                'ACL' => 'public-read',
+                'ContentType' => 'application/pdf',
+                'Body' => fopen($request->file('file'), 'r')
+            ));
 
-        // $s3->putObject(array(
-        //     'ACL' => 'public_read',
-        //     'Bucket' => $config['bucket'],
-        //     'Key' => $config['']
-        // ));
+            $fullPath = $result['ObjectURL'];
 
-        // dd($s3);
+            //Test upload
+            // Access parts of the result object
+            echo "Expiration : " . $result['Expiration'] . "\n";
+            echo "ServerSideEncryption : " . $result['ServerSideEncryption'] . "\n";
+            echo "ETag : " . $result['ETag'] . "\n";
+            echo "VersionId : " . $result['VersionId'] . "\n";
+            echo "RequestId : " . $result['RequestId'] . "\n";
+            echo "ObjectURL : " . $result['ObjectURL'] . "\n";
+            echo '<img src="' . $result['ObjectURL'] . '">';
+            //End Test upload
 
-        // $path = $request->file('file')->store('dormitory/file', 's3');
+            // $old = DB::table('report_result')->where([['year', $year->year], ['status', 1]])->first();
+            // if ($old != null) {
+            //     DB::table('report_result')->where('id', $old->id)->update(['path' => $fullPath]);
+            // } else {
+            //     DB::table('report_result')->insert([
+            //         'year' => $year->year,
+            //         'path' => $fullPath
+            //     ]);
+            // }
+            // $file = DB::table('report_result')->where('year', $year->year)->where('status', 1)->first();
+            // return view('report.result.index', compact('year', 'file'));
 
-        File::streamUpload($path, $filename, $request->file('file'), true);
+        } catch (S3Exception $e) {
 
-        $old = DB::table('report_result')->where([['year', $year->year], ['status', 1]])->first();
-        if ($old != null) {
-            DB::table('report_result')->where('id', $old->id)->update(['path' => $fullPath]);
-        } else {
-            DB::table('report_result')->insert([
-                'year' => $year->year,
-                'path' => $fullPath
-            ]);
+            echo $e->getAwsRequestId() . '\n';
+            echo $e->getAwsErrorType() . '\n';
+            echo $e->getAwsErrorCode() . '\n';
         }
-        $file = DB::table('report_result')->where('year', $year->year)->where('status', 1)->first();
-        return view('report.result.index', compact('year', 'file'));
-        //return redirect()->action([ResultController::class, 'index'], ['id' => $request->input('dorm')]);
-        //return back()->withInput()->with('status', 'อัพโหลดไฟล์สำเร็จ');
     }
 
     public function select()
