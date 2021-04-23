@@ -20,7 +20,8 @@
         <div class="card-body">
             <div class="container">
                 @if (Auth::user() && Auth::user()->type_id == 3)
-                    <form action="{{ route('report.result.store') }}" class="row justify-content-center" method="post">
+                    <form action="{{ route('report.result.store') }}" class="row justify-content-center" method="post"
+                        enctype="multipart/form-data">
                         @csrf
                         <div class="col-md-4">
                             <input type="file" accept="application/pdf" name="file" class="form-control-file" required>
