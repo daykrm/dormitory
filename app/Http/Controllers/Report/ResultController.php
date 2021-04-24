@@ -64,12 +64,12 @@ class ResultController extends Controller
             } else {
                 DB::table('report_result')->insert([
                     'year' => $year->year,
-                    'path' => $fullPath
+                    'path' => $fullPath,
+                    'status' => 1
                 ]);
             }
             $file = DB::table('report_result')->where('year', $year->year)->where('status', 1)->first();
             return view('report.result.index', compact('year', 'file'));
-
         } catch (S3Exception $e) {
 
             echo $e->getAwsRequestId() . '\n';
