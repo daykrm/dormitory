@@ -91,12 +91,15 @@
                         bar.width(percentVal)
                         percent.html(percentVal);
                     },
-                    success: function(res) {
+                    success: function(response, textStatus, jqxhr, formData) {
+                        console.log('server response', response);
+                        console.log('text status', textStatus);
+                        console.log('serialized form data', formData);
                         alert('File Has Been Uploaded Successfully');
                         window.location.href = SITEURL + "/" + "report/result";
                     },
-                    error : function(data){
-                        alert('Error : ' + data);
+                    error: function(jqhxr, textStatus, errorText) {
+                        console.error('There was an error submitting the form!', errorText);
                     }
 
                     // complete: function(xhr) {
