@@ -88,7 +88,9 @@
                         window.location.href = SITEURL + "/" + "report/result";
                     },
                     error: function(jqhxr, textStatus, errorText) {
-                        console.error('There was an error submitting the form!', errorText);
+                        alert('ไม่สามารถอัพโหลดไฟล์ได้ เนื่องจากใช้เวลานานเกิน 30 วินาที : ',
+                            errorText);
+                        // console.error('There was an error submitting the form!', errorText);
                     }
 
                     // complete: function(xhr) {
