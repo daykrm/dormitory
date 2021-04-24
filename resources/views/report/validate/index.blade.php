@@ -79,7 +79,7 @@
                         console.log('text status', textStatus);
                         console.log('serialized form data', formData);
                         alert('File Has Been Uploaded Successfully');
-                        window.location.href = SITEURL + "/" + "report/result";
+                        window.location.href = SITEURL + "/" + "report/validate";
                     },
                     error: function(jqhxr, textStatus, errorText) {
                         alert('ไม่สามารถอัพโหลดไฟล์ได้ เนื่องจากใช้เวลานานเกิน 30 วินาที : ',
