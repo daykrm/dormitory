@@ -52,6 +52,10 @@ class ValidateController extends Controller
         $fullPath = $path . '/' . $filename;
 
         try {
+
+            $disk = Storage::disk('s3');
+            $disk->put($fullPath, \fopen($request->file('file'), 'r+'));
+            
             $old = DB::table('report_result')->where([['year', $year->year], ['status', 0]])->first();
             if ($old != null) {
                 DB::table('report_result')->where('id', $old->id)->update(['path' => $fullPath]);
