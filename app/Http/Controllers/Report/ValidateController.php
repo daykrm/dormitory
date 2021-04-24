@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Report;
 use App\Http\Controllers\Controller;
 use App\Models\Dormitory;
 use App\Models\YearConfig;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
@@ -44,32 +45,27 @@ class ValidateController extends Controller
      */
     public function store(Request $request)
     {
-        //
-        // $id = $request->input('dorm');
-        // $dorm = Dormitory::find($id);
-        // $pdf = $request->file('file');
-        // $path = $pdf->storeAs('file/' . $year->year, 'validate_' . $dorm->name . '.pdf');
-        //$path = 'dormitory/file/' . $year->year;
-        //$filename = uniqid() . '.pdf';
-
-        $path = $request->file('file')->store('dormitory/file', 's3');
-        // Storage::disk('s3')->put($path, fopen($pdf, 'r+'));
-
-        // File::streamUpload($path, $filename, $request->file('file'), true);
 
         $year = YearConfig::find(1);
+        $path = 'dormitory/file/' . $year->year;
+        $filename = uniqid() . '.pdf';
+        $fullPath = $path . '/' . $filename;
 
-        $old = DB::table('report_result')->where([['year', $year->year], ['status', 0]])->first();
-        if ($old != null) {
-            DB::table('report_result')->where('id', $old->id)->update(['path' => $path]);
-        } else {
-            DB::table('report_result')->insert([
-                'year' => $year->year,
-                'path' => $path,
-                'status' => 0
-            ]);
+        try {
+            $old = DB::table('report_result')->where([['year', $year->year], ['status', 0]])->first();
+            if ($old != null) {
+                DB::table('report_result')->where('id', $old->id)->update(['path' => $fullPath]);
+            } else {
+                DB::table('report_result')->insert([
+                    'year' => $year->year,
+                    'path' => $fullPath,
+                    'status' => 0
+                ]);
+            }
+            return redirect()->action([ValidateController::class, 'index'])->with('status', 'อัพโหลดไฟล์สำเร็จ');
+        } catch (Exception $e) {
+            echo $e;
         }
-        return redirect()->action([ValidateController::class, 'index'])->with('status', 'อัพโหลดไฟล์สำเร็จ');
     }
 
     /**

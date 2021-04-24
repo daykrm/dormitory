@@ -1,17 +1,6 @@
 @extends('layouts.app')
 
 @section('content')
-    @php
-    $s3 = new Aws\S3\S3Client([
-        'version' => 'latest',
-        'region' => 'ap-southeast-1',
-    ]);
-
-    $bucket = getenv('AWS_BUCKET') ?: die('No "S3_BUCKET" config var');
-
-    // dd($bucket);
-
-    @endphp
     <div class="card">
         <div class="card-header">
             สรุปผลการคัดกรองนักศึกษาที่มีสิทธิ์เข้าในหอพักส่วนกลาง มหาวิทยาลัยขอนแก่น ประจำปีการศึกษา
