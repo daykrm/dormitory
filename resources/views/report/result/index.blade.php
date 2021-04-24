@@ -91,10 +91,18 @@
                         bar.width(percentVal)
                         percent.html(percentVal);
                     },
-                    complete: function(xhr) {
+                    success: function(res) {
                         alert('File Has Been Uploaded Successfully');
                         window.location.href = SITEURL + "/" + "report/result";
+                    },
+                    error : function(data){
+                        alert('Error : ' + data);
                     }
+
+                    // complete: function(xhr) {
+                    //     alert('File Has Been Uploaded Successfully');
+                    //     window.location.href = SITEURL + "/" + "report/result";
+                    // }
                 });
             });
         });
