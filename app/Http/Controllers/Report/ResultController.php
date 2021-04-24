@@ -44,52 +44,17 @@ class ResultController extends Controller
 
     public function store(Request $request)
     {
-        //dd($request->hasFile('file'));
-        // $id = $request->input('dorm');
-
-        // $model = Dormitory::find($id);
-        // $dorm = $model->name;
-        // $pdf = $request->file('file');
         $year = YearConfig::find(1);
         $path = 'dormitory/file/' . $year->year;
         $filename = uniqid() . '.pdf';
         $fullPath = $path . '/' . $filename;
 
         $config = Config::get('filesystems.disks.s3');
-        // $client = new S3Client([
-        //     'credentials' => [
-        //         'key'    => $config['key'],
-        //         'secret' => $config['secret'],
-        //     ],
-        //     'region' => $config['region'],
-        //     'version' => 'latest',
-        // ]);
 
         try {
 
             $disk = Storage::disk('s3');
             $disk->put($fullPath, \fopen($request->file('file'), 'r+'));
-
-            // $result = $client->putObject(array(
-            //     'Bucket' => $config['bucket'],
-            //     'Key' => $fullPath,
-            //     'ACL' => 'public-read',
-            //     'ContentType' => 'application/pdf',
-            //     'Body' => fopen($request->file('file'), 'r')
-            // ));
-
-            // $fullPath = $result['ObjectURL'];
-
-            //Test upload
-            // Access parts of the result object
-            // echo "Expiration : " . $result['Expiration'] . "\n";
-            // echo "ServerSideEncryption : " . $result['ServerSideEncryption'] . "\n";
-            // echo "ETag : " . $result['ETag'] . "\n";
-            // echo "VersionId : " . $result['VersionId'] . "\n";
-            // echo "RequestId : " . $result['RequestId'] . "\n";
-            // echo "ObjectURL : " . $result['ObjectURL'] . "\n";
-            // echo '<img src="' . $result['ObjectURL'] . '">';
-            //End Test upload
 
             $old = DB::table('report_result')->where([['year', $year->year], ['status', 1]])->first();
             if ($old != null) {
