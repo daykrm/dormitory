@@ -56,6 +56,8 @@ class ResultController extends Controller
             $disk = Storage::disk('s3');
             $disk->put($fullPath, \fopen($request->file('file'), 'r+'));
 
+            //return response()->json('Fule upload successfully');
+
             $old = DB::table('report_result')->where([['year', $year->year], ['status', 1]])->first();
             if ($old != null) {
                 DB::table('report_result')->where('id', $old->id)->update(['path' => $fullPath]);
