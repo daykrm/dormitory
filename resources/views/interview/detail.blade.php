@@ -11,6 +11,10 @@
                     <div class="col-md-12">
                         <h5>ข้อมูลส่วนตัว</h5>
                         <hr>
+                        <div class="row mb-2">
+                            <img src="{{ Storage::disk('s3')->url($app->img_path) }}"
+                                    height="auto" width="100%" style="max-width: 120px" />
+                        </div>
                         <div class="row">
                             <div class="col-md-2">รหัสนักศึกษา</div>
                             <div class="col-md-9">{{ $app->student->username }}</div>
