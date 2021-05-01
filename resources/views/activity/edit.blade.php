@@ -22,7 +22,7 @@
         $(document).ready(function() {
 
             var path = window.location.pathname;
-            $('#dorm_id').val(path.split('/')[2])
+            // $('#dorm_id').val(path.split('/')[2])
             
             $('#date').datepicker({
                 format: 'yyyy-mm-dd',

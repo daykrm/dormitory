@@ -1,4 +1,4 @@
-<input type="hidden" id="dorm_id" name="dorm_id" value="{{ $id }}">
+<input type="hidden" id="dorm_id" name="dorm_id" value="{{ $dorm_id }}">
 <div class="row justify-content-center">
     <div class="form-group col-md-12">
         <label>ชื่อกิจกรรม</label>

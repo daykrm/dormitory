@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Auth\LoginController;
+use App\Models\Activity;
 use App\Models\SubDistrict;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
@@ -19,8 +20,9 @@ use Illuminate\Support\Facades\Route;
 Route::post('crop-image-upload', 'CropImageController@uploadCropImage');
 
 Route::get('/test/{user_id}', function ($id) {
-    $user = User::find($id);
-    echo $user->dorm->dormitory->id;
+    $act = Activity::find($id);
+    // $user = User::find($id);
+    echo $act->dorm_id;
 });
 
 Route::get('/getDistrict/{id}', 'ProvinceListController@getDistrict');

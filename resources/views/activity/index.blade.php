@@ -68,7 +68,7 @@
         $(document).ready(function() {
 
             var path = window.location.pathname;
-            $('#dorm_id').val(path.split('/')[2])
+            // $('#dorm_id').val(path.split('/')[2])
             // console.log($('#dorm_id').val());
 
             $('#date').datepicker({
