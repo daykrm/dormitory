@@ -10,6 +10,6 @@ class Activity extends Model
     use HasFactory;
 
     protected $fillable = [
-        'council_id', 'name', 'detail', 'budget', 'year', 'activity_date', 'credit'
+        'dorm_id', 'name', 'detail', 'budget', 'year', 'activity_date', 'credit'
     ];
 }
