@@ -162,7 +162,7 @@ class ActivityController extends Controller
 
         $request->validate($rules, $messages);
 
-        // dd($request);
+        dd($request);
 
         $table  = Activity::find($id);
 
