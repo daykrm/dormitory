@@ -108,7 +108,7 @@ class ActivityController extends Controller
 
         //dd(date('Y-m-d'));
         //$sql = Activity::where('activity_date', '>=', date('yyyy-mm-dd'))->orderBy('activity_date')->toSql();
-        return view('activity.index', compact('activities'));
+        return view('activity.index', compact('activities','id'));
     }
 
     public function adminIndex()
@@ -127,7 +127,8 @@ class ActivityController extends Controller
     {
         $activity = Activity::find($id);
         return view('activity.edit', [
-            'activity' => $activity
+            'activity' => $activity,
+            'id' => $activity->dorm_id
         ]);
     }
 
@@ -160,6 +161,8 @@ class ActivityController extends Controller
         ];
 
         $request->validate($rules, $messages);
+
+        // dd($request);
 
         $table  = Activity::find($id);
 
