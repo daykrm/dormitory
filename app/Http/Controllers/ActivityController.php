@@ -126,9 +126,10 @@ class ActivityController extends Controller
     public function edit($id)
     {
         $activity = Activity::find($id);
+        $dorm_id = $activity->dorm_id;
         return view('activity.edit', [
             'activity' => $activity,
-            'id' => $activity->dorm_id
+            'id' => $dorm_id
         ]);
     }
 

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Auth\LoginController;
 use App\Models\SubDistrict;
+use App\Models\User;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,9 +16,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::post('crop-image-upload','CropImageController@uploadCropImage');
+Route::post('crop-image-upload', 'CropImageController@uploadCropImage');
 
-Route::get('/test', 'ProvinceListController@index');
+Route::get('/test/{user_id}', function ($id) {
+    $user = User::find($id);
+    echo $user->dorm->dormitory->id;
+});
 
 Route::get('/getDistrict/{id}', 'ProvinceListController@getDistrict');
 
