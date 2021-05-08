@@ -7,82 +7,99 @@
         </div>
         <div class="card-body">
             <div class="container">
-                <div class="row justify-content-center">
-                    <div class="col-4 col-md-2 text-right">
-                        รหัสนักศึกษา :
+                <div class="row justify-content-between mb-2">
+                    <button id="select-all" class="btn button-default">เลือกทั้งหมด/ยกเลิก</button>
+                    <div class="col-md-4">
+                        <input type="text" class="form-control" id="search" placeholder="ระบุคำค้นหา">
                     </div>
-                    <div class="col-8 form-group col-md-10">
-                        <form method="GET" action="{{ route('findStudent') }}">
-                            <div class="row">
-                                <div class="form-group col-md-10">
-                                    <input type="text" name="username" value="{{ old('username') }}" required
-                                        class="form-control">
-                                    <input type="hidden" name="dorm" value="{{ Auth::user()->dorm->dormitory->id }}">
-                                    @if (session('error'))
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ session('error') }}</strong>
-                                        </span>
-                                    @endif
-                                </div>
-                                <div class="col-md-2">
-                                    <button type="submit" class="btn btn-outline-primary">ค้นหา</button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                    @if (session('user'))
-                        <div class="col-4 col-md-2 text-right">
-                            ชื่อ-สกุล :
-                        </div>
-                        <div class="col-8 col-md-10">
-                            {{ session('user')->name }}
-                        </div>
-                        <form method="POST" action="{{ route('storeScore') }}">
-                            @csrf
-                            <input type="hidden" name="activity_id" value="{{ $activity->id }}">
-                            <input type="hidden" name="user_id" value="{{ session('user')->id }}">
-                            <button type="submit" class="btn btn-primary">เข้าร่วม</button>
-                        </form>
-                    @endif
                 </div>
-                {{-- <form method="POST" action="{{ route('activity.store') }}">
+                <form action="{{ route('storeScore') }}" method="post">
                     @csrf
-                    @include('activity.form')
-                </form> --}}
-            </div>
-        </div>
-    </div>
-    <br>
-    <hr>
-    <div class="card">
-        <div class="card-header">
-            รายชื่อนักศึกษาที่เข้าร่วมกิจกรรม
-        </div>
-        <div class="card-body">
-            <div class="container">
-                <div class="table-responsive">
-                    <table class="table table-striped">
+                    <input type="hidden" name="activity_id" value="{{ $activity->id }}">
+                    <table class="table table-sm table-striped table-bordered">
                         <thead>
-                            <th>รหัสนักศึกษา</th>
-                            <th>ชื่อ - สกุล</th>
-                            <th>ชื่อเล่น</th>
-                            <th>หอพัก</th>
-                            <th>ห้อง</th>
+                            <tr class="text-center">
+                                <th>
+                                    <input type="checkbox" class="select-all checkbox" name="select-all" />
+                                </th>
+                                <th>รหัสนักศึกษา</th>
+                                <th>ชื่อ - สกุล</th>
+                                <th>ชื่อเล่น</th>
+                                <th>หอพัก</th>
+                                <th>ห้องพัก</th>
+                            </tr>
                         </thead>
-                        <tbody>
-                            @foreach ($data as $item)
-                                <tr>
-                                    <td>{{ $item->student->username }}</td>
-                                    <td>{{ $item->student->name }}</td>
-                                    <td>{{ $item->student->nickname }}</td>
-                                    <td>{{ $item->student->dorm->dormitory->name }}</td>
-                                    <td>{{ $item->student->dorm->room->name }}</td>
+                        <tbody id="myTable">
+                            @foreach ($users as $item)
+                                <tr class="text-center">
+                                    <td>
+                                        <input type="checkbox" name="user_id[]" class="select-item checkbox"
+                                            value="{{ $item->id }}" @if ($item)  @endif>
+                                    </td>
+                                    <td>{{ $item->username }}</td>
+                                    <td>{{ $item->name }}</td>
+                                    <td>{{ $item->nickname }}</td>
+                                    <td>{{ $item->dorm->dormitory->name }}</td>
+                                    <td>{{ $item->dorm->room->name }}</td>
                                 </tr>
                             @endforeach
                         </tbody>
                     </table>
-                </div>
+                    <center><button type="submit" class="btn btn-primary">บันทึกการเข้าร่วม</button></center>
+                </form>
             </div>
         </div>
     </div>
+    <br>
 @endsection
+
+@push('scripts')
+    <script>
+        $(function() {
+            var user_activity = JSON.parse('<?php echo $activity->users; ?>');
+            // console.log(user_activity);
+            // console.log(user_activity[1].id);
+            $('input.select-item').each(function(index, item) {
+                var val = $(this).val();
+                var findIndex = user_activity.findIndex(user => user.id == val);
+                if (findIndex != -1) {
+                    $(this).prop('checked', true);
+                }
+            })
+
+            $('#search').on('keyup', function() {
+                var val = $(this).val();
+                $('#myTable tr').filter(function() {
+                    $(this).toggle($(this).text().indexOf(val) > -1)
+                })
+            })
+
+            // console.log(user_activity);
+            //button select all or cancel
+            $("#select-all").click(function() {
+                var all = $("input.select-all")[0];
+                all.checked = !all.checked
+                var checked = all.checked;
+                $("input.select-item").each(function(index, item) {
+                    item.checked = checked;
+                });
+            });
+            //column checkbox select all or cancel
+            $("input.select-all").click(function() {
+                var checked = this.checked;
+                $("input.select-item").each(function(index, item) {
+                    item.checked = checked;
+                });
+            });
+            //check selected items
+            $("input.select-item").click(function() {
+                var checked = this.checked;
+                var all = $("input.select-all")[0];
+                var total = $("input.select-item").length;
+                var len = $("input.select-item:checked:checked").length;
+                all.checked = len === total;
+            });
+        })
+
+    </script>
+@endpush

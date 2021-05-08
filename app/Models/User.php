@@ -80,4 +80,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Activity_credit::class, 'student_id');
     }
+
+    // for find by pivot
+    // public function activity(){
+    //     return $this->hasOneThrough()
+    // }
 }

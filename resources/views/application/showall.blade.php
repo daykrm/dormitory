@@ -18,35 +18,50 @@
                         <input type="text" id="filter" class="form-control" placeholder="รหัสนักศึกษา">
                     </div>
                 </div>
-                <div class="table-responsive">
-                    <table class="table table-striped">
-                        <thead>
-                            <tr>
-                                <th>#</th>
-                                <th>รหัสนักศึกษา</th>
-                                <th>ชื่อ - สกุล</th>
-                                <th>คณะ</th>
-                                <th>ชั้นปี</th>
-                                <th></th>
-                            </tr>
-                        </thead>
-                        <tbody id="table">
-                            @foreach ($apps as $key => $item)
+                <form action="{{ route('multiDelete') }}" method="post" id="form">
+                    <div class="table-responsive">
+
+                        @csrf
+                        <table class="table table-striped">
+                            <thead>
                                 <tr>
-                                    <td>{{ $key + 1 }}</td>
-                                    <td>{{ $item->student->username }}</td>
-                                    <td>{{ $item->student->prefix->name }}{{ $item->student->name }}</td>
-                                    <td>{{ $item->student->faculty->name }}</td>
-                                    <td>{{ $item->student->year() }}</td>
-                                    <td class="text-right">
-                                        <button class="btn btn-danger" data-toggle="modal" data-target="#confirmDelete"
-                                            data-id="{{ $item->id }}">ลบ</button>
-                                    </td>
+                                    <th>
+                                        <input type="checkbox" class="select-all checkbox">
+                                    </th>
+                                    <th>รหัสนักศึกษา</th>
+                                    <th>ชื่อ - สกุล</th>
+                                    <th>คณะ</th>
+                                    <th>ชั้นปี</th>
+                                    <th></th>
                                 </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                </div>
+                            </thead>
+                            <tbody id="table">
+                                @foreach ($apps as $key => $item)
+                                    <tr>
+                                        <td>
+                                            <input type="checkbox" name="app_id[]" value="{{ $item->id }}"
+                                                class="select-item checkbox">
+                                        </td>
+                                        <td>{{ $item->student->username }}</td>
+                                        <td>{{ $item->student->prefix->name }}{{ $item->student->name }}</td>
+                                        <td>{{ $item->student->faculty->name }}</td>
+                                        <td>{{ $item->student->year() }}</td>
+                                        <td class="text-right">
+                                            <button class="btn btn-danger" data-toggle="modal" data-target="#confirmDelete"
+                                                data-id="{{ $item->id }}">ลบ</button>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+
+                    </div>
+                    <input type="hidden" name="dorm_id" value="{{ $dorm->id }}">
+                    <input type="hidden" name="year" value="{{ $year->year }}">
+                    <div class="row justify-content-center">
+                        <button type="submit" class="btn btn-danger">ลบ</button>
+                    </div>
+                </form>
                 {{-- <div class="row justify-content-end mt-4">
                     {{ $apps->links() }}
                 </div> --}}
@@ -111,6 +126,24 @@
 @push('scripts')
     <script>
         $(document).ready(function() {
+
+            $("input.select-all").click(function() {
+                var checked = this.checked;
+                $("input.select-item").each(function(index, item) {
+                    item.checked = checked;
+                });
+            });
+
+            //check selected items
+            $("input.select-item").click(function() {
+                var checked = this.checked;
+                var all = $("input.select-all")[0];
+                var total = $("input.select-item").length;
+                var len = $("input.select-item:checked:checked").length;
+                all.checked = len === total;
+            });
+
+
             $('#confirmDelete').on('show.bs.modal', function(e) {
                 var btn = $(e.relatedTarget)
                 var id = btn.data('id')

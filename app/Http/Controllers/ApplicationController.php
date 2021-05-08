@@ -47,7 +47,29 @@ class ApplicationController extends Controller
             ['year', $year->year],
             ['dorm_id', $id]
         ])->get();
-        return view('application.showall', compact('apps', 'dorm'));
+        return view('application.showall', compact('apps', 'dorm', 'year'));
+    }
+
+    public function multiDelete(Request $request)
+    {
+        $app_id = $request->get('app_id');
+        $dorm_id = $request->input('dorm_id');
+        $year = $request->input('year');
+
+        $apps = Application::where([
+            ['dorm_id', $dorm_id],
+            ['year', $year]
+        ])
+            ->whereNotIn('id', $app_id)
+            ->get();
+        $delete_id = [];
+        foreach ($apps as $app) {
+            $delete_id[] = $app->id;
+        }
+        Interview_score::whereIn('application_id', $delete_id)->delete();
+        Application::whereIn('id',$delete_id)->delete();
+        return back()->with('status','ลบข้อมูลสำเร็จ');
+        // dd($delete_id);
     }
 
     public function checkApplicationThisYear($userId)

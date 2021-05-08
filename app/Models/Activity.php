@@ -12,4 +12,14 @@ class Activity extends Model
     protected $fillable = [
         'dorm_id', 'name', 'detail', 'budget', 'year', 'activity_date', 'credit'
     ];
+
+    public function dorm()
+    {
+        return $this->belongsTo(Dormitory::class);
+    }
+
+    public function users()
+    {
+        return $this->belongsToMany(User::class, 'activity_credits', 'activity_id', 'student_id');
+    }
 }

@@ -37,29 +37,39 @@ class ScoreController extends Controller
         $student_id = $request->input('user_id');
         $activity_id = $request->input('activity_id');
 
-        $id = DB::table('activity_credits')->where([
-            ['student_id', $student_id],
-            ['activity_id', $activity_id]
-        ])->first();
+        $acc = Activity::find($activity_id);
+        $acc->users()->sync($student_id);
 
-        if ($id != null) return back()->with('status', 'บันทึกข้อมูลสำเร็จ');
+        return back()->with('status','บันทึกข้อมูลสำเร็จ');
 
-        $table = new Activity_credit();
+        //dd($student_id);
 
-        $table->student_id = $request->input('user_id');
-        $table->activity_id = $request->input('activity_id');
-        if ($table->save()) {
-            return back()->with('status', 'บันทึกข้อมูลสำเร็จ');
-        } else {
-            return back()->with('error', 'บันทึกข้อมูลล้มเหลว');
-        }
+        // $id = DB::table('activity_credits')->where([
+        //     ['student_id', $student_id],
+        //     ['activity_id', $activity_id]
+        // ])->first();
+
+        // if ($id != null) return back()->with('status', 'บันทึกข้อมูลสำเร็จ');
+
+        // $table = new Activity_credit();
+
+        // $table->student_id = $request->input('user_id');
+        // $table->activity_id = $request->input('activity_id');
+        // if ($table->save()) {
+        //     return back()->with('status', 'บันทึกข้อมูลสำเร็จ');
+        // } else {
+        //     return back()->with('error', 'บันทึกข้อมูลล้มเหลว');
+        // }
     }
 
     public function showForm($id)
     {
         $activity = Activity::find($id);
         $data = Activity_credit::where('activity_id', $id)->get();
-        return view('score.create', compact('activity', 'data'));
+        $users = $activity->dorm->users;
+        // dd($users);
+        // echo json_encode($users,JSON_UNESCAPED_UNICODE);
+        return view('score.create', compact('activity', 'data', 'users'));
     }
 
     public function findStudent(Request $request)

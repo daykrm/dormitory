@@ -16,7 +16,7 @@ class Dormitory extends Model
 
     public function users()
     {
-        return $this->hasManyThrough(User::class, DormitoryDetail::class, 'dormitory_id', 'dorm_detail_id');
+        return $this->hasManyThrough(User::class, DormitoryDetail::class, 'dormitory_id', 'dorm_detail_id')->where('users.type_id', '<>', 3);
     }
 
     public function details()

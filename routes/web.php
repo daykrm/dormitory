@@ -20,9 +20,11 @@ use Illuminate\Support\Facades\Route;
 Route::post('crop-image-upload', 'CropImageController@uploadCropImage');
 
 Route::get('/test/{user_id}', function ($id) {
-    $act = Activity::find($id);
+    // $act = Activity::find($id);
     // $user = User::find($id);
-    echo $act->dorm_id;
+    // $user->activity()->sync([]);
+    // $user = User::find($id);
+    // echo json_encode($user->activity, JSON_UNESCAPED_UNICODE);
 });
 
 Route::get('/getDistrict/{id}', 'ProvinceListController@getDistrict');
@@ -125,6 +127,8 @@ Route::post('/dormitorydetail', 'DormitoryDetailController@store')->name('dormRo
 Route::resource('application', 'ApplicationController');
 
 Route::get('application/showall/{id}', 'ApplicationController@showAll');
+
+Route::post('application/multidelete', 'ApplicationController@multiDelete')->name('multiDelete');
 
 Route::get('application/detail/{id}', 'ApplicationController@showApp');
 
