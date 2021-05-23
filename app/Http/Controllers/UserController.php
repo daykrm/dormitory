@@ -9,6 +9,7 @@ use App\Models\Province;
 use App\Models\Room;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
@@ -73,7 +74,7 @@ class UserController extends Controller
         $rooms = Room::all();
         $dorm_detail = Dormitory::all();
         $route = 'student.update';
-        return view('auth.edit', compact('user', 'prefixes', 'provinces', 'faculties', 'dorms', 'rooms', 'dorm_detail','route'));
+        return view('auth.edit', compact('user', 'prefixes', 'provinces', 'faculties', 'dorms', 'rooms', 'dorm_detail', 'route'));
     }
 
     /**
@@ -141,5 +142,17 @@ class UserController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function showPDPA($id)
+    {
+        $previousRoute = route('home');
+        if ($id == 1) {
+            $nextRoute = route('register');
+        } else {
+            $nextRoute = route('checkApp', Auth::user()->id);
+        }
+
+        return view('pdpa', compact('nextRoute', 'previousRoute'));
     }
 }

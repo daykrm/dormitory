@@ -72,7 +72,7 @@
                         <a class="nav-link" href="{{ route('login') }}">Login</a>
                     </li> --}}
                     <li class="nav-item">
-                        <a class="nav-link text-white" href="{{ route('register') }}">สมัครสมาชิก</a>
+                        <a class="nav-link text-white" href="{{ route('pdpa', 1) }}">สมัครสมาชิก</a>
                     </li>
                 @endif
             </ul>

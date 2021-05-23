@@ -80,6 +80,8 @@ Route::prefix('/report')->name('report.')->namespace('Report')->group(function (
     });
 });
 
+Route::get('/pdpa/{id}','UserController@showPDPA')->name('pdpa');
+
 Route::resource('personel', 'PersonelController');
 
 Route::resource('student', 'UserController');
